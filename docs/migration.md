@@ -46,7 +46,10 @@ Investigation date: 2026-09-29.
 - Download all assets into the repo; the new site must not depend on the Webflow CDN.
 
 **Needs investigation (Phase 2)**
-- Whether the homepage's selection of 6 projects is a manual CMS filter/sort (likely a "featured"-type choice not exported as a field) → reproduce with an explicit `featured` flag + order in local data.
+**Decision (2026-09-29)**
+- Migrate **only the 6 homepage projects**. The other 4 (`beelo-pure-honey`, `gwp`, `handwerkerseiten`, `majer-sales---conversion-focused-webflow-website`) will be removed by the owner. Note: they are currently *published and live* (200), so they may be indexed. Plan: 301 them to `/` in the new site so any existing links land somewhere useful.
+- Fix typos in content during conversion (e.g. Webfow/Weblow → Webflow, Photoshp → Photoshop, Hgh → High, Ibahim → Ibrahim, stray quotes/list tags). Original CSVs stay untouched as the source record.
+- `Next project` references that point to a removed project are re-pointed so the 6 form a loop (documented in content.md).
 - Wistia: keep embeds or self-host video (decide per performance budget).
 
 ## 2. AI chat
@@ -61,8 +64,14 @@ Investigation date: 2026-09-29.
 - **No rate limiting observed**: 8 back-to-back requests all returned 200. No abuse protection visible.
 - **No CORS headers** (preflight → 404). Browsers on `billodesign.com` can't call it directly after migration; it only works same-origin today.
 
-**Assumption**
-- Model is GPT-4o mini (owner's recollection). **Not verifiable from outside**; the response metadata does not name the model.
+**Confirmed (2026-09-29, from the app source in Webflow Cloud, via owner screenshots)**
+- App code is **not under version control** and can't be downloaded; files can only be copied by hand from the Webflow Cloud editor.
+- Structure: Astro app with `src/pages/api/chat.ts` (the endpoint), `src/middleware.ts`, `src/pages/index.astro` (the unused template landing page), `.env` (holds the key; never copy it), docs `CHATBOT_README.md`, `CUSTOMIZE_CHATBOT…`, `OPENAI_SETUP_GUI…`, `WEBFLOW_CHATBOT…`, `test-openai.js`.
+- Provider **OpenAI** via the official SDK: `openai.chat.completions.create({ model: 'gpt-4o-mini', messages, max_tokens: 500, temperature: 0.9 })` (chat.ts, around line 113).
+
+**Needs investigation**
+- System prompt text: in `chat.ts` above line 113 (owner to copy the file **without** any key).
+- `middleware.ts`: check whether it adds rate limiting/CORS (live tests showed none).
 
 **Decision**
 - Keep the AI chat. New flow: browser UI → Next.js Route Handler (`/api/chat`) → LLM provider. API key server-side only. Don't upgrade the model just to upgrade.

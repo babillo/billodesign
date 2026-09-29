@@ -37,3 +37,22 @@ Proxy to the old Webflow Cloud endpoint from a Next.js route (a possible short-t
 
 Trade-offs:
 Needs the provider API key and a system prompt (recover the original, or rewrite if unrecoverable). Model choice stays the same as the original once confirmed.
+
+## ADR-003 — Keep gpt-4o-mini and the original generation settings for the chat
+
+Date: 2026-09-29
+
+Decision:
+The new `/api/chat` uses OpenAI `gpt-4o-mini`, `max_tokens: 500`, `temperature: 0.9`, the same as the original Astro app.
+
+Context:
+Confirmed from the original `src/pages/api/chat.ts`. The owner asked not to upgrade the model just for the sake of it.
+
+Reason:
+Reproduce the existing behavior first; evaluate models/cost separately later.
+
+Alternatives:
+Newer/cheaper models (deferred to a later, evidence-based evaluation).
+
+Trade-offs:
+Behavior parity now; any model change becomes a deliberate, documented decision.
