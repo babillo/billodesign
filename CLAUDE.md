@@ -1556,3 +1556,206 @@ The goal is:
 The interactive Spline orb is part of that experience.
 
 Optimize it intelligently before considering replacement.
+
+Here are my answers and preferences for the questions above.
+
+### 1. Webflow Projects CMS export
+
+Yes, I want to export the Projects Collection directly from Webflow as CSV if that option is available.
+
+Please investigate the current Webflow CMS export and use the official Collection CSV export rather than scraping if possible.
+
+I want to preserve the complete Projects dataset, including:
+
+* project names
+* slugs
+* descriptions
+* roles
+* categories
+* dates/years
+* images
+* URLs
+* rich text
+* reference fields
+* any other custom fields
+
+Also preserve/download the actual image and file assets separately where necessary.
+
+Important: don't assume the CSV's Webflow-hosted image URLs are a permanent asset strategy. Make sure important assets are copied into the new project so the new site doesn't depend on the old Webflow site remaining alive.
+
+Webflow's current documentation confirms that Collection content can be exported to CSV, while code export itself does not include CMS content.
+
+---
+
+### 2. AI chat
+
+Keep the AI chat.
+
+It is actually a useful feature of my portfolio and I want to preserve it rather than remove it.
+
+I don't remember the exact model or system prompt anymore. I believe I originally used **GPT-4o mini**, mainly because it was inexpensive at the time, but please treat that as a hypothesis rather than a confirmed fact.
+
+Please investigate the existing implementation to determine:
+
+* which model/provider it currently calls
+* where the API request is made
+* whether the system prompt is present in the exported/custom code
+* what context/data the assistant receives
+* what the `/assistant/api/chat` endpoint currently does
+* whether there are any hardcoded keys or other credentials
+* whether conversation history is maintained
+* whether the chat has any rate limiting or abuse protection
+
+Do not expose or commit any API keys or secrets.
+
+For the new implementation, I would prefer:
+
+Browser chat UI
+→ secure Next.js server/API endpoint
+→ LLM provider
+→ response
+
+The API key must remain server-side.
+
+If the original implementation really does use GPT-4o mini, we can initially reproduce the same behavior, then evaluate the current available model/cost options later. Don't upgrade the model just for the sake of upgrading it.
+
+Document the discovered implementation and any uncertainty in the migration documentation.
+
+---
+
+### 3. Contact form
+
+I want contact-form submissions to reach my business email.
+
+Please don't hardcode the email address into client-side code or expose any credentials.
+
+I already use Zoho for my business email, so consider a simple transactional email approach that can deliver notifications reliably to my business inbox.
+
+Before implementing it, propose the simplest appropriate architecture and explain the options.
+
+The priority is:
+
+* reliable delivery
+* spam protection
+* secure server-side handling
+* minimal infrastructure
+* low/no recurring cost if reasonably possible
+
+---
+
+### 4. `detail_testimonial` / `401`
+
+Please investigate these rather than asking me to guess.
+
+Determine whether either route is:
+
+* publicly linked
+* indexed
+* referenced by navigation
+* referenced by internal links
+* used by JavaScript
+* required by any existing functionality
+
+If they are unused internal/template artifacts, they don't need to become public routes in the new application.
+
+If either one is publicly accessible or linked somewhere, preserve the necessary behavior.
+
+Do not automatically recreate every exported HTML file as a Next.js route.
+
+---
+
+### 5. Sound
+
+Keep the sound system and its mute toggle because it is part of the existing interactive experience.
+
+However, **sound should NOT automatically play with audio on page load** if browser policies or user-experience considerations prevent that.
+
+Prefer:
+
+* muted/disabled initial state
+* explicit user control
+* preserve the existing mute/unmute behavior
+* respect browser autoplay restrictions
+* respect `prefers-reduced-motion` where relevant to associated effects
+* avoid loading/initializing unnecessary audio resources before they are needed
+
+Please inspect the existing Howler implementation and reproduce the intended experience rather than blindly copying the old code.
+
+---
+
+### 6. Search Console / indexed URLs
+
+As far as I know, there isn't an independently indexed production site that needs to be preserved beyond the current Webflow-hosted version.
+
+The custom domain currently redirects to:
+
+`billodesign.webflow.io`
+
+Please verify this rather than assuming it.
+
+Audit the existing publicly accessible URLs and determine:
+
+* which URLs are indexed
+* which URLs receive organic traffic if measurable
+* whether any project URLs are indexed
+* whether there are existing backlinks worth preserving
+* whether Search Console contains useful historical data
+
+If there are indexed URLs or meaningful backlinks, preserve their URL structure where possible and create redirects where necessary.
+
+If there genuinely isn't anything meaningful to preserve, document that finding.
+
+---
+
+### 7. Social links and alt text
+
+Please audit all social links and determine which ones are valid/current.
+
+The repeated alt text such as:
+
+* "Behance link"
+* "Behance link"
+* "Behance link"
+* "X link"
+
+may simply be placeholder/accessibility text.
+
+Please inspect the actual links and surrounding context.
+
+For the final implementation:
+
+* use accurate accessible labels
+* use the actual destination/service name
+* don't use "link" as the only meaningful accessible name
+* don't invent social profiles that don't exist
+* preserve valid existing social links
+
+If a social link is broken or clearly placeholder, flag it for me rather than silently inventing a replacement.
+
+---
+
+# Additional instruction
+
+For all seven questions, distinguish between:
+
+**Confirmed**
+Something verified from the existing implementation.
+
+**Assumption**
+Something we currently believe but haven't verified.
+
+**Decision**
+Something I have explicitly chosen.
+
+**Needs investigation**
+Something that requires inspecting the existing site/code/data.
+
+Please document these distinctions in the migration documentation.
+
+In particular, don't make architectural decisions based on assumptions about the old Webflow site when we can inspect the implementation and find out.
+
+The goal remains:
+
+**Preserve the existing experience → rebuild it properly → understand the architecture → enhance the design → optimize performance and SEO.**
+
+The AI chat and Spline 3D orb are both important parts of the experience and should be preserved unless we later make an intentional, evidence-based decision to change them.
