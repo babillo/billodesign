@@ -1,0 +1,135 @@
+.slider {
+  --slide-gap: 2rem;
+  position: relative;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+/* .projects_mask / .testimonial_mask: width set by maskClassName, overflow visible. */
+.mask {
+  display: flex;
+  width: 40%;
+  overflow: visible;
+}
+
+.slide {
+  display: flex;
+  flex: 0 0 100%;
+  margin-right: var(--slide-gap);
+  transition: transform 0.5s ease;
+}
+
+.slide > * {
+  width: 100%;
+}
+
+/* .arrow: round cyan buttons below the slider, bottom right. */
+.arrow {
+  position: absolute;
+  right: 0;
+  bottom: -7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid var(--color-cyan);
+  border-radius: 90px;
+  background: transparent;
+  color: var(--color-cyan);
+  cursor: pointer;
+}
+
+.arrow:hover {
+  background-color: var(--color-cyan);
+  color: #000;
+}
+
+.arrow svg {
+  width: 1rem;
+}
+
+.arrowLeft {
+  right: 8%;
+}
+
+/* .slide_nav + custom Webflow dot styles (wide bars instead of dots). */
+.nav {
+  position: absolute;
+  right: 0;
+  bottom: -5rem;
+  left: 0;
+  z-index: 2;
+  height: 40px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.dot {
+  display: inline-block;
+  width: 5rem;
+  height: 0.75rem;
+  margin: 0 4px 0.5em;
+  padding: 0;
+  border: 0;
+  background: #383838;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.dotActive {
+  background: #00afcd;
+}
+
+@media (max-width: 991px) {
+  .arrow {
+    bottom: -6rem;
+  }
+
+  .arrowLeft {
+    right: 11%;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    bottom: -4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .arrow svg {
+    width: 0.9rem;
+  }
+
+  .dot {
+    width: 2rem;
+    height: 0.3rem;
+  }
+
+  .nav {
+    bottom: -3rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .slider {
+    --slide-gap: 1rem;
+  }
+
+  .arrowLeft {
+    right: 18%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+}

@@ -1,0 +1,58 @@
+/* .orb_text-box: glass bubble with the "tail" corner at top-right. */
+.bubble {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: auto;
+  max-width: 18rem;
+  padding: 1rem;
+  border: 1px solid var(--color-cyan);
+  border-radius: 30px 0 30px 30px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transition: opacity 0.2s ease-in;
+}
+
+/* .orb_text-box-modal: inline, square corners. */
+.modal {
+  display: flex;
+  width: auto;
+  margin-top: 2rem;
+  margin-bottom: 10px;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--color-cyan);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+.shown {
+  opacity: 1;
+}
+
+/* Webflow faded to 0 then set display:none; visibility gives the same result without a jump. */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in, visibility 0s 0.2s;
+}
+
+.text {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.textRight {
+  text-align: right;
+}
+
+@media (max-width: 479px) {
+  .bubble {
+    max-width: 14rem;
+  }
+
+  .text {
+    font-size: 0.9rem;
+  }
+}

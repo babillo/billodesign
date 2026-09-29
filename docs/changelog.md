@@ -8,3 +8,23 @@
 - `docs/decisions.md`: ADR-001 (local content, no CMS), ADR-002 (chat via Next.js Route Handler)
 ### Changed
 - Audit corrected: 10 projects (not 6)
+
+## Phase 2 — Initial Next.js implementation
+
+### Added
+- Next.js 16 App Router app: homepage, 6 case-study pages, 404, sitemap, robots, redirects
+- Content importer `scripts/import-webflow.mjs`: CSV → `content/*.json`, all assets self-hosted
+- Design tokens and Webflow typography in `globals.css`; CSS Modules per component
+- Experience layer: Spline orb, preloader, typed orb bubbles, scroll reveals, GSAP text effects, Lottie scroll scrub, Lenis, sound system (muted by default), contact modal, AI chat
+- `/api/chat` (OpenAI gpt-4o-mini, server-side key, validation, rate limiting); `/api/contact` placeholder
+- JSON-LD, canonical URLs, OG/Twitter metadata, JPEG OG image
+- Docs: architecture, routes, components, content, design system, animations, SEO, decisions (ADR-003 to ADR-010), troubleshooting, learning notes
+
+### Changed
+- Webflow slider, IX2, Typed.js, SplitType, jQuery replaced by small local components / CSS
+- Sound defaults to muted
+- Content typos and incorrect alt text fixed
+
+### Fixed
+- SVGs extracted from the export (attribute casing and filter nesting)
+- Page crash when the Spline scene fails to load

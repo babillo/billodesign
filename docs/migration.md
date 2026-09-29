@@ -155,3 +155,48 @@ Investigation date: 2026-09-29.
 **Needs investigation (owner)**
 - Please confirm the LinkedIn and Upwork URLs open your profiles, and which Webflow profile is current: `@billodesign` or `@billodesign-work`.
 - Should the Contra link keep its referral query string?
+
+---
+
+## Webflow → Next.js mapping (Phase 2)
+
+| Webflow | Next.js |
+|---|---|
+| Homepage sections (static HTML) | `components/home/*` server components |
+| Projects CMS + template page | `content/projects.json` + `app/projects/[slug]/page.tsx` |
+| Hardcoded slider cards & testimonials | `card` fields in projects.json, testimonials.json |
+| Webflow slider | `components/ui/Slider` |
+| IX2: subtle slide from bottom | `data-reveal` + CSS + IntersectionObserver |
+| IX2: preloader | CSS keyframes (`Preloader`) |
+| IX2: modal open/close | `<dialog>` + `ContactModalProvider` |
+| IX2: nav burger | `Navbar` CSS transitions |
+| IX2: tech stack scroll Lottie | `TechStackLottie` + ScrollTrigger |
+| IX2: orb bubbles show/hide | `OrbSpeech`, `CtaOrbTips` |
+| Attribute text-animation script (SplitType + GSAP) | `ScrollEffects` (GSAP SplitText) |
+| Typed.js ×4 | `TypedText` |
+| Howler + jQuery sound script | `SoundProvider` |
+| Lenis init | `SmoothScroll` |
+| Custom-code AI chat widget | `AiChat` + `/api/chat` |
+| Webflow Forms | `ContactModal` + `/api/contact` (pending) |
+| Spline element | `SplineOrb` (@splinetool/react-spline) |
+| gtag snippet | `next/script` in layout (production only) |
+
+### Reproduced exactly
+Layout, spacing, type scale, colors, breakpoints, section order, copy, slider behavior, preloader timeline, reveal timing, text effects, Lottie scroll mapping, bubble timings, sound mapping, chat UI and model settings, all 6 URLs.
+
+### Implemented differently (same experience)
+- Preloader in CSS: it appears immediately instead of after Webflow's JS runs.
+- Spline orb loads after the browser is idle and fades in; an error boundary prevents a failed load from crashing the page.
+- Contact and chat use native `<dialog>`, which adds focus trapping, Escape to close and an inert background.
+- Wistia videos embedded directly (no Embedly).
+
+### Intentionally changed (owner-approved or bug fixes)
+- Sound starts **muted** (owner decision §5).
+- Only 6 projects; 4 removed URLs redirect to `/` (§1).
+- Content typos fixed; "What People Says" → "What People Say"; "What are your waiting for" → "What are you waiting for?".
+- Accessibility labels: social links, the wrong card alt text, JS logo alt text, form labels, a real `mailto:` link for the email.
+- Heading outline on project pages (same look).
+- The Fadi testimonial now has quote marks like the others.
+
+### Dropped (no longer needed)
+jQuery ×2, duplicate GSAP 3.12, SplitType, Typed.js, WebFont loader, Webflow IX2 runtime, the scroll-position save/restore script (browsers restore scroll natively), `console.log` on every scroll, and commented-out dead code.

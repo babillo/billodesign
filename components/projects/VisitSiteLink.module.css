@@ -1,0 +1,13 @@
+.link {
+  position: relative;
+  display: flex;
+  gap: 0.3rem;
+  color: var(--color-cyan);
+  text-decoration: none;
+}
+
+.arrow {
+  position: relative;
+  bottom: -3px;
+  width: 0.8rem;
+}

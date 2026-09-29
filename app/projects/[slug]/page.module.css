@@ -1,0 +1,37 @@
+/* .project_details-content-wrapper */
+.content {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  gap: 6rem;
+}
+
+/* .project_details-feedback */
+.feedback {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  gap: 2rem;
+  max-width: 40rem;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--color-grey-radial);
+}
+
+@media (max-width: 991px) {
+  .content {
+    gap: 5rem;
+  }
+
+  .feedback {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .content {
+    gap: 4rem;
+  }
+}

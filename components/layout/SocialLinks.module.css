@@ -1,0 +1,29 @@
+.list {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  margin: 0;
+}
+
+.link {
+  display: flex;
+}
+
+.icon {
+  width: 2.5rem;
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  .icon {
+    width: 2rem;
+  }
+}

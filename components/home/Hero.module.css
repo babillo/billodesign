@@ -1,0 +1,37 @@
+.section {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* .hero_home-content */
+.content {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  place-content: start;
+  place-items: start;
+  gap: 2rem;
+  max-width: 70rem;
+}
+
+.paragraph {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+@media (max-width: 767px) {
+  .paragraph {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .paragraph {
+    font-size: 1.3rem;
+  }
+}

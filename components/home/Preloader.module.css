@@ -1,0 +1,217 @@
+/*
+ * Timeline (ms), from the Webflow IX2 "Preloader" action groups:
+ *   250–600    orb, icon and text slide up into view
+ *   600–950    bar track grows to 15em
+ *   950–1450   bar fill 1; 1250–1750 bar fill 2
+ *   1750–2100  bar track shrinks
+ *   2100–2450  orb, icon and text slide back down
+ *   2450–2950  front curtains open; 2700–3200 back curtains + teal fade
+ *   3200       preloader removed
+ */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(7 121 140);
+  animation:
+    bg-fade 0.5s ease 2.7s forwards,
+    hide 0s linear 3.2s forwards;
+}
+
+.curtains {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.curtain {
+  width: 50%;
+  height: 100%;
+  background-color: #000;
+}
+
+.left2,
+.right2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: #00000080;
+}
+
+.left2 {
+  left: 0;
+}
+
+.right2 {
+  right: 0;
+}
+
+.left1 {
+  animation: curtain-left 0.5s ease 2.45s forwards;
+}
+.right1 {
+  animation: curtain-right 0.5s ease 2.45s forwards;
+}
+.left2 {
+  animation: curtain-left 0.5s ease 2.7s forwards;
+}
+.right2 {
+  animation: curtain-right 0.5s ease 2.7s forwards;
+}
+
+.content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -40px;
+}
+
+.title {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8em;
+  padding: 0 0.5em;
+  overflow: hidden;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.orb,
+.icon,
+.text {
+  animation:
+    slide-in 0.35s ease 0.25s both,
+    slide-out 0.35s ease 2.1s forwards;
+}
+
+.orb {
+  --out: 150%;
+  width: 11rem;
+  height: auto;
+}
+
+.icon,
+.text {
+  --out: 101%;
+}
+
+.text {
+  color: #fff;
+  font-family: var(--font-mono);
+  text-align: center;
+  text-transform: uppercase;
+  white-space: pre;
+}
+
+.bar {
+  display: flex;
+  justify-content: center;
+  width: 0;
+  height: 0.25em;
+  overflow: hidden;
+  border-radius: 1000px;
+  background-color: #222;
+  animation:
+    bar-grow 0.35s ease 0.6s forwards,
+    bar-shrink 0.35s ease 1.75s forwards;
+}
+
+.bar1 {
+  display: flex;
+  justify-content: center;
+  width: 0;
+  height: 100%;
+  border-radius: 1000px;
+  background-color: #004560;
+  animation: fill 0.5s ease 0.95s forwards;
+}
+
+.bar2 {
+  width: 0;
+  height: 100%;
+  background-color: #00aecd;
+  animation: fill 0.5s ease 1.25s forwards;
+}
+
+@media (max-width: 767px) {
+  .orb {
+    width: 10rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    display: none;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(var(--out));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateY(var(--out));
+  }
+}
+
+@keyframes bar-grow {
+  to {
+    width: 15em;
+  }
+}
+
+@keyframes bar-shrink {
+  from {
+    width: 15em;
+  }
+  to {
+    width: 0;
+  }
+}
+
+@keyframes fill {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes curtain-left {
+  to {
+    transform: translateX(-101%);
+  }
+}
+
+@keyframes curtain-right {
+  to {
+    transform: translateX(101%);
+  }
+}
+
+@keyframes bg-fade {
+  to {
+    background-color: rgb(0 173 204 / 0);
+  }
+}
+
+@keyframes hide {
+  to {
+    visibility: hidden;
+  }
+}

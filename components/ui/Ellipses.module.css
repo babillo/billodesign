@@ -1,0 +1,93 @@
+.ellipse {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Service cards (.elipse1 / .elipse2) */
+.serviceTop {
+  inset: -38% -31% auto auto;
+}
+.serviceBottom {
+  inset: auto auto -39% -48%;
+}
+
+/* Project detail cards (.is-project) */
+.projectTop {
+  inset: -68% -12% auto auto;
+}
+.projectBottom {
+  inset: auto auto -59% -28%;
+}
+
+/* Contact modal (.elipse1_modal / .elipse2_modal) */
+.modalTop {
+  inset: -38% -31% auto auto;
+}
+.modalBottom {
+  inset: auto auto -39% -38%;
+}
+
+@media (max-width: 991px) {
+  .serviceTop,
+  .serviceBottom,
+  .modalBottom {
+    max-width: 60%;
+  }
+  .serviceBottom {
+    left: -43%;
+  }
+  .modalTop {
+    max-width: 60%;
+    top: -28%;
+  }
+}
+
+@media (max-width: 767px) {
+  .projectTop {
+    top: -48%;
+    right: -13%;
+  }
+  .projectBottom {
+    bottom: -54%;
+    left: -34%;
+  }
+  .modalTop {
+    max-width: 80%;
+    top: -29%;
+  }
+  .modalBottom {
+    max-width: 80%;
+    bottom: -40%;
+    left: -43%;
+  }
+}
+
+@media (max-width: 479px) {
+  .serviceTop {
+    top: -20%;
+    right: -25%;
+  }
+  .serviceBottom {
+    bottom: -27%;
+    left: -30%;
+  }
+  .projectTop {
+    top: -14%;
+    right: -21%;
+  }
+  .projectBottom {
+    bottom: -14%;
+    left: -30%;
+  }
+  .modalTop {
+    max-width: 90%;
+    top: -31%;
+    right: -41%;
+  }
+  .modalBottom {
+    max-width: 90%;
+    bottom: -29%;
+    left: -59%;
+  }
+}

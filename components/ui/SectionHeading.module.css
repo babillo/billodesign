@@ -1,0 +1,21 @@
+/* .heading_wrap-small-width */
+.wrap {
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+  width: 50%;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 991px) {
+  .wrap {
+    width: 80%;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .wrap {
+    width: 90%;
+  }
+}

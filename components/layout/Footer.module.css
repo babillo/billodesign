@@ -1,0 +1,31 @@
+.content {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.copyright {
+  color: var(--color-grey-radial);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.pageEnd {
+  height: 1rem;
+}
+
+@media (max-width: 991px) {
+  .content {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .copyright {
+    font-size: 0.7rem;
+  }
+}

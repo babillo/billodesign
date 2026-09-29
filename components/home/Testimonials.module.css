@@ -1,0 +1,55 @@
+.section {
+  overflow: hidden;
+}
+
+.clip {
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.sliderWrap {
+  width: 100%;
+}
+
+.mask {
+  width: 40%;
+}
+
+@media (max-width: 991px) {
+  .content {
+    gap: 1rem;
+  }
+
+  .sliderWrap {
+    padding-bottom: 4rem;
+  }
+
+  .mask {
+    width: 60%;
+  }
+}
+
+@media (max-width: 767px) {
+  .sliderWrap {
+    padding-bottom: 2rem;
+  }
+
+  .mask {
+    width: 70%;
+  }
+}
+
+@media (max-width: 479px) {
+  .mask {
+    width: 90%;
+  }
+}

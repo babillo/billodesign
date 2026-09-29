@@ -1,0 +1,401 @@
+/*
+ * Global styles: design tokens, base typography and the few shared primitives
+ * (layout wrappers, button, animated gradient border). Component-specific
+ * styles live next to each component as CSS Modules.
+ *
+ * All values are the original Webflow values (see docs/design-system.md).
+ * Webflow breakpoints: 991px (tablet), 767px (mobile landscape), 479px (mobile portrait).
+ */
+
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-cyan: #00adcc;
+  --color-cyan-deep: #03869e;
+  --color-cyan-bright: #00a9c9;
+  --color-grey-radial: #9f9b9b;
+  --color-surface: #010101;
+  --color-surface-hover: #00262d;
+  --color-field: #181818;
+
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", sans-serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --font-display: var(--font-lato), Lato, sans-serif;
+
+  --gradient-heading: radial-gradient(circle farthest-corner at 50% 50%, #fff, var(--color-cyan-deep));
+  --gradient-subheading: radial-gradient(circle farthest-corner at 50% 50%, #fff, var(--color-grey-radial));
+
+  --padding-global: 2.5rem;
+  --container-large: 80rem;
+  --section-large: 8rem;
+  --section-small: 3rem;
+
+  --button-glow: 0 0 5px #46dbff80;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --section-large: 6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --padding-global: 1.25rem;
+    --section-large: 4rem;
+    --section-small: 2rem;
+  }
+}
+
+/* ---------- Reset / base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+img {
+  display: inline-block;
+  border: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--color-cyan-deep);
+}
+
+:focus-visible {
+  outline: 0.125rem solid #4d65ff;
+  outline-offset: 0.125rem;
+}
+
+/* ---------- Typography (Webflow tag styles) ---------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: var(--font-mono);
+}
+
+/* Gradient-filled text: the signature Billodesign heading treatment. */
+h1,
+h3,
+h4,
+h5 {
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+h1 {
+  background-image: var(--gradient-heading);
+  text-transform: uppercase;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h2 {
+  color: var(--color-cyan);
+  letter-spacing: 0.7rem;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+h3 {
+  background-image: var(--gradient-subheading);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h4 {
+  background-image: var(--gradient-subheading);
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+h5 {
+  background-image: var(--gradient-subheading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.375rem;
+  font-weight: 300;
+}
+
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+figure {
+  margin: 2rem 0;
+}
+
+figcaption {
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 991px) {
+  h1 { font-size: 3.2rem; }
+  h2 { letter-spacing: 0.4rem; font-size: 1.2rem; }
+  h3 { font-size: 2.2rem; }
+  p { font-size: 1.2rem; }
+}
+
+@media (max-width: 767px) {
+  h1 { font-size: 2.5rem; }
+  h2 { letter-spacing: 0.4rem; font-size: 1rem; }
+  h3 { font-size: 1.5rem; }
+  h4 { font-size: 1.25rem; }
+  h5 { font-size: 1rem; }
+  h6 { font-size: 0.875rem; }
+}
+
+@media (max-width: 479px) {
+  h1 { font-size: 2rem; }
+  h2 { letter-spacing: 0.3rem; font-size: 0.9rem; }
+  p { font-size: 1.2rem; }
+}
+
+/* ---------- Layout wrappers (Webflow Client-First structure) ---------- */
+
+.padding-global {
+  padding-left: var(--padding-global);
+  padding-right: var(--padding-global);
+}
+
+.container-large {
+  width: 100%;
+  max-width: var(--container-large);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-section-large {
+  padding-top: var(--section-large);
+  padding-bottom: var(--section-large);
+}
+
+.padding-section-small {
+  padding-top: var(--section-small);
+  padding-bottom: var(--section-small);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Animated gradient border ---------- */
+/*
+ * The rotating cyan border on buttons, service cards and the contact modal.
+ * Registering --angle with @property lets the browser interpolate it, which is
+ * what makes the conic-looking border spin (original Webflow custom code).
+ */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-angle {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.gradient-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    linear-gradient(var(--angle), #000, var(--color-cyan-bright)) border-box;
+  animation: rotate-angle 8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-border {
+    animation: none;
+    --angle: 135deg;
+  }
+}
+
+/* ---------- Webflow rich text (CMS case-study content) ---------- */
+
+.rich-text > :first-child {
+  margin-top: 0 !important;
+}
+
+.rich-text > :last-child,
+.rich-text li:last-child {
+  margin-bottom: 0 !important;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text h5,
+.rich-text h6 {
+  margin-top: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text p {
+  margin-bottom: 1rem;
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin-bottom: 1.5rem;
+}
+
+.rich-text figure {
+  position: relative;
+  width: 100%;
+  max-width: 100% !important;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.rich-text figure > div {
+  display: inline-block;
+  width: 100%;
+}
+
+.rich-text figure img {
+  width: 100%;
+  height: auto;
+}
+
+/* Video figures keep Webflow's inline padding-bottom aspect ratio. */
+.rich-text .w-richtext-figure-type-video > div {
+  position: absolute;
+  inset: 0;
+}
+
+.rich-text .w-richtext-figure-type-video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- Scroll reveal (Webflow IX2 "subtle slide from bottom") ---------- */
+/*
+ * The hidden start state only applies when html.motion is set by the inline
+ * script in app/layout.tsx, so content stays visible without JS or with
+ * reduced motion. ScrollEffects adds .is-revealed when an element enters view.
+ */
+html.motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity 0.5s ease-in,
+    transform 0.5s ease-in;
+}
+
+html.motion [data-reveal="delay"] {
+  transition-delay: 0.5s;
+}
+
+html.motion [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+ * Heading level decoupled from look: e.g. project section titles are <h2> for
+ * a correct outline but keep the original Webflow h3 appearance.
+ */
+.as-h3 {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  color: inherit;
+  background-image: var(--gradient-subheading);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@media (max-width: 991px) {
+  .as-h3 { font-size: 2.2rem; }
+}
+
+@media (max-width: 767px) {
+  .as-h3 { font-size: 1.5rem; }
+}
