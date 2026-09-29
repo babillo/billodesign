@@ -1067,3 +1067,492 @@ At the end of the project, verify that:
 The goal is not to produce huge amounts of documentation.
 
 The goal is to create a **searchable, accurate technical memory of the project** that I can rely on when maintaining or extending Billodesign in the future.
+
+# PHASE 7 — PERFORMANCE, SEO & EXPERIENCE OPTIMIZATION
+
+After Phase 6 is complete and the visual design has been intentionally refined, perform a dedicated optimization pass.
+
+This phase must evaluate the website as a real production website rather than optimizing only for synthetic scores.
+
+The goal is:
+
+> **Improve performance and SEO without sacrificing the visual identity, interaction quality, or core user experience of Billodesign.**
+
+---
+
+# CRITICAL: THE SPLINE 3D ORB
+
+The existing website contains an interactive **Spline 3D orb**.
+
+This is one of the most important visual and interactive elements of the portfolio.
+
+It should NOT be removed simply because it negatively affects performance metrics.
+
+The orb contributes significantly to:
+
+* visual identity
+* differentiation
+* first impression
+* visitor engagement
+* perceived design/technical capability
+* the overall character of the portfolio
+
+Treat it as a **core product experience**, not decorative content.
+
+The objective is to make the orb as efficient as reasonably possible.
+
+---
+
+## Spline Optimization Investigation
+
+Before considering any replacement, investigate whether the existing Spline implementation can be optimized.
+
+Evaluate:
+
+### Loading
+
+* when the Spline scene begins loading
+* whether loading can be deferred appropriately
+* whether it blocks critical rendering
+* whether it can load after important above-the-fold content
+* whether it can be initialized after the page becomes interactive
+* whether a loading placeholder would improve perceived performance
+
+### Asset optimization
+
+Inspect the Spline scene for:
+
+* unnecessary geometry
+* excessive polygon counts
+* large textures
+* unnecessary materials
+* unnecessary objects
+* excessive lighting complexity
+* expensive effects
+* unnecessary animations
+* excessive resolution
+* unused scene elements
+
+Determine whether the scene itself can be optimized without changing its visual character.
+
+### Runtime performance
+
+Investigate:
+
+* CPU usage
+* GPU usage
+* memory usage
+* frame rate
+* animation cost
+* interaction cost
+* mobile performance
+* desktop performance
+
+Pay particular attention to mobile devices and lower-powered hardware.
+
+---
+
+# DO NOT OPTIMIZE ONLY FOR LIGHTHOUSE
+
+Performance scores are useful signals, but they are not the only goal.
+
+Consider:
+
+* Core Web Vitals
+* real loading experience
+* perceived performance
+* interaction responsiveness
+* animation smoothness
+* mobile usability
+* network cost
+* JavaScript execution
+* CPU/GPU workload
+
+A technically higher Lighthouse score is not automatically an improvement if achieving it makes the portfolio less engaging.
+
+---
+
+# Explore Alternatives — Without Automatically Replacing Spline
+
+If the Spline implementation remains expensive after optimization, investigate technically viable alternatives.
+
+Possible approaches may include:
+
+* optimized Spline implementation
+* lazy initialization
+* delayed loading
+* reduced scene complexity
+* optimized textures
+* lower-resolution assets where visually acceptable
+* static poster/fallback before interaction
+* progressively enhancing the 3D experience
+* lightweight WebGL implementation
+* Three.js
+* React Three Fiber
+* custom shader-based implementation
+* pre-rendered visual combined with selective interaction
+
+Do NOT replace Spline simply because another technology is theoretically faster.
+
+Compare alternatives based on:
+
+1. Visual fidelity
+2. Interaction quality
+3. Performance
+4. Development complexity
+5. Maintainability
+6. Mobile behavior
+7. Accessibility
+8. Bundle/runtime cost
+9. Future flexibility
+
+If an alternative cannot reproduce the important qualities of the orb without significant loss, keep Spline and optimize the existing implementation.
+
+---
+
+# Progressive Enhancement Strategy
+
+Consider whether the experience can be structured in layers.
+
+For example:
+
+### Layer 1 — Immediate visual experience
+
+Show an optimized static representation/poster of the orb immediately.
+
+### Layer 2 — Interactive experience
+
+Load the full 3D experience when appropriate.
+
+### Layer 3 — Enhanced interaction
+
+Enable more expensive interactions only when the device/browser can reasonably support them.
+
+However, do not implement this automatically.
+
+First determine whether the additional complexity provides a meaningful benefit.
+
+---
+
+# Mobile Performance
+
+Evaluate the 3D experience separately on:
+
+* modern desktop
+* average laptop
+* modern mobile
+* lower-powered mobile
+
+If necessary, consider adaptive quality.
+
+Examples:
+
+* lower rendering quality
+* simplified scene
+* reduced animation
+* reduced interaction frequency
+* delayed initialization
+
+The orb should remain recognizable and visually meaningful.
+
+---
+
+# Performance Audit
+
+Perform a complete performance audit covering:
+
+## Loading
+
+* HTML
+* CSS
+* JavaScript
+* fonts
+* images
+* Spline
+* third-party scripts
+* analytics
+
+## Rendering
+
+* layout shifts
+* large paint areas
+* expensive animations
+* unnecessary re-renders
+* client-side JavaScript
+* hydration cost
+
+## Images
+
+Check:
+
+* dimensions
+* compression
+* formats
+* lazy loading
+* responsive sizing
+* priority loading
+
+## Fonts
+
+Check:
+
+* font loading strategy
+* font formats
+* font weights
+* unused weights
+* layout shift
+
+## JavaScript
+
+Check:
+
+* bundle size
+* client components
+* unnecessary dependencies
+* third-party scripts
+* hydration
+* unused JavaScript
+
+## Animation
+
+Check:
+
+* transform/opacity usage
+* layout-triggering properties
+* scroll handlers
+* GSAP usage
+* animation lifecycle
+* reduced-motion behavior
+
+---
+
+# SEO AUDIT
+
+Perform a dedicated SEO pass after the site is visually complete.
+
+Check:
+
+### Technical SEO
+
+* title tags
+* meta descriptions
+* canonical URLs
+* robots.txt
+* sitemap.xml
+* HTTP status codes
+* redirects
+* 404 behavior
+* URL structure
+* indexing directives
+
+### On-page SEO
+
+* H1 hierarchy
+* heading structure
+* descriptive text
+* image alt text
+* internal linking
+* semantic HTML
+
+### Social metadata
+
+* Open Graph
+* Twitter/X cards
+* preview images
+* titles
+* descriptions
+
+### Structured data
+
+Determine whether structured data is appropriate for the portfolio.
+
+Do not add schema merely for the sake of adding schema.
+
+### Performance and SEO relationship
+
+Identify whether performance problems are likely to affect:
+
+* Core Web Vitals
+* crawlability
+* rendering
+* user experience
+* search visibility
+
+---
+
+# Accessibility Audit
+
+As part of this optimization phase, check:
+
+* keyboard navigation
+* focus states
+* semantic HTML
+* color contrast
+* image alt text
+* form labels
+* button/link semantics
+* reduced motion
+* screen-reader behavior
+* interactive 3D accessibility
+
+The Spline orb must not become the only way to understand important information.
+
+Important content should remain accessible without interacting with the 3D element.
+
+---
+
+# BENCHMARK BEFORE AND AFTER
+
+Before making major optimizations, establish a baseline.
+
+Record relevant measurements such as:
+
+* Lighthouse Performance
+* Lighthouse SEO
+* Lighthouse Accessibility
+* Core Web Vitals where available
+* page weight
+* JavaScript size
+* image weight
+* Spline-related network/runtime cost
+* initial load behavior
+
+Then compare after optimization.
+
+Do not optimize based on assumptions when measurements can answer the question.
+
+---
+
+# OPTIMIZATION DECISION LOG
+
+For every significant optimization, document:
+
+### Problem
+
+What was slow or inefficient?
+
+### Evidence
+
+What measurement or observation identified it?
+
+### Solution
+
+What was changed?
+
+### Result
+
+What improved?
+
+### Trade-off
+
+What was sacrificed, if anything?
+
+### Decision
+
+Was the change kept or reverted?
+
+Example:
+
+```text id="6m3pqa"
+Problem:
+Spline increased initial loading cost.
+
+Evidence:
+Large network payload and delayed interactivity.
+
+Experiment:
+Deferred Spline initialization until after critical page content loaded.
+
+Result:
+Improved initial page responsiveness while preserving the interactive orb.
+
+Decision:
+Keep.
+```
+
+---
+
+# PERFORMANCE BUDGET
+
+After establishing a realistic baseline, propose reasonable performance budgets.
+
+Do not invent arbitrary targets before measuring the application.
+
+Consider budgets for:
+
+* initial JavaScript
+* images
+* fonts
+* third-party scripts
+* Spline assets
+* total page weight
+
+The Spline experience should have its own explicit budget because it is a deliberate part of the design.
+
+---
+
+# FINAL OPTIMIZATION REVIEW
+
+At the end of Phase 7, produce:
+
+## Performance report
+
+Include:
+
+* before/after measurements
+* biggest performance bottlenecks
+* changes made
+* Spline optimization results
+* remaining limitations
+* mobile performance findings
+
+## SEO report
+
+Include:
+
+* current SEO implementation
+* issues found
+* fixes
+* remaining opportunities
+
+## Accessibility report
+
+Include:
+
+* issues found
+* fixes
+* remaining limitations
+
+## Final recommendations
+
+Separate recommendations into:
+
+### Implemented
+
+Changes already made.
+
+### Optional
+
+Improvements that may be useful but are not currently necessary.
+
+### Rejected
+
+Potential optimizations that were tested or considered but rejected because they harmed the experience or provided insufficient benefit.
+
+---
+
+# IMPORTANT PRINCIPLE
+
+Never sacrifice Billodesign's defining visual experiences simply to achieve a better performance score.
+
+The goal is not:
+
+> "Make the website as technically lightweight as possible."
+
+The goal is:
+
+> **"Make the website as fast and efficient as possible while preserving the experience that makes Billodesign memorable."**
+
+The interactive Spline orb is part of that experience.
+
+Optimize it intelligently before considering replacement.
