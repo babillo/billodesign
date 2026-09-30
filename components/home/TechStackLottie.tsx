@@ -3,6 +3,7 @@
 import type { AnimationItem } from "lottie-web";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/motion";
 import styles from "./TechStack.module.css";
 
 /*
@@ -37,7 +38,7 @@ export function TechStackLottie() {
 
       item.addEventListener("DOMLoaded", () => {
         if (cancelled) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (prefersReducedMotion()) {
           item.goToAndStop(item.totalFrames - 1, true);
           return;
         }

@@ -52,3 +52,22 @@
 - Importer filename collisions (3 case-study images were replaced by same-named files)
 - Rich-text figure sizing ported 1:1 from Webflow; video ratio from `data-rt-dimensions`
 - Project card title weight identical for h3/h4
+- `<strong>` rendered at 700 like Webflow (normalize.css), which fixed line wrapping differences
+
+## Phase 3 — Architecture refinement (2026-09-30)
+
+### Improved
+- `Container` component replaces the wrapper repeated in 10 sections
+- `useModalDialog` hook + `CloseIcon` shared by the contact modal and the AI chat
+- Shared server helpers: `createRateLimiter`, `clientIp`; `prefersReducedMotion()` helper
+- Lint config: one documented rule instead of 18 inline `eslint-disable` comments
+- Removed unused CSS (Webflow center/float figure alignments, Bio anchor class)
+
+### Accessibility
+- "Skip to content" link
+- Sound toggle: stable "Sound" label with `aria-pressed`
+- AI chat: the typewriter reply is hidden from the live region; the finished reply is announced once
+
+### Verified
+- Layout identical before and after (home at 1440/390, OrbitAI at 390)
+- Dependencies: all used; initial JS measured (see architecture.md)

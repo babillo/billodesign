@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ShadowTitle } from "@/components/ui/ShadowTitle";
 import { Slider } from "@/components/ui/Slider";
 import { getProjects } from "@/lib/content";
+import { Container } from "@/components/ui/Container";
 import styles from "./Projects.module.css";
 
 export function Projects() {
@@ -22,23 +23,19 @@ export function Projects() {
 
   return (
     <section className={styles.section} aria-label="Selected work">
-      <div className="padding-global">
-        <div className="container-large">
-          <div className={`padding-section-large ${styles.clip}`}>
-            <div id="portfolio" className={styles.content}>
-              <SectionHeading
-                eyebrow="Projects"
-                title="Selected Work"
-                intro="Craft meets conversion. Here are a few recent projects that pushed boundaries."
-              />
-              <ShadowTitle>Portfolio</ShadowTitle>
-              <div className={styles.sliderWrap}>
-                <Slider label="Selected projects" slides={slides} maskClassName={styles.mask} />
-              </div>
-            </div>
+      <Container spacing="large" className={styles.clip}>
+        <div id="portfolio" className={styles.content}>
+          <SectionHeading
+            eyebrow="Projects"
+            title="Selected Work"
+            intro="Craft meets conversion. Here are a few recent projects that pushed boundaries."
+          />
+          <ShadowTitle>Portfolio</ShadowTitle>
+          <div className={styles.sliderWrap}>
+            <Slider label="Selected projects" slides={slides} maskClassName={styles.mask} />
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

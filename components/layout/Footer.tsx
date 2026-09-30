@@ -8,7 +8,6 @@ export function Footer() {
         <div className="container-large">
           <div className="padding-section-small">
             <div className={styles.content}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- decorative divider line */}
               <img src="/images/footer-logo.avif" alt="" width={310} height={2} loading="lazy" />
               <p className={styles.copyright}>Muhammad/ © All rights reserved - BilloDesign</p>
             </div>

@@ -7,21 +7,13 @@
 //   CONTACT_FROM_EMAIL    verified sender on a Resend-verified domain, e.g. "Billodesign <contact@send.billodesign.com>"
 //   TURNSTILE_SECRET_KEY  Turnstile secret (widget site key is NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
+import { clientIp, createRateLimiter } from "@/lib/server/rate-limit";
+
 const LIMITS = { name: 256, email: 256, message: 5000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Best-effort per-instance limit (see ADR-004): 5 submissions per 10 minutes per IP.
-const WINDOW_MS = 10 * 60_000;
-const MAX_PER_WINDOW = 5;
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_PER_WINDOW;
-}
+// 5 submissions per 10 minutes per IP (ADR-004).
+const isRateLimited = createRateLimiter({ windowMs: 10 * 60_000, max: 5 });
 
 const escapeHtml = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
@@ -42,7 +34,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const ip = clientIp(request);
 
   let body: Record<string, unknown>;
   try {
@@ -63,7 +55,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Please fill in all fields with a valid email." }, { status: 400 });
   }
 
-  if (rateLimited(ip)) return Response.json({ error: "Too many messages. Please try again later." }, { status: 429 });
+  if (isRateLimited(ip)) return Response.json({ error: "Too many messages. Please try again later." }, { status: 429 });
 
   if (!(await verifyTurnstile(str("turnstileToken"), ip))) {
     return Response.json({ error: "Spam check failed. Please try again." }, { status: 403 });

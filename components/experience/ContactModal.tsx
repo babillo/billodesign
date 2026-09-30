@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Ellipses } from "@/components/ui/Ellipses";
 import { PulseDot } from "@/components/ui/Button";
 import { orbLines } from "@/lib/site";
 import { useContactModal } from "./ContactModalProvider";
 import { OrbSpeech } from "./OrbSpeech";
 import { Turnstile } from "./Turnstile";
+import { CloseIcon } from "@/components/ui/CloseIcon";
+import { useModalDialog } from "./useModalDialog";
 import styles from "./ContactModal.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -18,18 +20,11 @@ type Status = "idle" | "sending" | "success" | "error";
  */
 export function ContactModal() {
   const { isOpen, close } = useContactModal();
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogRef = useModalDialog(isOpen);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileReset, setTurnstileReset] = useState(0);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (isOpen && !dialog.open) dialog.showModal();
-    if (!isOpen && dialog.open) dialog.close();
-  }, [isOpen]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -66,7 +61,6 @@ export function ContactModal() {
     >
       <div className={`${styles.modal} gradient-border`}>
         {isOpen && (
-          // eslint-disable-next-line @next/next/no-img-element -- 2.6 MB GIF, only requested once the modal opens
           <img src="/images/orb-blinking.gif" alt="" className={styles.orb} />
         )}
 
@@ -103,12 +97,7 @@ export function ContactModal() {
 
         <Ellipses variant="modal" />
         <button type="button" className={styles.close} onClick={close} aria-label="Close contact form" data-sound-click="">
-          <svg viewBox="0 0 29 28" fill="none" aria-hidden="true">
-            <path
-              d="M28.4141 0.707031L14.9141 14.207L27.707 27L27 27.707L14.207 14.9141L1.41406 27.707L0.707031 27L13.5 14.207L0 0.707031L0.707031 0L14.207 13.5L27.707 0L28.4141 0.707031Z"
-              fill="currentColor"
-            />
-          </svg>
+          <CloseIcon />
         </button>
       </div>
     </dialog>

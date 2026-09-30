@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /*
  * Page-level scroll effects, driven by data attributes so the markup stays in
@@ -21,7 +22,7 @@ export function ScrollEffects() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
     const io = new IntersectionObserver(
       (entries) => {

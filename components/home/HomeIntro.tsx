@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // Keep in sync with the hero OrbSpeech `hideAfter` in app/page.tsx.
 export const INTRO_DURATION_MS = 8500;
@@ -17,7 +18,7 @@ export const INTRO_DURATION_MS = 8500;
  */
 export function HomeIntro() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
     const root = document.documentElement;
     root.dataset.intro = "playing";
     const t = setTimeout(() => delete root.dataset.intro, INTRO_DURATION_MS);
