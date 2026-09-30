@@ -1,0 +1,38 @@
+.section {
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+/* Native Lottie size is 896×651; reserve the space to avoid layout shift. */
+.lottie {
+  width: min(100%, 56rem);
+  aspect-ratio: 896 / 651;
+}
+
+@media (max-width: 991px) {
+  .section {
+    background-color: #000;
+  }
+
+  .content {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .lottie {
+    width: 150%;
+    max-width: none;
+  }
+}

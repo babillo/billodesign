@@ -1,0 +1,87 @@
+.anchor {
+  scroll-margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 16px;
+}
+
+.portrait {
+  width: 100%;
+  height: auto;
+}
+
+/* .bio_content-wrapper */
+.content {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+  padding-left: 2rem;
+  border-left: 1px solid #222;
+}
+
+.paragraph {
+  font-size: 1.375rem;
+}
+
+.email {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.emailIcon {
+  display: flex;
+}
+
+/* Styled like the original h5.email_address, but now a real mailto link. */
+.emailAddress {
+  color: var(--color-cyan);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+@media (max-width: 991px) {
+  .section {
+    background-color: #000;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1.75fr;
+  }
+
+  .paragraph {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .email {
+    gap: 0.5rem;
+  }
+
+  .emailIcon {
+    width: 2rem;
+  }
+
+  .emailAddress {
+    font-size: 1rem;
+  }
+
+  .paragraph {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

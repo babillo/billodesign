@@ -137,7 +137,11 @@ Black background with cyan `#00adcc` accent; IBM Plex Mono uppercase headings (h
 
 Not visual: duplicate library removal, dead code removal, Lighthouse/CLS fixes, valid JSON-LD, canonical URLs, fixed heading semantics on project pages, self-hosted audio, GIF→video/Lottie, sitemap/robots, proper alt text, reduced-motion support, keyboard/ARIA on modal and chat, sound default OFF (a design decision to confirm), lazy-load Spline/Howler/audio. Visual/UX enhancements wait for Phase 6.
 
-## Open questions for the owner
+## Follow-up (2026-09-29)
+
+The open questions below were answered/investigated. See [migration.md](migration.md) for Confirmed / Assumption / Decision / Needs-investigation findings. Key corrections to this report: **10 projects exist, not 6** (4 aren't on the homepage but are live), and CMS content now comes from the official CSV exports.
+
+## Original open questions for the owner
 
 1. Can you export the **Projects CMS collection as CSV** from Webflow (CMS → Export)? Scraping is the fallback.
 2. **AI chat**: which LLM/provider and system prompt does `/assistant/api/chat` use? Keep, rebuild, or drop?

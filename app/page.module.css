@@ -1,0 +1,5 @@
+/* Hero orb speech bubble, positioned inside the fixed orb layer. */
+.heroTip {
+  top: 42%;
+  right: 26%;
+}

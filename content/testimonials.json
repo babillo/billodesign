@@ -1,0 +1,59 @@
+[
+  {
+    "slug": "robert-jensen",
+    "name": "Robert Jensen",
+    "role": "CEO - Green Wing Partners LLC",
+    "quotes": [
+      "He is a very quick study and is very creative across many different skill sets which we used for this project. I would highly recommend Mohammad to anyone needing his services. He was joy to work with, was detailed oriented and always able to make excellent recommendations."
+    ],
+    "avatar": "/media/testimonials/bob.png",
+    "avatarAlt": "Portrait of Robert Jensen",
+    "avatarSize": {
+      "width": 158,
+      "height": 148
+    }
+  },
+  {
+    "slug": "fadi-al-ibrahim",
+    "name": "Fadi Al Ibrahim",
+    "role": "IT System Administrator",
+    "quotes": [
+      "Muhammad turned my vision into reality. Great communication, sharp attention to detail, and he treated the project as his own. I’m very happy with the result, will return for future work and highly recommend his services."
+    ],
+    "avatar": "/media/testimonials/frame-58.jpg",
+    "avatarAlt": "Portrait of Fadi Al Ibrahim",
+    "avatarSize": {
+      "width": 951,
+      "height": 1173
+    }
+  },
+  {
+    "slug": "tim-kozak",
+    "name": "Tim Kozak",
+    "role": "Leverion",
+    "quotes": [
+      "Muhammad did an awesome job. He was proactive with his communication, gave additional tips on SEO, and completed the task as expected. Great choice if you're looking to get your SEO up an running"
+    ],
+    "avatar": "/media/testimonials/tim.png",
+    "avatarAlt": "Portrait of Tim Kozak",
+    "avatarSize": {
+      "width": 158,
+      "height": 148
+    }
+  },
+  {
+    "slug": "david-mueller",
+    "name": "David Mueller",
+    "role": "ROIGrowth",
+    "quotes": [
+      "Amazing to work with Muhammad, next project is already in line",
+      "thanks! It looks very good! You are the best, I am happy to work with you again!"
+    ],
+    "avatar": "/media/testimonials/david.png",
+    "avatarAlt": "Portrait of David Mueller",
+    "avatarSize": {
+      "width": 158,
+      "height": 148
+    }
+  }
+]

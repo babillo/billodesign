@@ -1,0 +1,46 @@
+.section {
+  overflow: hidden;
+}
+
+.clip {
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  gap: 2rem;
+  /* Anchor target sits below the fixed navbar. */
+  scroll-margin-top: 6rem;
+}
+
+.mask {
+  width: 40%;
+}
+
+@media (max-width: 991px) {
+  .content {
+    gap: 1rem;
+  }
+
+  .sliderWrap {
+    padding-bottom: 4rem;
+  }
+
+  .mask {
+    width: 60%;
+  }
+}
+
+@media (max-width: 767px) {
+  .mask {
+    width: 70%;
+  }
+}
+
+@media (max-width: 479px) {
+  .mask {
+    width: 90%;
+  }
+}

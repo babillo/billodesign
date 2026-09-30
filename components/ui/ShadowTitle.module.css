@@ -1,0 +1,35 @@
+/* .shadow_title — the only place Lato is used (weight 900). */
+.shadow {
+  position: absolute;
+  inset: 6% -10% 0 auto;
+  z-index: -1;
+  color: #1c1c1cb3;
+  text-transform: uppercase;
+  mix-blend-mode: screen;
+  font-family: var(--font-display);
+  font-size: 10.625rem;
+  font-weight: 900;
+  line-height: 1.5;
+  pointer-events: none;
+}
+
+@media (max-width: 991px) {
+  .shadow {
+    color: #1c1c1c;
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .shadow {
+    top: 10%;
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .shadow {
+    top: 11%;
+    font-size: 4rem;
+  }
+}

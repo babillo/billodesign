@@ -1,0 +1,21 @@
+/* .utility-page_component / .utility-page_wrapper */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+  padding: 0 1.25rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 20rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.4rem;
+}

@@ -1,0 +1,95 @@
+# Architecture
+
+## Overview
+
+- **Next.js 16 App Router**, TypeScript, React 19. Every page is statically generated at build time.
+- **Content:** local JSON generated from the Webflow CSV exports. No CMS (ADR-001).
+- **Styling:** global design tokens + CSS Modules (ADR-005).
+- **Interactivity:** a small set of client components, triggered from server-rendered markup via data attributes (ADR-006).
+- **Server code:** two route handlers, `/api/chat` (OpenAI) and `/api/contact` (not yet configured).
+- **Hosting:** Vercel (Phase 5).
+
+```
+app/
+  layout.tsx            fonts, default metadata, global chrome, providers, GA4
+  globals.css           tokens, typography, shared primitives, rich text, reveal
+  page.tsx              homepage (+ JSON-LD)
+  projects/[slug]/      case-study template (generateStaticParams, dynamicParams=false)
+  not-found.tsx         404
+  sitemap.ts, robots.ts
+  api/chat/route.ts     AI assistant (server-only OpenAI key)
+  api/contact/route.ts  contact form (placeholder until an email option is chosen)
+components/
+  layout/       Navbar, Footer, SocialLinks, AwwwardsBadge
+  home/         homepage sections (Hero, WeGotYou, Services, TechStack, Projects, Testimonials, Bio, Preloader)
+  projects/     ProjectCard, ProjectHeader, ProjectSection, VisitSiteLink
+  testimonials/ TestimonialCard
+  sections/     Cta (+ CtaOrbTips), shared by home and project pages
+  ui/           Button/PulseDot, SectionHeading, Slider, Ellipses, ShadowTitle
+  experience/   client-side experience layer: SplineOrb, SoundProvider, SoundToggle,
+                ContactModalProvider, ContactModal, AiChat, OrbSpeech, TypedText,
+                SmoothScroll, ScrollEffects, OrbErrorBoundary
+content/        projects.json, testimonials.json (generated; see content.md)
+lib/            content.ts (typed accessors), site.ts (site-wide copy/links), gsap.ts, chat/system-prompt.ts
+scripts/        import-webflow.mjs (CSV → content + asset download)
+public/         icons/, images/, media/ (project + testimonial assets), audio/, lottie/
+webflow/export/ original Webflow export + CMS CSVs (reference only; excluded from lint)
+```
+
+## Routing
+
+| URL | Source |
+|---|---|
+| `/` | `app/page.tsx` |
+| `/projects/<slug>` | `app/projects/[slug]/page.tsx`, 6 slugs from `content/projects.json`; unknown slugs → 404 |
+| 4 removed project URLs | 308 permanent redirect → `/` (`next.config.ts`) |
+
+Details: [routes.md](routes.md).
+
+## Server vs client components
+
+**Decision:** server components by default. A component is a client component only when it needs browser APIs, state or effects.
+
+| Client component | Why it can't be a server component |
+|---|---|
+| `Navbar` | mobile menu open/close state |
+| `Slider` | current slide state, pointer/keyboard handlers |
+| `SplineOrb` (+ `OrbErrorBoundary`) | WebGL runtime; lazy import after idle |
+| `TechStackLottie` | Lottie player + ScrollTrigger |
+| `SoundProvider`, `SoundToggle` | Howler, localStorage, visibility events |
+| `ContactModalProvider`, `ContactModal` | open state, `<dialog>`, fetch |
+| `AiChat` | chat state, fetch, typewriter |
+| `OrbSpeech`, `TypedText`, `CtaOrbTips` | timers, IntersectionObserver |
+| `SmoothScroll`, `ScrollEffects` | Lenis / GSAP need `window` |
+
+Everything else (all sections, cards, headers, footer) renders on the server as static HTML.
+
+**Consequence:** most of the page is plain HTML. JavaScript is limited to the experience layer, and the heaviest parts (Spline, Lottie, Howler) are loaded dynamically.
+
+## Styling
+
+`globals.css` holds the tokens (`--color-cyan`, `--padding-global`, …), the Webflow tag styles (h1–h6, p), layout wrappers (`.padding-global`, `.container-large`, `.padding-section-large`), the animated `.gradient-border`, `.rich-text` and the reveal states. Components use CSS Modules, and each rule comments the Webflow class it replaces. See [design-system.md](design-system.md).
+
+## Animation
+
+See [animations.md](animations.md). In short: CSS for simple loops and transitions; GSAP + ScrollTrigger + SplitText for text effects and Lottie scrubbing; Lenis for smooth scroll; Spline for the orb. Everything respects `prefers-reduced-motion`.
+
+## Assets
+
+- All images and audio are self-hosted under `public/`. Nothing loads from the Webflow CDN.
+- `next/image` optimizes cards, thumbnails, avatars and the portrait into AVIF/WebP at the right sizes.
+- Case-study images inside rich text are plain `<img loading="lazy">`, not optimized (Phase 7 candidate).
+
+## External services
+
+| Service | Used for | Where |
+|---|---|---|
+| Spline (prod.spline.design) | 3D orb scene | `SplineOrb.tsx` |
+| Wistia | project videos | rich text + `ProjectHeader` |
+| OpenAI | AI chat, `gpt-4o-mini` | `app/api/chat/route.ts` |
+| Google Analytics 4 (`G-MVZCKN2L6C`) | analytics (production only) | `app/layout.tsx` |
+| Google Fonts | fetched **at build time** by `next/font`, self-hosted | `app/layout.tsx` |
+
+## Deployment
+
+Vercel, static pages + two serverless routes. See [deployment.md](deployment.md) (Phase 5).
