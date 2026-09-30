@@ -56,9 +56,12 @@
   align-self: flex-end;
 }
 
+/* Fixed weight/line-height so the card looks the same whether its title is an h3 or h4. */
 .title {
   width: 100%;
   font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .description {

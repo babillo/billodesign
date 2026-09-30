@@ -320,17 +320,15 @@ figcaption {
   margin-bottom: 1.5rem;
 }
 
+/*
+ * Figures: ported from Webflow's .w-richtext rules (webflow/export/css/webflow.css)
+ * so image and video sizing matches the live pages exactly.
+ * "normal" figures keep their natural size (max 60%); "fullwidth" ones span
+ * the column. Videos use a padding-bottom ratio set inline by the importer.
+ */
 .rich-text figure {
   position: relative;
-  width: 100%;
-  max-width: 100% !important;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.rich-text figure > div {
-  display: inline-block;
-  width: 100%;
+  max-width: 60%;
 }
 
 .rich-text figure img {
@@ -338,16 +336,80 @@ figcaption {
   height: auto;
 }
 
-/* Video figures keep Webflow's inline padding-bottom aspect ratio. */
+.rich-text .w-richtext-figure-type-image {
+  display: table;
+}
+
+.rich-text .w-richtext-figure-type-image > div {
+  display: inline-block;
+}
+
+.rich-text .w-richtext-figure-type-image > figcaption {
+  display: table-caption;
+  caption-side: bottom;
+}
+
+.rich-text .w-richtext-figure-type-video {
+  width: 60%;
+  height: 0;
+}
+
 .rich-text .w-richtext-figure-type-video > div {
-  position: absolute;
-  inset: 0;
+  width: 100%;
 }
 
 .rich-text .w-richtext-figure-type-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.rich-text .w-richtext-align-center {
+  margin-right: auto;
+  margin-left: auto;
+  clear: both;
+}
+
+.rich-text .w-richtext-align-center.w-richtext-figure-type-image > div {
+  max-width: 100%;
+}
+
+.rich-text .w-richtext-align-normal {
+  clear: both;
+}
+
+.rich-text .w-richtext-align-fullwidth {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  clear: both;
+}
+
+.rich-text .w-richtext-align-fullwidth > div {
+  display: inline-block;
+  padding-bottom: inherit;
+}
+
+.rich-text .w-richtext-align-fullwidth > figcaption {
+  display: block;
+}
+
+.rich-text .w-richtext-align-floatleft {
+  float: left;
+  margin-right: 15px;
+  clear: none;
+}
+
+.rich-text .w-richtext-align-floatright {
+  float: right;
+  margin-left: 15px;
+  clear: none;
 }
 
 /* ---------- Scroll reveal (Webflow IX2 "subtle slide from bottom") ---------- */

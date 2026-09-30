@@ -104,3 +104,21 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 1. **Measurement artifact:** the live site's lazy images below the fold have 0 height until scrolled into view, while `next/image` reserves space. Always scroll the full page before measuring.
 2. **Real difference:** the importer stripped `<p>&zwj;</p>` paragraphs from rich text. Webflow editors use them as spacers (33px each). They're now kept.
 3. **Real difference:** project card thumbnails stretched to the wrapper height; the Webflow class had `align-items: flex-start`.
+
+---
+
+## Wrong images on project pages: filename collisions in the importer
+
+**Problem:** OrbitAI's case-study header and "Next Project" card showed a different image from the live site (a 2880×1964 image instead of the 2880×2160 thumbnail).
+
+**Cause:** The importer stripped Webflow's 24-character ID prefix from CDN filenames, and `download()` skipped files that already existed. Different images with the same base name (the homepage card `thumbnail.jpg`, and two different `…_Thumbnail.jpg` files in OrbitAI's content) resolved to one local file, and whichever came first won. 3 images were silently lost.
+
+**Solution:** card images get a `card-` prefix. `download()` tracks which URL produced each local file and adds a short ID when two different URLs share a name. `public/media` was regenerated from scratch (46 files, previously 43).
+
+**Prevention:** when flattening remote URLs to local names, detect collisions rather than assuming names are unique.
+
+## Rich-text videos and images sized differently from the live site
+
+**Cause:** (1) the importer kept the stored `padding-bottom` ratio, but Webflow renders videos using `data-rt-dimensions` (FlexiBank's video: 40.5% stored vs 67.4% rendered); (2) my rich-text CSS stretched every figure to full width, whereas Webflow's "normal" figures keep their natural size (max 60%).
+
+**Solution:** the importer derives the video ratio from `data-rt-dimensions`; the `.rich-text figure` rules are now ported 1:1 from `webflow.css`.

@@ -28,7 +28,7 @@
       "challenge": "<p>Fadi needed a modern, premium website that:</p><ul><li>Positions him as a serious Enterprise IT Professional</li><li>Showcases hands-on Home Lab projects</li><li>Demonstrates real-world enterprise experience</li><li>Feels advanced — but not over-designed</li><li>Is fully manageable by him after delivery</li></ul><p><strong>Challenges:</strong></p><ul><li>Complex CMS structure (Labs + Categories + Templates)</li><li>Advanced animations without harming performance</li><li>High design precision expectations</li><li>Multiple structural refinements during final review</li><li>Maintaining visual balance across 2K screens</li></ul><p>‍</p>",
       "strategy": "<h3>My Approach</h3><h4>🧩 Phase 1 — Design System &amp; Direction</h4><ul><li>Created a futuristic yet professional visual identity</li><li>Built a modular design system (typography, glow accents, card structure)</li><li>Balanced sci-fi aesthetic with enterprise credibility</li><li>Designed scalable layout for CMS-driven expansion</li></ul><h4>⚙️ Phase 2 — Webflow Implementation</h4><h5>CMS Architecture</h5><ul><li>Multi-reference category system</li><li>Lab filtering logic</li><li>Dynamic category template pages</li><li>Featured + paginated layout structure</li><li>Responsive flexible card system (bento behavior)</li></ul><h5>Animation System</h5><ul><li>Webflow native interactions</li><li>Custom GSAP scroll-trigger animations</li><li>Text-split stagger effects</li><li>Scroll-based highlight animations</li><li>Performance-conscious animation design</li></ul><h5>Performance Optimization</h5><ul><li>Image compression</li><li>SEO structure</li><li>Alt text strategy</li><li>Lighthouse optimization</li><li>Removed unnecessary external scripts</li></ul><p>‍</p>",
       "result": "<ul><li>Fully custom Webflow platform</li><li>Scalable CMS architecture</li><li>Premium animation system</li><li>High performance scores</li><li>Client satisfaction + repeat-work signal</li><li>Strong personal brand positioning</li></ul></li><li><strong>Client marked project complete and left a 5-star recommendation</strong></li><li>‍</li><p>‍</p>",
-      "visualShowcase": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2880px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/personal-brand-it-portfolio/hero.jpg\"></div><figcaption>Hero Section</figcaption></figure><figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:56.25%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/s0qcp61iot\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure><figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:56.25%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/ld6dlkfe29\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure><figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:1298px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/personal-brand-it-portfolio/new-homelab2.png\"></div></figure>",
+      "visualShowcase": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2880px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/personal-brand-it-portfolio/hero.jpg\"></div><figcaption>Hero Section</figcaption></figure><figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:56.2500%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/s0qcp61iot\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure><figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:56.2500%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/ld6dlkfe29\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure><figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:1298px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/personal-brand-it-portfolio/new-homelab2.png\"></div></figure>",
       "caseStudy": "<p><strong>Quick Stats (micro proof):</strong></p><ul><li>20+ refinement iterations handled</li><li>Advanced CMS filtering system</li><li>Hybrid animation system (Webflow + GSAP)</li><li>95+ Desktop Lighthouse score</li><li>Client review: ⭐⭐⭐⭐⭐ Recommended</li></ul><h3>Key Features</h3><h4>✨ Advanced Hero Animation</h4><ul><li>Dynamic glow system</li><li>Sci-fi circular motion refinement</li><li>Scroll-triggered headline reveal</li><li>Performance-safe animation layering</li></ul><h4>🏗 Structured Home Lab System</h4><ul><li>Featured latest lab card</li><li>Dynamic grid layout</li><li>Flexible responsive card logic</li><li>Clean article templates for long-form content</li></ul><h4>📈 Enterprise Experience Section</h4><ul><li>Custom timeline animation</li><li>Structured content hierarchy</li><li>Balanced readability (max-width control)</li></ul><h3>Major Refinement Phase (Important Section)</h3><p>During final review, the client provided:</p><ul><li>20+ structured feedback points</li><li>Layout restructuring requests</li><li>Animation refinement adjustments</li><li>CMS restructuring request</li><li>New page split (Projects + Experience)</li><li>Blog-style redesign for Home Lab</li></ul><p>Instead of treating it as “revisions,” I treated it as collaboration.<br>We:<br></p><ul><li>Refined the hero animation system</li><li>Re-architected the Home Lab CMS structure</li><li>Improved responsiveness across 2K displays</li><li>Optimized performance (80+ on Mobile &amp; 95+ desktop Lighthouse)</li><li>Built a scalable article + category system</li></ul><p><strong>Result:</strong><br>A premium, structured, scalable <strong>Webflow</strong> platform — and a 5-star recommendation.</p><p>‍</p><h3>Client Testimonial</h3><figure class=\"w-richtext-figure-type-image w-richtext-align-normal\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/personal-brand-it-portfolio/review.png\"></div></figure><h3>What This Project Demonstrates</h3><ul><li>Advanced Webflow CMS engineering</li><li>Hybrid animation implementation (Webflow + GSAP)</li><li>UX-first content structuring</li><li>Performance-focused development</li><li>Emotional maturity in feedback handling</li><li>Ability to elevate client vision beyond scope</li></ul><p>‍</p><p>‍</p>"
     },
     "testimonial": "fadi-al-ibrahim",
@@ -36,7 +36,7 @@
     "card": {
       "title": "IT System Administrator Portfolio",
       "description": "This project involved transforming Fadi’s professional vision into a premium, enterprise-grade digital presence.",
-      "image": "/media/projects/personal-brand-it-portfolio/hero.avif",
+      "image": "/media/projects/personal-brand-it-portfolio/card-hero.avif",
       "imageAlt": "Fadi Al-Ibrahim portfolio homepage: dark purple hero reading 'System Administrator' with a glowing emblem and Active Directory and VMware Virtualization callouts.",
       "imageSize": {
         "width": 2880,
@@ -54,10 +54,10 @@
     "title": "OrbitAI — Calm, Intelligent AI for Focus and Deep Work",
     "summary": "OrbitAI is a personal AI productivity hub designed to help users focus, plan intelligently, and work in alignment with their energy — not against it.",
     "publishedOn": "2026-01-14",
-    "thumbnail": "/media/projects/orbitai/thumbnail.jpg",
+    "thumbnail": "/media/projects/orbitai/437d6fe2-thumbnail.jpg",
     "thumbnailSize": {
       "width": 2880,
-      "height": 1964
+      "height": 2160
     },
     "websiteUrl": "https://orbitaix.webflow.io/",
     "video": {
@@ -83,7 +83,7 @@
     "card": {
       "title": "OrbitAI",
       "description": "OrbitAI is a personal AI productivity hub designed to help users focus, plan intelligently, and work in alignment with their energy — not against it.",
-      "image": "/media/projects/orbitai/thumbnail.jpg",
+      "image": "/media/projects/orbitai/card-thumbnail.jpg",
       "imageAlt": "OrbitAI homepage with dark space background, headline stating 'Your personal AI that plans your day effortlessly,' and a dashboard interface showing task scheduling, focus mode timer, and insights.",
       "imageSize": {
         "width": 2880,
@@ -128,7 +128,7 @@
     "card": {
       "title": "Elegantnast",
       "description": "Luxury Beauty Brand Website - Created a multilingual luxury website for Elegantnast, focusing on elegance and premium brand aesthetics.",
-      "image": "/media/projects/elegantnast/frame-93-min.avif",
+      "image": "/media/projects/elegantnast/card-frame-93-min.avif",
       "imageAlt": "Website homepage for luxury eyelash extensions featuring a profile of a woman, sections highlighting certified expertise, natural beauty, premium products, and a lash artist named Lisa.",
       "imageSize": {
         "width": 3105,
@@ -173,7 +173,7 @@
     "card": {
       "title": "Timms-Team",
       "description": "High-Converting Landing Page designed and developed for Timms Team, a German renovation and interior construction company.",
-      "image": "/media/projects/timms-team-landing-page/www.timms-team.de-1-min.jpg",
+      "image": "/media/projects/timms-team-landing-page/card-www.timms-team.de-1-min.jpg",
       "imageAlt": "Two construction workers installing a ceiling panel; promotional text about saving energy and modernizing homes.",
       "imageSize": {
         "width": 2530,
@@ -211,14 +211,14 @@
       "overview": "<p>Macro State needed a dedicated solution page to serve as a key step in their sales funnel—where visitors could explore their UniFi Door Access systems in depth after landing on the homepage. The goal was to combine clarity, visual appeal, and conversion optimization within a single, well-structured Webflow page.</p>",
       "solution": "<p>I started by creating a Figma mockup to align the design direction with the client’s brand. Once approved, I built the page in Webflow, incorporating:</p><ul><li>A <strong>CMS-based modal system</strong> in the UniFi Hardware section for scalable content updates.</li><li><strong>Subtle, smooth animations</strong> and hover effects to enhance user experience.</li><li><strong>Interactive content switching</strong> for the Access Types section, triggered by hover or click.</li><li><strong>JavaScript enhancements</strong> for accessibility, including Escape-key modal close and background click detection.</li><li>Full <strong>responsive optimization</strong> across desktop, tablet, and mobile.</li></ul>",
       "result": "<p>The final page delivered a clean, modern design that effectively communicates Macro State’s offerings while driving conversions. It’s fully interactive, accessible, and easy to manage—creating a professional digital experience that elevates the brand and supports their sales goals.</p>",
-      "visualShowcase": "<figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:51.25%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/8eyse8otqe\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure><figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2880px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/macrostate-landing-page/latest-second-iteration-min.jpg\"></div></figure>"
+      "visualShowcase": "<figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:51.2500%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/8eyse8otqe\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure><figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2880px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/macrostate-landing-page/latest-second-iteration-min.jpg\"></div></figure>"
     },
     "testimonial": null,
     "nextProject": "flexibank---online-banking-mobile-app",
     "card": {
       "title": "Macrostate Landing Page",
       "description": "I designed and developed a high-converting solution landing page for MacroState in Webflow, showcasing their UniFi Door Access solutions...",
-      "image": "/media/projects/macrostate-landing-page/70913ef1bacda83a29a665e1c49d3fe6_macrostate.ae-2-copy-1600px.avif",
+      "image": "/media/projects/macrostate-landing-page/card-70913ef1bacda83a29a665e1c49d3fe6_macrostate.ae-2-copy-1600px.avif",
       "imageAlt": "Laptop screen displaying a new landing page for Unifi Door Access Solutions with menu options and a customer testimonial on a purple background.",
       "imageSize": {
         "width": 2654,
@@ -262,7 +262,7 @@
       "lowFidelityWireframes": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2800px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/07-lo-fi-wireframes-min.jpg\"></div></figure>",
       "designSystem": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2800px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/08-design-system-min.jpg\"></div></figure>",
       "highFidelityWireframes": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2800px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/09-hi-fi-wireframes-min.jpg\"></div></figure>",
-      "finalDesigns": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2800px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/cover-page-2-2-min.jpg\"></div></figure><figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:1616px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/mobile-banking-app.gif\"></div></figure><figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:40.5%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/dg12qg70og\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure>",
+      "finalDesigns": "<figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:2800px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/cover-page-2-2-min.jpg\"></div></figure><figure class=\"w-richtext-figure-type-image w-richtext-align-fullwidth\" style=\"max-width:1616px\"><div><img loading=\"lazy\" alt=\"__wf_reserved_inherit\" src=\"/media/projects/flexibank---online-banking-mobile-app/mobile-banking-app.gif\"></div></figure><figure class=\"w-richtext-figure-type-video w-richtext-align-fullwidth\" style=\"padding-bottom:67.5000%\"><div><iframe src=\"https://fast.wistia.net/embed/iframe/dg12qg70og\" title=\"Project video\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div></figure>",
       "solution": "<p>The final design delivers a user-friendly and secure experience.<br>Key features include:</p><ul><li>Quick account setup with guided onboarding</li><li>Biometric authentication for secure login</li><li>Simplified money transfers and bill payments</li><li>Expense tracking with categorized insights</li><li>Clean, modern dark UI for comfort and focus</li></ul><p>‍</p>",
       "result": "<p>The project resulted in a complete UX case study demonstrating the full process—from user research to final prototype. FlexiBank successfully meets the goal of creating a <strong>secure, accessible, and efficient banking experience</strong>, tailored for users in Nigeria who need reliable financial tools on the go.</p>"
     },
@@ -271,7 +271,7 @@
     "card": {
       "title": "Online Banking Mobile App",
       "description": "FlexiBank is a modern mobile banking app designed to provide a seamless and secure digital banking experience....",
-      "image": "/media/projects/flexibank---online-banking-mobile-app/cover-page-2-2-min.avif",
+      "image": "/media/projects/flexibank---online-banking-mobile-app/card-cover-page-2-2-min.avif",
       "imageAlt": "Screens of FlexiBank online banking mobile app showing login, debit card details, home screen with skyscraper, fingerprint scan, and face unlock.",
       "imageSize": {
         "width": 2800,

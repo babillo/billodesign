@@ -119,21 +119,31 @@ function localName(url) {
     .toLowerCase();
 }
 
-async function download(url, destDir) {
-  const name = localName(url);
-  const dest = path.join(destDir, name);
-  fs.mkdirSync(destDir, { recursive: true });
-  if (!fs.existsSync(dest)) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Download failed ${res.status}: ${url}`);
-    fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
+// Local file → source URL, so two different CDN files that share a name
+// (e.g. several "…_Thumbnail.jpg") never overwrite or shadow each other.
+const downloaded = new Map();
+
+async function download(url, destDir, prefix = "") {
+  let name = prefix + localName(url);
+  let dest = path.join(destDir, name);
+  if (downloaded.has(dest) && downloaded.get(dest) !== url) {
+    const id = decodeURIComponent(new URL(url).pathname.split("/").pop()).match(/^([0-9a-f]{24})_/)?.[1] ?? String(downloaded.size);
+    name = `${prefix}${id.slice(-8)}-${localName(url)}`;
+    dest = path.join(destDir, name);
   }
+  downloaded.set(dest, url);
+  fs.mkdirSync(destDir, { recursive: true });
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Download failed ${res.status}: ${url}`);
+  fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
   return "/" + path.relative(PUBLIC, dest).split(path.sep).join("/");
 }
 
 function copyExportImage(rel, destDir) {
   const src = path.join(EXPORT, decodeURIComponent(rel));
-  const dest = path.join(destDir, path.basename(src).toLowerCase());
+  // "card-" prefix: homepage card images can share a name with the CMS thumbnail
+  // (e.g. both "thumbnail.jpg"), and download() skips files that already exist.
+  const dest = path.join(destDir, "card-" + path.basename(src).toLowerCase());
   fs.mkdirSync(destDir, { recursive: true });
   fs.copyFileSync(src, dest);
   return "/" + path.relative(PUBLIC, dest).split(path.sep).join("/");
@@ -153,6 +163,14 @@ async function cleanRichText(html, slug) {
 
   out = out.replace(/<iframe[^>]*src="[^"]*embedly[^"]*fast\.wistia\.net%2Fembed%2Fiframe%2F(\w+)[^"]*"[^>]*><\/iframe>/g,
     (_m, id) => `<iframe src="https://fast.wistia.net/embed/iframe/${id}" title="Project video" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>`);
+
+  // Webflow renders video figures at the ratio in data-rt-dimensions, not the
+  // stored inline padding (FlexiBank's said 40.5% but the page shows 640:432).
+  out = out.replace(/<figure([^>]*)>/g, (tag) => {
+    const dims = tag.match(/data-rt-dimensions="(\d+):(\d+)"/);
+    if (!dims || !tag.includes("type-video")) return tag;
+    return tag.replace(/padding-bottom:[^;"]*/, `padding-bottom:${((+dims[2] / +dims[1]) * 100).toFixed(4)}%`);
+  });
 
   out = out
     .replace(/ id=""/g, "")
@@ -239,7 +257,7 @@ async function main() {
     const card = cards[slug];
     const cardDir = path.join(PUBLIC, "media/projects", slug);
     const cardImage = MISSING_CARD_IMAGES[slug]
-      ? await download(MISSING_CARD_IMAGES[slug], cardDir)
+      ? await download(MISSING_CARD_IMAGES[slug], cardDir, "card-")
       : copyExportImage(card.image, cardDir);
 
     const sections = {};
