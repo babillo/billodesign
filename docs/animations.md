@@ -50,4 +50,4 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Where:** `SoundProvider` (logic), `SoundToggle` (bottom-left button).
 - **Default: muted.** Nothing downloads until the visitor turns sound on. The choice is saved in `localStorage.soundOn`; a saved "on" resumes after the first interaction (browser autoplay rules).
 - **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden.
-- **Files:** `public/audio/*.mp3`. `click-beep.mp3` and `hover.mp3` came from a third party's GitHub via jsDelivr, so their license needs checking.
+- **Files:** `public/audio/*.mp3`. `click-beep.mp3` and `hover.mp3` came from a third party's GitHub via jsDelivr; the owner confirmed they are free to use.

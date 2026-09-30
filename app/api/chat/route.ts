@@ -1,13 +1,19 @@
+import { getFallbackResponse } from "@/lib/chat/fallback";
 import { SYSTEM_PROMPT } from "@/lib/chat/system-prompt";
 
-// Portfolio AI assistant endpoint. Same contract as the original Webflow Cloud
-// app (POST { message, conversationHistory } → { response }) and the same model
-// settings (ADR-003). The OpenAI key only exists server-side (OPENAI_API_KEY).
+// Portfolio AI assistant endpoint, ported from the original Webflow Cloud app
+// (webflow/export/chatbot files/chatbot/src/pages/api/chat.ts): same contract
+// (POST { message, conversationHistory } → { response }), same model settings
+// (ADR-003), same keyword fallbacks when OpenAI is unavailable.
+//
+// Fixed vs the original: it read `history` while the widget sent
+// `conversationHistory`, so previous messages were silently dropped.
+// The OpenAI key only exists server-side (OPENAI_API_KEY).
 
 const MODEL = "gpt-4o-mini";
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.9;
-const MAX_HISTORY = 5;
+const MAX_HISTORY = 10;
 const MAX_MESSAGE_LENGTH = 1000;
 
 // Best-effort abuse protection. Serverless instances don't share memory, so
@@ -38,11 +44,10 @@ function parseHistory(value: unknown): ChatMessage[] {
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) return Response.json({ error: "Chat is not configured" }, { status: 503 });
-
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (rateLimited(ip)) return Response.json({ error: "Too many requests" }, { status: 429 });
+  if (rateLimited(ip)) {
+    return Response.json({ response: "Whoa, you're fast! 😅 Give me a minute to catch my breath, then ask again." }, { status: 429 });
+  }
 
   let body: { message?: unknown; conversationHistory?: unknown };
   try {
@@ -55,24 +60,27 @@ export async function POST(request: Request) {
   if (!message) return Response.json({ error: "Message is required" }, { status: 400 });
   if (message.length > MAX_MESSAGE_LENGTH) return Response.json({ error: "Message is too long" }, { status: 400 });
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      temperature: TEMPERATURE,
-      messages: [{ role: "system", content: SYSTEM_PROMPT }, ...parseHistory(body.conversationHistory), { role: "user", content: message }],
-    }),
-  });
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) return Response.json({ response: getFallbackResponse(message) });
 
-  if (!res.ok) {
-    console.error("OpenAI error", res.status, await res.text().catch(() => ""));
-    return Response.json({ error: "Failed to get response" }, { status: 502 });
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: MAX_TOKENS,
+        temperature: TEMPERATURE,
+        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...parseHistory(body.conversationHistory), { role: "user", content: message }],
+      }),
+    });
+
+    if (!res.ok) throw new Error(`OpenAI ${res.status}: ${await res.text().catch(() => "")}`);
+    const data = await res.json();
+    const response = data.choices?.[0]?.message?.content?.trim();
+    return Response.json({ response: response || getFallbackResponse(message) });
+  } catch (error) {
+    console.error("Chat API error:", error);
+    return Response.json({ response: getFallbackResponse(message) });
   }
-
-  const data = await res.json();
-  const response = data.choices?.[0]?.message?.content?.trim();
-  if (!response) return Response.json({ error: "Empty response" }, { status: 502 });
-  return Response.json({ response });
 }

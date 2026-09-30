@@ -69,9 +69,14 @@ Investigation date: 2026-09-29.
 - Structure: Astro app with `src/pages/api/chat.ts` (the endpoint), `src/middleware.ts`, `src/pages/index.astro` (the unused template landing page), `.env` (holds the key; never copy it), docs `CHATBOT_README.md`, `CUSTOMIZE_CHATBOT…`, `OPENAI_SETUP_GUI…`, `WEBFLOW_CHATBOT…`, `test-openai.js`.
 - Provider **OpenAI** via the official SDK: `openai.chat.completions.create({ model: 'gpt-4o-mini', messages, max_tokens: 500, temperature: 0.9 })` (chat.ts, around line 113).
 
-**Needs investigation**
-- System prompt text: in `chat.ts` above line 113 (owner to copy the file **without** any key).
-- `middleware.ts`: check whether it adds rate limiting/CORS (live tests showed none).
+**Confirmed (2026-09-30, from the files the owner added in `webflow/export/chatbot files/chatbot/`)**
+- Full system prompt recovered (`src/pages/api/chat.ts`), reused verbatim in `lib/chat/system-prompt.ts` (ADR-012).
+- Keyword fallback replies when there's no key or OpenAI errors, ported to `lib/chat/fallback.ts`.
+- **Bug in the original:** the endpoint read `body.history`, but the widget sent `conversationHistory`, so conversation history was never used. Fixed in the new route.
+- `AIChatbot.tsx` / `ChatbotTrigger.tsx` are the Astro template's Tailwind widget, **not** the widget on the live site (which is custom code in the Webflow page). They were not used, which avoided adding `openai`, `lucide-react` and Tailwind.
+
+**Decision (2026-09-30)**
+- Improve the bot with knowledge of the real projects and testimonials, generated from site content.
 
 **Decision**
 - Keep the AI chat. New flow: browser UI → Next.js Route Handler (`/api/chat`) → LLM provider. API key server-side only. Don't upgrade the model just to upgrade.
@@ -88,7 +93,9 @@ Investigation date: 2026-09-29.
 **Decision**
 - Submissions go to the Zoho business inbox. No address or credentials client-side. Propose options before implementing (below).
 
-**Proposal (awaiting choice)**
+**Decision (2026-09-30): Option A, Resend + Turnstile** (ADR-011). Implemented in `app/api/contact/route.ts` and `components/experience/Turnstile.tsx`. Setup steps are in deployment.md.
+
+**Options that were considered**
 
 | Option | How | Cost | Pros | Cons |
 |---|---|---|---|---|
@@ -114,8 +121,7 @@ Investigation date: 2026-09-29.
 **Decision**
 - Keep sound + mute toggle. **Start muted**, no audio until the user explicitly enables it; respect autoplay rules; lazy-load audio only after sound is enabled; respect reduced motion for the associated effects.
 
-**Needs investigation**
-- Licensing of the third-party jsDelivr sounds before self-hosting them.
+**Confirmed (owner, 2026-09-30):** the two jsDelivr sounds (click beep, hover) are free to use.
 
 ## 6. Indexed URLs / Search Console
 

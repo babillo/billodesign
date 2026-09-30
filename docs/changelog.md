@@ -28,3 +28,12 @@
 ### Fixed
 - SVGs extracted from the export (attribute casing and filter nesting)
 - Page crash when the Spline scene fails to load
+
+### Added (2026-09-30)
+- Contact form delivery: Resend + Cloudflare Turnstile, honeypot, validation, rate limit (ADR-011)
+- Chatbot: original system prompt restored; project and testimonial knowledge generated from content (ADR-012); keyword fallback replies
+
+### Fixed (2026-09-30)
+- Chat conversation history was never sent to the model in the original (`history` vs `conversationHistory`)
+- Fallback keyword matching ("this" matched "hi", "working" matched "work")
+- Reference chatbot files excluded from TypeScript and ESLint so they can't break the build

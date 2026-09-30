@@ -6,6 +6,7 @@ import { PulseDot } from "@/components/ui/Button";
 import { orbLines } from "@/lib/site";
 import { useContactModal } from "./ContactModalProvider";
 import { OrbSpeech } from "./OrbSpeech";
+import { Turnstile } from "./Turnstile";
 import styles from "./ContactModal.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -19,6 +20,9 @@ export function ContactModal() {
   const { isOpen, close } = useContactModal();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileReset, setTurnstileReset] = useState(0);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -30,16 +34,26 @@ export function ContactModal() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
+    setErrorMessage("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(e.currentTarget))),
+        body: JSON.stringify({ ...Object.fromEntries(new FormData(e.currentTarget)), turnstileToken }),
       });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        setStatus("success");
+        return;
+      }
+      const data = await res.json().catch(() => null);
+      setErrorMessage(data?.error ?? "");
+      setStatus("error");
     } catch {
       setStatus("error");
     }
+    // Turnstile tokens are single-use: get a fresh one for the next attempt.
+    setTurnstileToken("");
+    setTurnstileReset((n) => n + 1);
   }
 
   return (
@@ -72,6 +86,7 @@ export function ContactModal() {
               <textarea id="contact-message" className={`${styles.field} ${styles.textarea}`} name="message" placeholder="Your Message" maxLength={5000} required />
               {/* Honeypot: hidden from people, filled in by bots. */}
               <input className={styles.honeypot} name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+              {isOpen && <Turnstile onToken={setTurnstileToken} resetKey={turnstileReset} />}
               <div className={styles.spacer} />
               <button type="submit" className={styles.submit} disabled={status === "sending"} data-sound-click="">
                 <PulseDot />
@@ -79,7 +94,7 @@ export function ContactModal() {
               </button>
               {status === "error" && (
                 <div className={styles.error} role="alert">
-                  Oops! Something went wrong while submitting the form.
+                  Oops! Something went wrong while submitting the form.{errorMessage && ` ${errorMessage}`}
                 </div>
               )}
             </form>

@@ -21,6 +21,7 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 | Doc | What's in it |
 |---|---|
 | [phase-1-audit.md](phase-1-audit.md) | original site audit |
+| [phase-4-visual-qa.md](phase-4-visual-qa.md) | side-by-side comparison checklist |
 | [migration.md](migration.md) | migration log: Confirmed / Assumption / Decision / Needs investigation, and the Webflow → Next mapping |
 | [architecture.md](architecture.md) | structure, server/client split, services |
 | [routes.md](routes.md) | every URL and redirect |
@@ -37,6 +38,6 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 
 ## Current status
 - ✅ Visual rebuild of all pages (first pass, not yet compared side by side with the live site: Phase 4)
-- ⏳ AI chat: endpoint built; needs `OPENAI_API_KEY` and the **original system prompt** (currently provisional)
-- ⏳ Contact form: UI built; delivery waits on the owner's email-option choice
+- ✅ AI chat: original prompt + generated project knowledge + fallbacks; needs `OPENAI_API_KEY` in Vercel
+- ✅ Contact form: Resend + Turnstile implemented; needs accounts/keys (deployment.md)
 - ⏳ Phase 3 refinement, Phase 4 visual QA, Phase 5 deployment

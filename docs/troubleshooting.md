@@ -63,3 +63,5 @@ Then validated every file with an XML parser, checking that no `path`/`stop`/`re
 **Cause:** The sandbox routes outbound traffic through a TLS-intercepting proxy whose CA isn't trusted by Chromium. Trusting that CA from inside the session was not permitted.
 
 **Workaround:** Visual behavior of the original site was reconstructed from the export's code instead: the IX2 interaction JSON in `webflow.js`, the CSS, and inline scripts. Local screenshots of the new app still work, because localhost bypasses the proxy. Side-by-side visual QA against the live site (Phase 4) must be done on a machine with normal network access.
+
+**Update 2026-09-30:** still failing after the environment was switched to full network access. The policy isn't the issue: `curl` reaches the site, but Chromium doesn't trust the proxy CA (the browser trust store in the container appears to be from the previous session). Working around it inside the session isn't permitted, so live-site comparison stays manual (see phase-4-visual-qa.md).

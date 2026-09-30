@@ -8,7 +8,7 @@ All content is local. There is no CMS (ADR-001).
 | Testimonials (4) | `content/testimonials.json`, typed by `Testimonial` |
 | Navigation, social links, services, SEO defaults, orb speech lines | `lib/site.ts` |
 | Homepage section copy | inside each component in `components/home/` |
-| AI chat system prompt | `lib/chat/system-prompt.ts` (**provisional**, see migration.md §2) |
+| AI chat system prompt | `lib/chat/system-prompt.ts`: original persona + project/testimonial knowledge generated from `content/*.json` (ADR-012) |
 
 ## Where the data came from
 

@@ -176,3 +176,43 @@ Facebook, LinkedIn and X don't render AVIF preview images, so the original share
 
 Trade-offs:
 A small crop to the standard 1.91:1 ratio.
+
+## ADR-011 — Contact form: Resend + Cloudflare Turnstile
+
+Date: 2026-09-30
+
+Decision:
+`/api/contact` verifies a Turnstile token, then sends the submission through the Resend REST API to the Zoho business inbox, with reply-to set to the visitor.
+
+Context:
+Webflow Forms stops working after migration. Owner priorities: reliable delivery, spam protection, server-side handling, minimal infrastructure, low cost. Options are compared in migration.md §3.
+
+Reason:
+Resend handles SPF/DKIM on a sending subdomain (better deliverability than SMTP from serverless) and has a free tier of 3,000 emails/month. Turnstile is free and invisible for most visitors (`appearance: interaction-only`), so the form design is unchanged. Both are called with `fetch`, so no SDK dependency.
+
+Alternatives:
+Zoho SMTP via nodemailer (plan-dependent, slower from serverless); hosted form services (a third party holds the data).
+
+Trade-offs:
+Two accounts to set up and DNS records for a sending subdomain. Layered defenses: Turnstile, honeypot, validation, per-IP rate limit, HTML escaping in the email body.
+
+## ADR-012 — Chatbot knowledge generated from site content
+
+Date: 2026-09-30
+
+Decision:
+Keep the original persona prompt verbatim, and append "Projects" and "What clients say" sections generated at build time from `content/*.json`.
+
+Context:
+The original bot knew only generic project types, not Muhammad's actual projects.
+
+Reason:
+A single source of truth: adding or editing a project automatically updates what the bot knows. Instructions forbid inventing projects, clients or prices.
+
+Alternatives:
+Hand-written project list in the prompt (goes stale); retrieval/embeddings (overkill for 6 projects).
+
+Trade-offs:
+About 3.8k input tokens per request (≈ $0.0006 with gpt-4o-mini; OpenAI caches the repeated prefix automatically).
+
+Also fixed: the original endpoint read `history` while the widget sent `conversationHistory`, so the bot never saw earlier messages. It now does, up to 10.

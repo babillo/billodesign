@@ -75,7 +75,9 @@ export function AiChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, conversationHistory: history }),
       });
-      if (res.ok) reply = (await res.json()).response ?? reply;
+      // The server sends a friendly `response` even for rate limits and outages.
+      const data = await res.json().catch(() => null);
+      if (data?.response) reply = data.response;
     } catch {}
     setWaiting(false);
     play("chatTyping");
