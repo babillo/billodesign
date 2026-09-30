@@ -22,6 +22,10 @@
 | OG image | AVIF | JPEG 1200×630 | social platforms don't render AVIF (ADR-010) |
 | Alt text | some wrong (OrbitAI text on Fadi's card; JS logo called a "yellow bird") | corrected | accuracy |
 
+## Deployment hosts (Phase 5)
+
+- `*.vercel.app` URLs send `X-Robots-Tag: noindex` (`next.config.ts`), so only `billodesign.com` is indexed. Canonical tags already point to `billodesign.com`.
+
 ## Open items (Phase 5 / 7)
 
 - After cutover: redirect or noindex `billodesign.webflow.io` so it isn't duplicate content (migration.md §6).

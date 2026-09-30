@@ -2,7 +2,7 @@
 
 Portfolio of Muhammad (Billodesign), migrated from Webflow to Next.js. It will be deployed on Vercel at https://billodesign.com.
 
-**Status:** Phases 1–4 done. Next: Phase 5 (Vercel deployment). Homepage, 6 case studies, 404, sitemap/robots, redirects and the AI chat endpoint are built; the site builds and runs. Open items are listed under "Current status" below.
+**Status:** Phases 1–4 done. Phase 5 in progress: live at https://billodesign.vercel.app; domain cutover and API keys pending (deployment.md). Homepage, 6 case studies, 404, sitemap/robots, redirects and the AI chat endpoint are built; the site builds and runs. Open items are listed under "Current status" below.
 
 ## Stack
 Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules · GSAP + Lenis · Spline · lottie-web · Howler · OpenAI (chat) · Vercel

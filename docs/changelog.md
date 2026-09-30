@@ -71,3 +71,11 @@
 ### Verified
 - Layout identical before and after (home at 1440/390, OrbitAI at 390)
 - Dependencies: all used; initial JS measured (see architecture.md)
+
+## Phase 5 — Production / deployment (in progress)
+
+### Added
+- Deployed on Vercel: https://billodesign.vercel.app (verified: all routes, redirects, 404, sitemap, robots, assets, no client errors at 1440/390, layout identical to the local build)
+- Security headers; `noindex` on `*.vercel.app` hosts
+- Error page (`app/error.tsx`)
+- deployment.md rewritten: environment-variable status, contact form setup, domain cutover steps, post-deploy checks, rollback

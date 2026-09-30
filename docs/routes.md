@@ -38,6 +38,7 @@
 | URL | Source | Notes |
 |---|---|---|
 | 404 | `app/not-found.tsx` | "Page Not Found / Go Home" |
+| runtime error | `app/error.tsx` | "Something went wrong / Try again" |
 | `/sitemap.xml` | `app/sitemap.ts` | home + 6 projects |
 | `/robots.txt` | `app/robots.ts` | disallows everything on Vercel preview deployments |
 | `POST /api/chat` | `app/api/chat/route.ts` | `{message, conversationHistory}` → `{response}` |
