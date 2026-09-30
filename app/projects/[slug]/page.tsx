@@ -7,6 +7,7 @@ import { ProjectSection } from "@/components/projects/ProjectSection";
 import { Cta } from "@/components/sections/Cta";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
 import { getProject, getProjects, getTestimonial, type ProjectSectionKey } from "@/lib/content";
+import { Container } from "@/components/ui/Container";
 import styles from "./page.module.css";
 
 // Order and headings of the Webflow project template. "strategy" and
@@ -65,46 +66,42 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       <SplineOrb variant="project" />
       <ProjectHeader project={project} />
 
-      <div className="padding-global">
-        <div className="container-large">
-          <div className="padding-section-large">
-            <div className={styles.content}>
-              {SECTIONS.map(({ key, title, visual }) => {
-                const html = project.sections[key];
-                return html ? <ProjectSection key={key} title={title} html={html} visual={visual} /> : null;
-              })}
+      <Container spacing="large">
+        <div className={styles.content}>
+          {SECTIONS.map(({ key, title, visual }) => {
+            const html = project.sections[key];
+            return html ? <ProjectSection key={key} title={title} html={html} visual={visual} /> : null;
+          })}
 
-              {testimonial && (
-                <section className={styles.feedback} aria-labelledby="client-feedback">
-                  <h2 id="client-feedback" className="as-h3" data-reveal="">
-                    Client Feedback
-                  </h2>
-                  <TestimonialCard testimonial={testimonial} />
-                </section>
-              )}
+          {testimonial && (
+            <section className={styles.feedback} aria-labelledby="client-feedback">
+              <h2 id="client-feedback" className="as-h3" data-reveal="">
+                Client Feedback
+              </h2>
+              <TestimonialCard testimonial={testimonial} />
+            </section>
+          )}
 
-              <div className={styles.divider} />
+          <div className={styles.divider} />
 
-              <section className={styles.feedback} aria-labelledby="next-project">
-                <h2 id="next-project" className="as-h3" data-reveal="">
-                  Next Project
-                </h2>
-                <ProjectCard
-                  slug={next.slug}
-                  title={next.title}
-                  description={next.summary}
-                  image={next.thumbnail}
-                  imageAlt=""
-                  imageSize={next.thumbnailSize}
-                  websiteUrl={next.websiteUrl}
-                  tools={NEXT_PROJECT_TOOLS}
-                  headingLevel="h3"
-                />
-              </section>
-            </div>
-          </div>
+          <section className={styles.feedback} aria-labelledby="next-project">
+            <h2 id="next-project" className="as-h3" data-reveal="">
+              Next Project
+            </h2>
+            <ProjectCard
+              slug={next.slug}
+              title={next.title}
+              description={next.summary}
+              image={next.thumbnail}
+              imageAlt=""
+              imageSize={next.thumbnailSize}
+              websiteUrl={next.websiteUrl}
+              tools={NEXT_PROJECT_TOOLS}
+              headingLevel="h3"
+            />
+          </section>
         </div>
-      </div>
+      </Container>
 
       <Cta title="Let’s Build Yours" text="Ready to turn your vision into a living, breathing digital experience?" />
     </>

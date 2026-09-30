@@ -18,6 +18,8 @@ Client components are marked **(client)**. Everything else is a server component
 | `Slider` (client) | `label`, `slides[]`, `maskClassName?` | infinite loop, arrows, bar dots, swipe, arrow keys |
 | `Ellipses` | `variant: service / project / modal` | decorative corner glows |
 | `ShadowTitle` | `children` | giant faint Lato background word |
+| `Container` | `spacing?: large/small`, `className?`, `id?` | Client-First wrapper: padding-global → container-large → padding-section-*; used by every section |
+| `CloseIcon` | — | "×" icon for the modal and the chat |
 
 ## Projects (`components/projects/`)
 | Component | Used by | Notes |
@@ -46,4 +48,5 @@ Client components are marked **(client)**. Everything else is a server component
 | `OrbSpeech` | glass speech bubble with `TypedText`; typing sound while visible |
 | `TypedText` | typewriter (replaces Typed.js) |
 | `SmoothScroll` | Lenis |
+| `useModalDialog(open)` | hook: syncs a native `<dialog>` with React state |
 | `ScrollEffects` | `data-reveal` and `data-text` effects |

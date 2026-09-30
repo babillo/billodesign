@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { useEffect } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /*
  * Lenis smooth scrolling, same settings as the Webflow site (duration 2).
@@ -12,7 +13,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
  */
 export function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
     const lenis = new Lenis({ duration: 2, anchors: true });
     lenis.on("scroll", ScrollTrigger.update);

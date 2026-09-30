@@ -7,7 +7,6 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <figure className={styles.card}>
       <div className={styles.content}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- decorative SVG */}
         <img src="/icons/stars.svg" alt="" className={styles.stars} />
         <div className={styles.body}>
           <blockquote className={styles.quote}>

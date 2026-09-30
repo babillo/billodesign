@@ -51,7 +51,6 @@ export function Navbar() {
       <div className="padding-global">
         <div className={styles.container}>
           <Link href="/" className={styles.brand} aria-label="Billodesign home" onClick={close}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- SVG logo, already optimal */}
             <img src="/icons/logo.svg" alt="" width={196} height={44} className={styles.logo} />
           </Link>
 

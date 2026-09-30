@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
 import styles from "./Hero.module.css";
 
 /*
@@ -9,23 +10,21 @@ import styles from "./Hero.module.css";
 export function Hero() {
   return (
     <section className={styles.section}>
-      <div className="padding-global">
-        <div className="container-large">
-          <div className={styles.content}>
-            <h1>
-              Design Beyond Pixels. <br />
-              Build Beyond Limits.
-            </h1>
-            <p className={styles.paragraph}>
-              Webflow sites that don’t just look stunning — <br />
-              they think, scale, and convert.
-            </p>
-            <Button data-open-contact="" data-sound-hover="" data-sound-click="" data-reveal="">
-              Work With Me
-            </Button>
-          </div>
+      <Container>
+        <div className={styles.content}>
+          <h1>
+            Design Beyond Pixels. <br />
+            Build Beyond Limits.
+          </h1>
+          <p className={styles.paragraph}>
+            Webflow sites that don’t just look stunning — <br />
+            they think, scale, and convert.
+          </p>
+          <Button data-open-contact="" data-sound-hover="" data-sound-click="" data-reveal="">
+            Work With Me
+          </Button>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

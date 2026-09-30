@@ -1,5 +1,6 @@
 import { getFallbackResponse } from "@/lib/chat/fallback";
 import { SYSTEM_PROMPT } from "@/lib/chat/system-prompt";
+import { clientIp, createRateLimiter } from "@/lib/server/rate-limit";
 
 // Portfolio AI assistant endpoint, ported from the original Webflow Cloud app
 // (webflow/export/chatbot files/chatbot/src/pages/api/chat.ts): same contract
@@ -16,19 +17,8 @@ const TEMPERATURE = 0.9;
 const MAX_HISTORY = 10;
 const MAX_MESSAGE_LENGTH = 1000;
 
-// Best-effort abuse protection. Serverless instances don't share memory, so
-// this limits bursts per instance only; see docs/decisions.md ADR-004.
-const WINDOW_MS = 60_000;
-const MAX_REQUESTS_PER_WINDOW = 10;
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_REQUESTS_PER_WINDOW;
-}
+// 10 requests per minute per IP (ADR-004).
+const isRateLimited = createRateLimiter({ windowMs: 60_000, max: 10 });
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -44,8 +34,7 @@ function parseHistory(value: unknown): ChatMessage[] {
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (rateLimited(ip)) {
+  if (isRateLimited(clientIp(request))) {
     return Response.json({ response: "Whoa, you're fast! 😅 Give me a minute to catch my breath, then ask again." }, { status: 429 });
   }
 

@@ -48,7 +48,6 @@ export function ProjectCard({ slug, title, description, image, imageAlt, imageSi
             {tools.map((tool) => {
               const icon = toolIcons[tool];
               if (!icon) return null;
-              // eslint-disable-next-line @next/next/no-img-element -- 30px icons, already tiny AVIFs
               return <img key={tool} src={icon.src} alt={icon.alt} title={icon.alt} loading="lazy" />;
             })}
           </div>

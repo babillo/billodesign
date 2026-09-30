@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSound } from "./SoundProvider";
+import { CloseIcon } from "@/components/ui/CloseIcon";
+import { useModalDialog } from "./useModalDialog";
 import styles from "./AiChat.module.css";
 
 type Message = { role: "user" | "assistant"; content: string; time: string };
@@ -26,20 +28,15 @@ export function AiChat() {
   const [input, setInput] = useState("");
   const [waiting, setWaiting] = useState(false);
   const [typing, setTyping] = useState<{ full: string; shown: number } | null>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogRef = useModalDialog(open);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const { play, stop } = useSound();
 
+  // Runs after useModalDialog's effect, so the dialog is already open.
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (open && !dialog.open) {
-      dialog.showModal();
-      inputRef.current?.focus();
-    }
-    if (!open && dialog.open) dialog.close();
-    if (!open) stop("chatTyping");
+    if (open) inputRef.current?.focus();
+    else stop("chatTyping");
   }, [open, stop]);
 
   // Typewriter for the assistant's reply, with the typing sound while it runs.
@@ -107,17 +104,11 @@ export function AiChat() {
       >
         <div className={styles.container}>
           <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Close chat" data-sound-click="">
-            <svg viewBox="0 0 29 28" fill="none" aria-hidden="true">
-              <path
-                d="M28.4141 0.707031L14.9141 14.207L27.707 27L27 27.707L14.207 14.9141L1.41406 27.707L0.707031 27L13.5 14.207L0 0.707031L0.707031 0L14.207 13.5L27.707 0L28.4141 0.707031Z"
-                fill="currentColor"
-              />
-            </svg>
+            <CloseIcon />
           </button>
 
           <div className={styles.header}>
             {open && (
-              // eslint-disable-next-line @next/next/no-img-element -- 2.4 MB GIF, only requested once the chat opens
               <img src="/images/orb-blinking-chat.gif" alt="" className={styles.orb} />
             )}
           </div>
@@ -148,7 +139,12 @@ export function AiChat() {
               <ChatMessage key={i} {...m} />
             ))}
 
-            {typing && <ChatMessage role="assistant" content={typing.full.slice(0, typing.shown)} time="" cursor />}
+            {/* Hidden from the live region while typing; the finished reply is announced once. */}
+            {typing && (
+              <div aria-hidden="true">
+                <ChatMessage role="assistant" content={typing.full.slice(0, typing.shown)} time="" cursor />
+              </div>
+            )}
 
             {waiting && (
               <div className={styles.typingIndicator} aria-label="Assistant is typing">
@@ -194,9 +190,7 @@ export function AiChat() {
             <div className={styles.footer}>Muhammad&apos;s Portfolio AI assistant • Responses may vary</div>
           </div>
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/ellipse.avif" alt="" className={`${styles.ellipse} ${styles.topLeft}`} />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/ellipse.avif" alt="" className={`${styles.ellipse} ${styles.bottomRight}`} />
         </div>
       </dialog>

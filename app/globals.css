@@ -248,6 +248,22 @@ figcaption {
   padding-bottom: var(--section-small);
 }
 
+/* Keyboard users can jump past the navbar; visible only when focused. */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10000;
+  padding: 0.5rem 1rem;
+  background: var(--color-black);
+  color: var(--color-cyan);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -374,16 +390,6 @@ figcaption {
   border: 0;
 }
 
-.rich-text .w-richtext-align-center {
-  margin-right: auto;
-  margin-left: auto;
-  clear: both;
-}
-
-.rich-text .w-richtext-align-center.w-richtext-figure-type-image > div {
-  max-width: 100%;
-}
-
 .rich-text .w-richtext-align-normal {
   clear: both;
 }
@@ -407,17 +413,7 @@ figcaption {
   display: block;
 }
 
-.rich-text .w-richtext-align-floatleft {
-  float: left;
-  margin-right: 15px;
-  clear: none;
-}
-
-.rich-text .w-richtext-align-floatright {
-  float: right;
-  margin-left: 15px;
-  clear: none;
-}
+/* Webflow's center/float alignments are omitted: no project content uses them. */
 
 /* ---------- Scroll reveal (Webflow IX2 "subtle slide from bottom") ---------- */
 /*

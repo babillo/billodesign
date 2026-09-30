@@ -55,8 +55,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <SoundProvider>
           <ContactModalProvider>
+            <a href="#main" className="skip-link">
+              Skip to content
+            </a>
             <Navbar />
-            <main>{children}</main>
+            <main id="main">{children}</main>
             <Footer />
             <SoundToggle />
             <AwwwardsBadge />

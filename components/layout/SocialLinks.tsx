@@ -7,7 +7,6 @@ export function SocialLinks() {
       {socialLinks.map((s) => (
         <li key={s.label}>
           <a href={s.href} target="_blank" rel="noopener noreferrer" className={styles.link} aria-label={`${s.label} (opens in a new tab)`}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- small SVG icon */}
             <img src={s.icon} alt="" className={styles.icon} />
           </a>
         </li>

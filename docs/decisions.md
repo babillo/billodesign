@@ -216,3 +216,25 @@ Trade-offs:
 About 3.8k input tokens per request (≈ $0.0006 with gpt-4o-mini; OpenAI caches the repeated prefix automatically).
 
 Also fixed: the original endpoint read `history` while the widget sent `conversationHistory`, so the bot never saw earlier messages. It now does, up to 10.
+
+## ADR-013 — Phase 3 refactors: shared Container, dialog hook, server helpers
+
+Date: 2026-09-30
+
+Decision:
+- `components/ui/Container`: the Webflow Client-First wrapper (padding-global → container-large → padding-section-*), repeated in 10 sections.
+- `useModalDialog(open)`: the `<dialog>` open/close sync shared by the contact modal and the AI chat. `CloseIcon` shared by both.
+- `lib/server/rate-limit.ts` (`createRateLimiter`, `clientIp`) shared by `/api/chat` and `/api/contact`; `lib/motion.ts` (`prefersReducedMotion`) replaces 6 inline checks.
+- The `@next/next/no-img-element` lint rule is turned off in `eslint.config.mjs` (with the rationale) instead of 18 inline disables.
+
+Context:
+Phase 3 review for duplicated code and noise.
+
+Reason:
+Each abstraction had at least 2 real uses. The layout was verified identical before and after (section geometry compared at 1440/390 on home and OrbitAI).
+
+Alternatives:
+Leave the duplication (fewer files but drift risk); a generic Section component with heading props (premature: sections differ too much).
+
+Trade-offs:
+One more indirection when reading a section. The lint rule is off globally, so reviewers must keep using `next/image` for photos (documented in architecture.md).

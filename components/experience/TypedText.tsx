@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./TypedText.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 type Props = {
   lines: readonly string[];
@@ -24,7 +25,7 @@ export function TypedText({ lines, typeSpeed = 40, backDelay = 700, loop = false
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
     let lineIndex = 0;
     let charIndex = 0;
     let timer: ReturnType<typeof setTimeout>;
