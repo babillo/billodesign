@@ -18,6 +18,16 @@ import { prefersReducedMotion } from "@/lib/motion";
  * The original script also defined words-slide-up, words-rotate-in,
  * words-slide-from-right and letters-slide-up, but no element used them.
  */
+/*
+ * SplitText gives each word/char `position: relative`. Positioned descendants
+ * drop out of their heading's `background-clip: text` gradient and render
+ * transparent (the "We got your back" subtitle vanished behind the dashboard
+ * image). Webflow's splitter left them static, so do the same.
+ */
+function keepGradientText(...groups: Element[][]) {
+  for (const els of groups) gsap.set(els, { position: "static" });
+}
+
 export function ScrollEffects() {
   const pathname = usePathname();
 
@@ -39,6 +49,7 @@ export function ScrollEffects() {
     const ctx = gsap.context(() => {
       document.querySelectorAll<HTMLElement>('[data-text="letters-fade-in"]').forEach((el) => {
         const split = SplitText.create(el, { type: "words,chars" });
+        keepGradientText(split.words, split.chars);
         const tl = gsap.timeline({ paused: true });
         tl.from(split.chars, { opacity: 0, duration: 0.2, ease: "power1.out", stagger: { amount: 2 } });
         // Play at 60% of the viewport; reset once the element is fully below the fold again.
@@ -48,6 +59,7 @@ export function ScrollEffects() {
 
       document.querySelectorAll<HTMLElement>('[data-text="scrub-words"]').forEach((el) => {
         const split = SplitText.create(el, { type: "words" });
+        keepGradientText(split.words);
         gsap.from(split.words, {
           opacity: 0.4,
           duration: 0.2,

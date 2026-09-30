@@ -60,14 +60,23 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const play = useCallback((name: SoundName) => {
-    if ("loop" in SOUNDS[name]) activeLoops.current.add(name);
-    if (!enabledRef.current) return;
+  // Howler doesn't load a `preload: false` sound (the large ambient track) on
+  // play(); it stays silent until load() is called.
+  const start = useCallback((name: SoundName) => {
     const howl = howls.current[name];
     if (!howl) return;
     if ("loop" in SOUNDS[name] && howl.playing()) return;
+    if (howl.state() === "unloaded") howl.load();
     howl.play();
   }, []);
+
+  const play = useCallback(
+    (name: SoundName) => {
+      if ("loop" in SOUNDS[name]) activeLoops.current.add(name);
+      if (enabledRef.current) start(name);
+    },
+    [start],
+  );
 
   const stop = useCallback((...names: SoundName[]) => {
     for (const name of names) {
@@ -86,12 +95,12 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       if (on) {
         await load();
         activeLoops.current.add("ambient");
-        for (const name of activeLoops.current) howls.current[name]?.play();
+        for (const name of activeLoops.current) start(name);
       } else {
         for (const howl of Object.values(howls.current)) howl?.pause();
       }
     },
-    [load],
+    [load, start],
   );
 
   const toggle = useCallback(() => void setSound(!enabledRef.current), [setSound]);
@@ -120,12 +129,12 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       for (const name of activeLoops.current) {
         const howl = howls.current[name];
         if (document.hidden) howl?.pause();
-        else howl?.play();
+        else start(name);
       }
     };
     document.addEventListener("visibilitychange", onVisibility);
     return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, []);
+  }, [start]);
 
   // Delegated listeners for the data-sound-* attributes.
   useEffect(() => {

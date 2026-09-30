@@ -136,3 +136,17 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Gotcha:** headless or automated browsers never receive a Turnstile token, so they always get "Spam check failed". Test the contact form in a normal browser.
 
 **Prevention:** after changing env vars, always redeploy (`NEXT_PUBLIC_*` values are compiled into the build), and run the post-deployment checks in `deployment.md`.
+
+## Live-site feedback round (2026-09-30)
+
+**Hero flash on load.** *Cause:* `HomeIntro` set `html[data-intro]` in `useEffect`, so the server-rendered hero painted first and was hidden only after hydration (about 0.5s locally, longer on real networks). *Fix:* set it in the inline head script before the first paint (15s failsafe). *Lesson:* anything that must be hidden from the first frame can't wait for React.
+
+**Tech-stack Lottie didn't react to scroll.** *Cause:* during the intro the sections are `display:none`. ScrollTriggers created in that state (Lottie, word scrub) got start and end positions of 0 and were never re-measured. *Investigation:* compared Lottie SVG output at several scroll offsets; it was identical on the live site and changing after the fix. *Fix:* `ScrollTrigger.refresh()` when the intro ends. *Lesson:* after toggling `display` on large parts of the page, refresh ScrollTrigger.
+
+**"Image overlaps content" in We got your back.** *Cause:* not the layout (geometry was identical to Webflow at 8 viewports). The subtitle uses a gradient with `background-clip: text` and a transparent text fill. GSAP SplitText wraps words in `position: relative` divs, and positioned descendants aren't painted into the parent's text clip, so the words were transparent and the dashboard showed through. Webflow's SplitType words are static. *Fix:* `gsap.set(words, { position: "static" })`.
+
+**Only some sounds played.** *Cause:* the ambient loop is `preload: false`, and Howler's `play()` doesn't load an unloaded sound. *Fix:* call `howl.load()` before `play()` when `state() === "unloaded"`. Verified via `Howler._howls` state in the browser.
+
+**Contact form "nothing was sent".** Headless browsers can't pass Turnstile, so this has to be checked in a real browser with the server logs. The form now refuses to submit without a token and shows Turnstile's error code. `/api/contact` logs `Turnstile verification failed [codes] hostname`, `Resend error <status> <body>`, or `Resend is not configured` (Vercel → Logs). The Resend dashboard → Emails also shows whether a message was accepted or delivered.
+
+**Sandbox note:** in the QA sandbox the agent proxy sometimes returns 502 for the Spline runtime chunk in Chromium, although `curl` gets 200 from Vercel. That's a sandbox artifact, not a site bug; `OrbErrorBoundary` handles it.

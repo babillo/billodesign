@@ -35,6 +35,8 @@ function loadScript() {
 
 type Props = {
   onToken: (token: string) => void;
+  /** Called with Cloudflare's error code when the widget fails (e.g. wrong hostname). */
+  onError?: (code: string) => void;
   /** Increment to get a fresh token (Turnstile tokens are single-use). */
   resetKey: number;
 };
@@ -46,14 +48,16 @@ type Props = {
  * The script is loaded only when the contact modal is open.
  * Renders nothing when no site key is configured (local development).
  */
-export function Turnstile({ onToken, resetKey }: Props) {
+export function Turnstile({ onToken, onError, resetKey }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const onTokenRef = useRef(onToken);
+  const onErrorRef = useRef(onError);
 
   useEffect(() => {
     onTokenRef.current = onToken;
-  }, [onToken]);
+    onErrorRef.current = onError;
+  }, [onToken, onError]);
 
   useEffect(() => {
     if (!SITE_KEY || !ref.current) return;
@@ -67,10 +71,16 @@ export function Turnstile({ onToken, resetKey }: Props) {
           appearance: "interaction-only",
           callback: (token: string) => onTokenRef.current(token),
           "expired-callback": () => onTokenRef.current(""),
-          "error-callback": () => onTokenRef.current(""),
+          "error-callback": (code: string) => {
+            onTokenRef.current("");
+            onErrorRef.current?.(String(code));
+          },
         });
       })
-      .catch(() => onTokenRef.current(""));
+      .catch(() => {
+        onTokenRef.current("");
+        onErrorRef.current?.("script-load");
+      });
     return () => {
       cancelled = true;
       if (widgetId.current) window.turnstile?.remove(widgetId.current);
@@ -84,4 +94,9 @@ export function Turnstile({ onToken, resetKey }: Props) {
 
   if (!SITE_KEY) return null;
   return <div ref={ref} />;
+}
+
+/** Whether the form must wait for a Turnstile token before submitting. */
+export function turnstileEnabled() {
+  return Boolean(SITE_KEY);
 }

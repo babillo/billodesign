@@ -15,6 +15,8 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Behavior:** from page load until the hero speech bubble finishes (8.5s), the page content (main sections and footer) is hidden. Only the navbar, the orb and its bubble ("Hey there... Welcome to BilloDesign 👋" → "Let's build beyond pixels." → "Scroll down and I'll guide you.") are visible after the preloader. Then the content appears.
 - **Origin:** Webflow IX2. The "Preloader" action hid `.main-wrapper`, and "hide orb text tip delay hero" showed it again after 8.5s. Verified on the live site with a browser timeline (content hidden from about 4.3s to about 12s after navigation).
 - **Kept visible:** elements marked `data-intro-keep` (preloader, orb layer).
+- **Start before paint:** on a full page load, the inline head script in `app/layout.tsx` sets `data-intro` on `/` before the first paint, and `HomeIntro` takes over after hydration. A 15s failsafe in that script un-hides the content if JavaScript never runs. Setting the flag only in `useEffect` made the hero flash on slower connections.
+- **After the intro:** `HomeIntro` calls `ScrollTrigger.refresh()`. Triggers created while the content was `display:none` (Lottie scrub, word scrub) had measured zero-size elements and would not animate otherwise.
 - **Reduced motion:** no intro; content is visible immediately. Content is always in the HTML (SEO, no-JS).
 
 ## Spline orb
@@ -36,6 +38,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 ## Text effects (GSAP)
 - `data-text="letters-fade-in"`: CTA heading letters fade in one by one (2s total stagger), play at 60% of the viewport, reset when scrolled back out of view.
 - `data-text="scrub-words"`: words go from 40% to 100% opacity as the element scrolls between 90% and 50% of the viewport. Used on section intros and the bio paragraph.
+- Split words and characters are forced to `position: static` (`keepGradientText`). SplitText makes them `relative` by default, which breaks the gradient `background-clip: text` of headings, so the text turned invisible.
 - **Tech:** GSAP SplitText + ScrollTrigger (`components/experience/ScrollEffects.tsx`).
 
 ## Tech stack Lottie
@@ -56,5 +59,5 @@ Every item respects `prefers-reduced-motion` unless noted.
 ## Sound
 - **Where:** `SoundProvider` (logic), `SoundToggle` (bottom-left button).
 - **Default: muted.** Nothing downloads until the visitor turns sound on. The choice is saved in `localStorage.soundOn`; a saved "on" resumes after the first interaction (browser autoplay rules).
-- **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden.
+- **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden. The ambient track (1.4 MB) isn't preloaded; `start()` calls `howl.load()` first, because Howler never loads a `preload: false` sound on `play()`.
 - **Files:** `public/audio/*.mp3`. `click-beep.mp3` and `hover.mp3` came from a third party's GitHub via jsDelivr; the owner confirmed they are free to use.

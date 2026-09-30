@@ -6,7 +6,7 @@ import { PulseDot } from "@/components/ui/Button";
 import { orbLines } from "@/lib/site";
 import { useContactModal } from "./ContactModalProvider";
 import { OrbSpeech } from "./OrbSpeech";
-import { Turnstile } from "./Turnstile";
+import { Turnstile, turnstileEnabled } from "./Turnstile";
 import { CloseIcon } from "@/components/ui/CloseIcon";
 import { useModalDialog } from "./useModalDialog";
 import styles from "./ContactModal.module.css";
@@ -25,9 +25,16 @@ export function ContactModal() {
   const [errorMessage, setErrorMessage] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileReset, setTurnstileReset] = useState(0);
+  const [turnstileError, setTurnstileError] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // Without a token the server rejects the message, so don't send it yet.
+    if (turnstileEnabled() && !turnstileToken) {
+      setErrorMessage(turnstileError ? `Spam check failed to load (${turnstileError}). Please refresh and try again.` : "Verifying you’re human, please try again in a moment.");
+      setStatus("error");
+      return;
+    }
     setStatus("sending");
     setErrorMessage("");
     try {
@@ -80,7 +87,16 @@ export function ContactModal() {
               <textarea id="contact-message" className={`${styles.field} ${styles.textarea}`} name="message" placeholder="Your Message" maxLength={5000} required />
               {/* Honeypot: hidden from people, filled in by bots. */}
               <input className={styles.honeypot} name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-              {isOpen && <Turnstile onToken={setTurnstileToken} resetKey={turnstileReset} />}
+              {isOpen && (
+                <Turnstile
+                  onToken={(token) => {
+                    setTurnstileToken(token);
+                    if (token) setTurnstileError("");
+                  }}
+                  onError={setTurnstileError}
+                  resetKey={turnstileReset}
+                />
+              )}
               <div className={styles.spacer} />
               <button type="submit" className={styles.submit} disabled={status === "sending"} data-sound-click="">
                 <PulseDot />
