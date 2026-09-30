@@ -19,7 +19,8 @@
   max-width: 60rem;
 }
 
-.tip {
+/* .content .tip beats OrbSpeech's own max-width at every breakpoint (Webflow combo class .orb_text-box.is-footer). */
+.content .tip {
   top: 136%;
   right: 36%;
   max-width: 21rem;
@@ -34,7 +35,7 @@
     gap: 1rem;
   }
 
-  .tip {
+  .content .tip {
     top: 130%;
     right: 18%;
   }
@@ -45,7 +46,7 @@
     height: 90svh;
   }
 
-  .tip {
+  .content .tip {
     top: 105%;
     right: 20%;
   }

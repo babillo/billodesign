@@ -206,3 +206,23 @@ Layout, spacing, type scale, colors, breakpoints, section order, copy, slider be
 
 ### Dropped (no longer needed)
 jQuery ×2, duplicate GSAP 3.12, SplitType, Typed.js, WebFont loader, Webflow IX2 runtime, the scroll-position save/restore script (browsers restore scroll natively), `console.log` on every scroll, and commented-out dead code.
+
+---
+
+## Phase 4 visual QA, first pass (2026-09-30)
+
+With browser access to the live site, section heights were compared at 1440 / 1024 / 768 / 390 after the full scroll-through.
+
+**Found and fixed**
+- **Missed feature: homepage intro.** The live page hides its content after the preloader while the orb speaks, then reveals it. My Phase 1 reading of the IX2 data wrongly treated this as a no-op. Now reproduced (`HomeIntro`).
+- Project card thumbnails stretched (missing `align-items: flex-start`).
+- "Visit Site" links are underlined on the original.
+- Navbar highlights the link of the section in view (Webflow `w--current` scroll-spy).
+- Testimonial slider broken on mobile (CSS order bug, see troubleshooting).
+- Rich-text spacer paragraphs were stripped by the importer.
+
+**Result (homepage):** every section within ±7px of the original at all four widths, except "Selected Work", which is taller only because my version reserves space for card images the live site hasn't lazy-loaded yet (no layout shift).
+
+**Known remaining differences (intentional or architectural)**
+- The Spline orb doesn't render in the headless QA browser (no GPU) on either site, so it's not visually compared. It needs a check on a real device.
+- The live site's "Next Project" card title is an `h4`; mine is an `h3` (heading outline).

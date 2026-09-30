@@ -5,10 +5,13 @@
   touch-action: pan-y;
 }
 
-/* .projects_mask / .testimonial_mask: width set by maskClassName, overflow visible. */
+/*
+ * .projects_mask / .testimonial_mask. Width comes only from the consumer's
+ * maskClassName: a default here would compete with the consumer's media
+ * queries at equal specificity, and CSS chunk order would decide the winner.
+ */
 .mask {
   display: flex;
-  width: 40%;
   overflow: visible;
 }
 

@@ -10,6 +10,13 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Reduced motion:** not shown.
 - **Note:** the original showed only once Webflow's JS ran. This version shows before hydration.
 
+## Homepage intro (orb speaks first)
+- **Where:** `components/home/HomeIntro.tsx` + `html[data-intro]` rule in `globals.css`
+- **Behavior:** from page load until the hero speech bubble finishes (8.5s), the page content (main sections and footer) is hidden. Only the navbar, the orb and its bubble ("Hey there... Welcome to BilloDesign 👋" → "Let's build beyond pixels." → "Scroll down and I'll guide you.") are visible after the preloader. Then the content appears.
+- **Origin:** Webflow IX2. The "Preloader" action hid `.main-wrapper`, and "hide orb text tip delay hero" showed it again after 8.5s. Verified on the live site with a browser timeline (content hidden from about 4.3s to about 12s after navigation).
+- **Kept visible:** elements marked `data-intro-keep` (preloader, orb layer).
+- **Reduced motion:** no intro; content is visible immediately. Content is always in the HTML (SEO, no-JS).
+
 ## Spline orb
 - **Where:** `components/experience/SplineOrb.tsx`, a fixed layer behind the content (z-index −2). Home: left 30%. Projects: left 44%.
 - **Loading:** dynamic import after `requestIdleCallback`, fades in (0.6s) when the scene loads, wrapped in an error boundary.

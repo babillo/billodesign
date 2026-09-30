@@ -162,8 +162,9 @@ async function cleanRichText(html, slug) {
     .replace(/<img /g, '<img loading="lazy" ')
     .replace(/<iframe loading="lazy" /g, "<iframe ")
     // Stray leading <li> in one "The Result" field (invalid HTML from the CMS).
-    .replace(/^<li>(<br>)?/, "")
-    .replace(/<p>‍<\/p>/g, "");
+    .replace(/^<li>(<br>)?/, "");
+  // "<p>&zwj;</p>" paragraphs are kept on purpose: Webflow editors use them as
+  // vertical spacers and the live pages render them (33px each).
   return out;
 }
 

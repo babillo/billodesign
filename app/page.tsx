@@ -2,6 +2,7 @@ import { OrbSpeech } from "@/components/experience/OrbSpeech";
 import { SplineOrb } from "@/components/experience/SplineOrb";
 import { Bio } from "@/components/home/Bio";
 import { Hero } from "@/components/home/Hero";
+import { HomeIntro, INTRO_DURATION_MS } from "@/components/home/HomeIntro";
 import { Preloader } from "@/components/home/Preloader";
 import { Projects } from "@/components/home/Projects";
 import { Services } from "@/components/home/Services";
@@ -55,8 +56,9 @@ export default function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Preloader />
+      <HomeIntro />
       <SplineOrb variant="home">
-        <OrbSpeech lines={orbLines.hero} typeSpeed={25} hideAfter={8500} className={styles.heroTip} />
+        <OrbSpeech lines={orbLines.hero} typeSpeed={25} hideAfter={INTRO_DURATION_MS} className={styles.heroTip} />
       </SplineOrb>
       <Hero />
       <WeGotYou />

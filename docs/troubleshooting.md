@@ -65,3 +65,42 @@ Then validated every file with an XML parser, checking that no `path`/`stop`/`re
 **Workaround:** Visual behavior of the original site was reconstructed from the export's code instead: the IX2 interaction JSON in `webflow.js`, the CSS, and inline scripts. Local screenshots of the new app still work, because localhost bypasses the proxy. Side-by-side visual QA against the live site (Phase 4) must be done on a machine with normal network access.
 
 **Update 2026-09-30:** still failing after the environment was switched to full network access. The policy isn't the issue: `curl` reaches the site, but Chromium doesn't trust the proxy CA (the browser trust store in the container appears to be from the previous session). Working around it inside the session isn't permitted, so live-site comparison stays manual (see phase-4-visual-qa.md).
+
+---
+
+## Enabling the headless browser to load external sites (visual QA)
+
+**Problem:** Chromium in the cloud container failed with `ERR_CERT_AUTHORITY_INVALID` for every external HTTPS site, while `curl` worked.
+
+**Cause:** Outbound HTTPS goes through the agent proxy, which re-signs TLS with its own CA (`/root/.ccr/agent-proxy-ca.crt`). The browser NSS store in the container predated the proxy CA's renewal, so Chromium didn't trust it. Allowing the site in robots.txt or the Webflow traffic settings has no effect on this.
+
+**Solution (authorized by the owner, 2026-09-30):** launch the QA browser with Chromium's `--ignore-certificate-errors-spki-list=<sha256 SPKI hashes>`, computed from the proxy CA file:
+```bash
+openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | base64
+```
+(the file holds two certificates, so hash both). This trusts **only** that proxy's keys. Normal verification stays on for everything else, and it applies only to the browsers launched for comparison scripts.
+
+**Prevention:** in a fresh session the container may already have a correct trust store; try without the flag first.
+
+---
+
+## Component styles overridden depending on CSS load order
+
+**Problem:** On mobile, the testimonial slides were squeezed to 140px and overlapped.
+
+**Cause:** `Slider.module.css` set `.mask { width: 40% }` and `Testimonials.module.css` set `.mask { width: 90% }` inside a media query. Both have the same specificity, so the stylesheet that loads **last** wins, and CSS Modules chunk order isn't guaranteed. For Projects the consumer happened to win; for Testimonials it lost.
+
+**Solution:** shared components don't set properties that consumers override (width now comes only from the consumer). Where an override is intended, raise specificity deliberately (`.content .tip` in `Cta.module.css`, mirroring Webflow's combo classes).
+
+**Prevention:** when a component accepts a `className` to customize a property, don't also give that property a default in the component's own module.
+
+---
+
+## Rebuild looked shorter than the original: lazy images and hidden spacers
+
+**Symptoms:** Section heights differed from the live site by tens to hundreds of pixels.
+
+**Causes found:**
+1. **Measurement artifact:** the live site's lazy images below the fold have 0 height until scrolled into view, while `next/image` reserves space. Always scroll the full page before measuring.
+2. **Real difference:** the importer stripped `<p>&zwj;</p>` paragraphs from rich text. Webflow editors use them as spacers (33px each). They're now kept.
+3. **Real difference:** project card thumbnails stretched to the wrapper height; the Webflow class had `align-items: flex-start`.

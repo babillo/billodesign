@@ -48,7 +48,8 @@
   cursor: pointer;
 }
 
-.link:hover {
+.link:hover,
+.current {
   color: var(--color-cyan);
 }
 

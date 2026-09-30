@@ -37,7 +37,7 @@ export function SplineOrb({ variant = "home", children }: Props) {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-intro-keep="">
       <div className={styles.inner}>
         <div className={`${styles.orb} ${variant === "project" ? styles.project : ""} ${ready ? styles.ready : ""}`} aria-hidden="true">
           {load && (

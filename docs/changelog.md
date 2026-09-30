@@ -37,3 +37,15 @@
 - Chat conversation history was never sent to the model in the original (`history` vs `conversationHistory`)
 - Fallback keyword matching ("this" matched "hi", "working" matched "work")
 - Reference chatbot files excluded from TypeScript and ESLint so they can't break the build
+
+## Phase 4 — Visual QA (first pass, 2026-09-30)
+
+### Added
+- Homepage intro sequence (content revealed after the orb's greeting), reproduced from the live site
+- Navbar scroll-spy highlight
+
+### Fixed
+- Project card thumbnail stretching; "Visit Site" underline
+- Testimonial slider width on mobile (CSS cascade order)
+- Rich-text spacer paragraphs restored
+- CTA bubble max-width specificity
