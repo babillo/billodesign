@@ -38,9 +38,10 @@
 | URL | Source | Notes |
 |---|---|---|
 | 404 | `app/not-found.tsx` | "Page Not Found / Go Home" |
+| runtime error | `app/error.tsx` | "Something went wrong / Try again" |
 | `/sitemap.xml` | `app/sitemap.ts` | home + 6 projects |
 | `/robots.txt` | `app/robots.ts` | disallows everything on Vercel preview deployments |
 | `POST /api/chat` | `app/api/chat/route.ts` | `{message, conversationHistory}` → `{response}` |
-| `POST /api/contact` | `app/api/contact/route.ts` | returns 503 until an email option is chosen |
+| `POST /api/contact` | `app/api/contact/route.ts` | Turnstile check → Resend email to the Zoho inbox (ADR-011) |
 
 **Not recreated** (see migration.md §4): Webflow `401` password page, `detail_testimonial` template, `style-guide`.
