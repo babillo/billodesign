@@ -122,3 +122,17 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Cause:** (1) the importer kept the stored `padding-bottom` ratio, but Webflow renders videos using `data-rt-dimensions` (FlexiBank's video: 40.5% stored vs 67.4% rendered); (2) my rich-text CSS stretched every figure to full width, whereas Webflow's "normal" figures keep their natural size (max 60%).
 
 **Solution:** the importer derives the video ratio from `data-rt-dimensions`; the `.rich-text figure` rules are now ported 1:1 from `webflow.css`.
+
+## Live site: chat gave canned replies, contact form said "Spam check failed"
+
+**Symptoms:** on the first Vercel deployment, `/api/chat` answered every question with the generic fallback, and every contact submission returned 403 "Spam check failed".
+
+**Cause:** environment variables were missing from the production build. `NEXT_PUBLIC_TURNSTILE_SITE_KEY` wasn't in the JavaScript, so the widget never produced a token. `OPENAI_API_KEY` wasn't reaching production, so the route fell back silently.
+
+**Investigation:** `curl` POST to `/api/chat` (a fallback answer means no key, or OpenAI rejected the request; the reason is logged as `Chat API error:` in Vercel → Logs). Grep the loaded JS chunks for `0x4…` to confirm the Turnstile site key was built in.
+
+**Solution:** set the variables for the **Production** environment and redeploy. Verified 2026-09-30: the chat answers with real project knowledge, and the Turnstile widget renders.
+
+**Gotcha:** headless or automated browsers never receive a Turnstile token, so they always get "Spam check failed". Test the contact form in a normal browser.
+
+**Prevention:** after changing env vars, always redeploy (`NEXT_PUBLIC_*` values are compiled into the build), and run the post-deployment checks in `deployment.md`.
