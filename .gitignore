@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# Original chatbot app secrets (never commit)
+webflow/export/chatbot files/chatbot/.env
