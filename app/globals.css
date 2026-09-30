@@ -96,6 +96,13 @@ a {
   color: var(--color-cyan-deep);
 }
 
+/* From Webflow's normalize.css. Browsers default to "bolder", which on 300-weight
+   paragraphs only reaches 400; Webflow renders <strong> at 700. */
+b,
+strong {
+  font-weight: bold;
+}
+
 :focus-visible {
   outline: 0.125rem solid #4d65ff;
   outline-offset: 0.125rem;

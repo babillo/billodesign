@@ -52,3 +52,4 @@
 - Importer filename collisions (3 case-study images were replaced by same-named files)
 - Rich-text figure sizing ported 1:1 from Webflow; video ratio from `data-rt-dimensions`
 - Project card title weight identical for h3/h4
+- `<strong>` rendered at 700 like Webflow (normalize.css), which fixed line wrapping differences

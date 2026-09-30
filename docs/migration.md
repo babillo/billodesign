@@ -226,3 +226,22 @@ With browser access to the live site, section heights were compared at 1440 / 10
 **Known remaining differences (intentional or architectural)**
 - The Spline orb doesn't render in the headless QA browser (no GPU) on either site, so it's not visually compared. It needs a check on a real device.
 - The live site's "Next Project" card title is an `h4`; mine is an `h3` (heading outline).
+
+### Final QA results (2026-09-30, pass 3)
+
+Position of every section heading and total page height compared at 1440 and 390, after scrolling the full page.
+
+| Page | Result |
+|---|---|
+| Home | all sections within ±7px at 1440/1024/768/390 (Selected Work taller only because the live site hadn't lazy-loaded some card images) |
+| Timms-Team | identical (≤1px) |
+| Macrostate, Elegantnast | within ±35px (only the Next Project card differs) |
+| OrbitAI | identical until Next Project |
+| FlexiBank | identical until Next Project |
+| Personal Brand | −24px: the CMS's stray `<li><br>` outside a list is removed on purpose (invalid HTML) |
+
+**Intentional:** "Next Project" cards differ where the live site links to a removed project (FlexiBank → Beelo, OrbitAI → Handwerkerseiten, Macrostate → MAJER Sales).
+
+**Fixed in pass 3:** `<strong>` weight (normalize.css sets `bold`; the browser default `bolder` gave 400 on 300-weight paragraphs, which changed line wrapping).
+
+**Not verifiable in headless QA:** the Spline orb (no GPU); check it on a real device.
