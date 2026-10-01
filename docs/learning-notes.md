@@ -68,3 +68,6 @@ Sets how far below the top of the viewport an element stops when scrolled to (an
 
 ## Animating numbers accessibly
 Render the final value on the server, animate a copy marked `aria-hidden`, and keep the real value in visually hidden text. No-JS users, screen readers and reduced-motion users all get the correct number, never a half-counted one.
+
+## Gradient borders on translucent elements
+The `padding-box`/`border-box` background trick paints the gradient under the whole element, which shows through a semi-transparent background. For glass cards, draw the border on a `::before` with `padding: 1px` and a mask `linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)`: only the 1px ring stays visible (`.gradient-border-glass` in globals.css).

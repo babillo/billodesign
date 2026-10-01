@@ -155,3 +155,4 @@
 - No hover/orb sounds from taps on touch screens
 - Navbar status dot: cyan
 - Decoding now also plays on section titles, and replays every time they scroll into view
+- Stat cards: cycling cyan border like the service cards (`.gradient-border-glass`, keeps the glass see-through)

@@ -45,7 +45,7 @@ Tokens live in `app/globals.css` (`:root`).
 ## Components / patterns
 
 - **Button** (`components/ui/Button`): 0.75rem 1.5rem padding, 0.25rem radius, glow `0 0 5px #46dbff80`, pulsing dot, rotating gradient border.
-- **Rotating gradient border** (`.gradient-border`): `@property --angle` animated 0 → 360° over 8s. Used on buttons, service cards, the contact modal and the submit button.
+- **Rotating gradient border** (`.gradient-border`): `@property --angle` animated 0 → 360° over 8s. Used on buttons, service cards, the contact modal and the submit button. `.gradient-border-glass` (Phase 6) is the same effect for translucent cards: a masked `::before` draws only the 1px ring, so the gradient doesn't show through the glass (used on the stat cards).
 - **Cards:** 1px `#03869e` border, `backdrop-filter: blur(5–10px)`, often `mix-blend-mode: screen`, with two blurred ellipse glows (`Ellipses`).
 - **Orb speech bubble:** 1px cyan border, radius `30px 0 30px 30px`, blur 20px.
 - **Slider dots:** bars 5rem × 0.75rem (2rem × 0.3rem ≤767), active `#00afcd`, inactive `#383838`.
@@ -78,6 +78,6 @@ New values introduced in Phase 6, approved by the owner (see `phase-6-proposals.
 | Hero actions | gap 1.5rem × 2.5rem; "View my work" mono 1rem weight 300, 1px cyan underline | `Hero.module.css` |
 | Scroll cue | 22×34px outline mouse, 1px cyan, glow 12px; wheel dot loops 1.8s; label mono 0.7rem/300, letter-spacing .35em | `Hero.module.css` |
 | Status pill | 1px `--color-cyan-deep`, `rgb(0 0 0/.4)`, mono 0.75rem/300; dot 7px `--color-cyan` with 2s pulse (owner: cyan, not green) | `Navbar.module.css` |
-| Stat cards (We got your back) | glass: `rgb(1 1 1/.45)` + blur(5px), 1px `--color-cyan-deep`, **no cyan fill**; numbers mono 2.6rem **300** (tabular); labels mono 0.7rem/300 .25em; rings 72px, stroke 1.5px; bars 1px cyan top line | `WeGotYou.module.css` |
+| Stat cards (We got your back) | glass: `rgb(1 1 1/.45)` + blur(5px), **cycling 1px cyan border** (`.gradient-border-glass`, same 8s rotation as the service cards), **no cyan fill**; numbers mono 2.6rem **300** (tabular); labels mono 0.7rem/300 .25em; rings 72px, stroke 1.5px; bars 1px cyan top line | `WeGotYou.module.css` |
 | Dashboard backdrop | original image, fixed, centred, `min(895px, 92vw)`, opacity .85 | `WeGotYou.module.css` |
 | Bio stats | 1px `--color-cyan-deep` grid (4 cols, 2×2 ≤767px); values mono 1.5rem **300**; labels mono 0.68rem/300 | `Bio.module.css` |
