@@ -8,7 +8,7 @@
 |---|---|
 | 1 | ✅ Approved, **size only**: the badge stays in the same position, just smaller on phones |
 | 2 | ✅ Approved |
-| 3 | ❌ Not approved: the orb keeps its current behaviour |
+| 3 | ❌ Not approved. Revisited 2026-10-02 with mockups on the live site (B: dim + blur at 35%/3px; C: smaller, 50%, top-right). **Final: skip.** The orb covers only about 5% of the screen and the text is readable after a little scrolling, so the trade-off (less orb presence and character) isn't worth it |
 | 4 | ✅ Approved |
 | 5 | ✅ Approved |
 | 6 | ✅ Approved: the enlarged tap areas must not overlap each other |
