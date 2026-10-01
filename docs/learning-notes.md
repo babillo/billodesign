@@ -47,3 +47,6 @@ React effects run after the browser has painted the server HTML. State that must
 
 ## HTML email is not web HTML
 Gmail, Outlook and others strip `<style>` blocks, CSS variables, flexbox and grid, and often block images until the reader allows them. Reliable emails use nested `<table role="presentation">` layouts, inline `style=""` on every element, web-safe font stacks, and a plain-text alternative. The contact notification (`lib/server/contact-email.ts`) follows these rules, and every visitor-supplied value is HTML-escaped.
+
+## `useSyncExternalStore` for browser-stored preferences
+A value that lives outside React (localStorage, `matchMedia`, a module variable) shouldn't be copied into `useState` from an effect: that renders twice and the React Compiler lint rejects it. `useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)` reads it directly. The server snapshot (e.g. `false`) is used for SSR and hydration, then React re-renders with the real client value. Example: the sound preference in `SoundProvider.tsx`.

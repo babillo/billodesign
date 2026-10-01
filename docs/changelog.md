@@ -94,3 +94,4 @@
 ### Completed (2026-10-01)
 - billodesign.com served by Vercel (apex primary; `www` and `http` redirect), Webflow subdomain indexing off
 - Verified: share previews (LinkedIn, opengraph.xyz), GA4 Realtime, Spline orb on real phone and laptop, sitemap submitted in Search Console, contact email delivery, AI chat
+- Sound toggle: icon and audio could get out of sync after a reload (first click raced the remembered-state resume); the remembered state now shows immediately

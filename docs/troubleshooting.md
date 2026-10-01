@@ -162,3 +162,15 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Solution:** the honeypot is now `hp_check`, a name autofill doesn't recognise, and a filled honeypot is logged (`Contact form: honeypot filled, message dropped`).
 
 **Prevention:** never give a honeypot a realistic field name (`company`, `website`, `phone`, `address`…). Log silent drops so false positives are visible.
+
+## Sound icon showed "muted" while sound was playing
+
+**Symptoms:** after turning sound on and reloading, the icon showed the muted (slashed) speaker while the ambient track played, and every later click looked inverted.
+
+**Cause:** a saved "sound on" choice resumed audio on the first `pointerdown` anywhere, because browsers need a gesture before audio can play. When that first gesture was a click on the sound toggle, the resume turned sound on and the click toggled it straight off. `setSound(true)` was still awaiting the Howler import, and once that finished it started the ambient loop anyway.
+
+**Investigation:** a browser script reloaded the live site and logged `aria-pressed`, the visible icon, `localStorage.soundOn` and `Howler._howls[].playing()` after each step. That reproduced "pressed=false, ambient playing".
+
+**Solution:** (1) the resume listener ignores gestures on `[data-sound-toggle]`; (2) `setSound` checks the current state again after `await load()`; (3) the preference is read with `useSyncExternalStore`, so the icon shows the remembered choice immediately instead of "off" until the first gesture.
+
+**Prevention:** after an `await`, re-check that the state you acted on is still current.
