@@ -72,4 +72,4 @@ Each project's `card.tag` is the one-line tag under its title in the homepage gr
 In `lib/site.ts`:
 - `site.availability`: navbar status pill text.
 - `performanceStats`: uptime, Lighthouse scores, response time (same figures as the dashboard image).
-- `bioStats`: bio strip; owner-provided figures (3+ years, 15+ projects, Certified Webflow Partner, Awwwards Nominee).
+- `bioStats`: bio strip. Years are computed from `CAREER_START_YEAR = 2022` (web design & development professionally; coding background since 2018) and refresh on each deploy (the homepage is static). Other figures from the owner: 15+ projects, Certified Webflow Partner, Awwwards Nominee.

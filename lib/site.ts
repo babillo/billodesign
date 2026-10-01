@@ -50,9 +50,13 @@ export const performanceStats = {
   responseMs: 42,
 };
 
-// Bio stats strip (Phase 6), figures provided by the owner.
+// Bio stats strip (Phase 6), figures provided by the owner. Years are counted
+// from when web design & development started professionally (2022), so the
+// number updates itself each January.
+const CAREER_START_YEAR = 2022;
+
 export const bioStats = [
-  { value: "3+", label: "Years experience" },
+  { value: `${new Date().getFullYear() - CAREER_START_YEAR}+`, label: "Years experience" },
   { value: "15+", label: "Projects shipped" },
   { value: "Certified", label: "Webflow Partner" },
   { value: "Nominee", label: "Awwwards" },

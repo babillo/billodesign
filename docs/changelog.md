@@ -157,3 +157,4 @@
 - Decoding now also plays on section titles, and replays every time they scroll into view
 - Stat cards: cycling cyan border like the service cards (`.gradient-border-glass`, keeps the glass see-through)
 - Hero heading and paragraph decode too (text-node based, keeps line breaks; case-matched glyphs; longer text takes longer)
+- Bio: years of experience computed from 2022 (owner correction: 4+ years, not 3+)
