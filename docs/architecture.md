@@ -6,7 +6,7 @@
 - **Content:** local JSON generated from the Webflow CSV exports. No CMS (ADR-001).
 - **Styling:** global design tokens + CSS Modules (ADR-005).
 - **Interactivity:** a small set of client components, triggered from server-rendered markup via data attributes (ADR-006).
-- **Server code:** two route handlers, `/api/chat` (OpenAI) and `/api/contact` (not yet configured).
+- **Server code:** two route handlers, `/api/chat` (OpenAI) and `/api/contact` (Turnstile + Resend → Zoho inbox, ADR-011).
 - **Hosting:** Vercel (Phase 5).
 
 ```
@@ -18,7 +18,7 @@ app/
   not-found.tsx         404
   sitemap.ts, robots.ts
   api/chat/route.ts     AI assistant (server-only OpenAI key)
-  api/contact/route.ts  contact form (placeholder until an email option is chosen)
+  api/contact/route.ts  contact form: validation, honeypot, rate limit, Turnstile, Resend
 components/
   layout/       Navbar, Footer, SocialLinks, AwwwardsBadge
   home/         homepage sections (Hero, WeGotYou, Services, TechStack, Projects, Testimonials, Bio, Preloader)
@@ -31,7 +31,7 @@ components/
                 SmoothScroll, ScrollEffects, OrbErrorBoundary
 content/        projects.json, testimonials.json (generated; see content.md)
 lib/            content.ts (typed accessors), site.ts (site-wide copy/links), gsap.ts, motion.ts,
-                chat/ (system prompt, fallbacks), server/rate-limit.ts
+                chat/ (system prompt, fallbacks), server/ (rate-limit.ts, contact-email.ts)
 scripts/        import-webflow.mjs (CSV → content + asset download)
 public/         icons/, images/, media/ (project + testimonial assets), audio/, lottie/
 webflow/export/ original Webflow export + CMS CSVs (reference only; excluded from lint)
