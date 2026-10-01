@@ -113,3 +113,8 @@
 - #6 Slider dots: 32px-tall touch areas, bars pixel-identical, no overlap
 - #10 Shorter social-share description (`site.shareDescription`)
 - "What I Build" heading: double space removed
+
+### Batch B
+- #5 Case-study screenshots open full-screen (`ImageLightbox`): keyboard, swipe, captions, counter
+- Accessibility: the 31 case-study images had Webflow's placeholder alt text `__wf_reserved_inherit`, which screen readers read out; they now use their caption or "<Project> screenshot" (importer `fixImageAlts`)
+- Typo: "OrbitAI Dashboad" → Dashboard

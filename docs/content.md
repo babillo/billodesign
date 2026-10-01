@@ -58,3 +58,6 @@ Rendered section order and headings are defined in `SECTIONS` in `app/projects/[
 ## How to change navigation or social links
 
 Edit `navLinks` / `socialLinks` in `lib/site.ts`. "Contact" in the navbar opens the contact modal and is defined in `components/layout/Navbar.tsx`.
+
+## Rich-text image alt text
+Webflow stores `alt="__wf_reserved_inherit"` when no alt was set. The importer (`fixImageAlts`) replaces it with the figure's caption, or "<Project name> screenshot" when there is none. To give an image a better description, edit its caption in the content, or the `alt` in `content/projects.json`.

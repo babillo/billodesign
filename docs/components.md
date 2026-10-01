@@ -28,6 +28,7 @@ Client components are marked **(client)**. Everything else is a server component
 | `ProjectHeader` | project page | h1, Wistia video **or** thumbnail, Visit Site, meta `<dl>` (empty rows hidden) |
 | `ProjectSection` | project page | one case-study card with rich-text HTML; `visual` disables the screen blend |
 | `VisitSiteLink` | cards, header | external link with arrow |
+| `ImageLightbox` (client) | project page | Phase 6 #5. Turns every `main .rich-text figure img` into a keyboard-focusable "Enlarge image" button and opens it in a native `<dialog>`: caption + counter, ←/→ keys, swipe, Escape/backdrop to close, focus back to the image. `data-lenis-prevent` stops the page scrolling behind. No props. |
 
 ## Home (`components/home/`)
 `Hero`, `WeGotYou`, `Services`, `TechStack` (+ `TechStackLottie`, client), `Projects`, `Testimonials`, `Bio`, `Preloader` (CSS-only). Each maps 1:1 to a Webflow section. See routes.md.

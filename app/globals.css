@@ -479,3 +479,13 @@ html[data-intro] footer {
 html[data-intro-seen] [data-intro-once] {
   display: none;
 }
+
+/* Phase 6 (#5): case-study screenshots open in ImageLightbox. */
+.rich-text img[data-lightbox-index] {
+  cursor: zoom-in;
+}
+
+.rich-text img[data-lightbox-index]:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 4px;
+}

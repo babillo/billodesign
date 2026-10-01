@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { SplineOrb } from "@/components/experience/SplineOrb";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectHeader } from "@/components/projects/ProjectHeader";
+import { ImageLightbox } from "@/components/projects/ImageLightbox";
 import { ProjectSection } from "@/components/projects/ProjectSection";
 import { Cta } from "@/components/sections/Cta";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
@@ -103,6 +104,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         </div>
       </Container>
 
+      <ImageLightbox />
       <Cta title="Let’s Build Yours" text="Ready to turn your vision into a living, breathing digital experience?" />
     </>
   );

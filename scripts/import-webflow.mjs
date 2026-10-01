@@ -44,6 +44,7 @@ const TYPO_FIXES = [
   ["maintainance", "maintenance"],
   ["lists.They", "lists. They"],
   ["tool.<strong>OrbitAI", "tool. <strong>OrbitAI"],
+  ["Dashboad", "Dashboard"],
 ];
 
 const RICH_TEXT_FIELDS = {
@@ -189,6 +190,22 @@ async function cleanRichText(html, slug) {
   return out;
 }
 
+// Webflow writes alt="__wf_reserved_inherit" when an image has no alt text, and
+// screen readers would read that out. Use the figure caption, or a generic
+// description naming the project.
+function fixImageAlts(html, projectName) {
+  const attr = (v) => v.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+  return html
+    .replace(/<figure[^>]*>[\s\S]*?<\/figure>/g, (fig) => {
+      const caption = fig.match(/<figcaption>([\s\S]*?)<\/figcaption>/)?.[1]
+        .replace(/<[^>]+>/g, "")
+        .replace(/&zwj;|&nbsp;/g, " ")
+        .trim();
+      return fig.replace('alt="__wf_reserved_inherit"', `alt="${attr(caption || `${projectName} screenshot`)}"`);
+    })
+    .replaceAll('alt="__wf_reserved_inherit"', `alt="${attr(`${projectName} screenshot`)}"`);
+}
+
 function parseHomepage() {
   const html = fs.readFileSync(path.join(EXPORT, "index.html"), "utf8");
   const slider = html.slice(html.indexOf("projects_mask"), html.indexOf("section_home-testimoinal"));
@@ -266,7 +283,7 @@ async function main() {
     const sections = {};
     for (const [col, key] of Object.entries(RICH_TEXT_FIELDS)) {
       const cleaned = await cleanRichText(r[col] ?? "", slug);
-      if (cleaned) sections[key] = cleaned;
+      if (cleaned) sections[key] = fixImageAlts(cleaned, r.Title.split(/\s+[—–-]\s+/)[0].trim());
     }
 
     const text = (v) => (v ? fixTypos(v.trim()) : null);

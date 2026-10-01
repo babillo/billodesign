@@ -1,0 +1,141 @@
+/* Phase 6 (#5): full-screen viewer for case-study screenshots. */
+.dialog {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.dialog[open] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fade-in 0.2s ease-in-out;
+}
+
+.dialog::backdrop {
+  background-color: #000000f2;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: calc(100vw - 9rem);
+  margin: 0;
+  touch-action: pan-y;
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100svh - 7rem);
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.caption {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-grey-radial);
+  text-align: center;
+}
+
+.counter {
+  color: var(--color-cyan);
+}
+
+/* Same round cyan outline buttons as the contact modal's close button. */
+.nav,
+.close {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.7rem;
+  border: 1px solid var(--color-cyan);
+  border-radius: 90px;
+  background: rgb(0 0 0 / 0.5);
+  color: #27deff;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.nav:hover,
+.close:hover {
+  background-color: var(--color-cyan-deep);
+  color: #000;
+}
+
+.close {
+  top: 1rem;
+  right: 1rem;
+}
+
+.nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.prev {
+  left: 1.5rem;
+}
+
+.prev svg {
+  transform: rotate(180deg);
+}
+
+.next {
+  right: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .figure {
+    max-width: calc(100vw - 2rem);
+  }
+
+  .image {
+    max-height: calc(100svh - 10rem);
+  }
+
+  /* Phones: arrows move to the bottom; swiping also works. */
+  .nav {
+    top: auto;
+    bottom: 1.5rem;
+    transform: none;
+  }
+
+  .prev {
+    left: calc(50% - 4rem);
+  }
+
+  .next {
+    right: calc(50% - 4rem);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open] {
+    animation: none;
+  }
+}
