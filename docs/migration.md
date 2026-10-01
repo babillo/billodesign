@@ -123,6 +123,8 @@ Investigation date: 2026-09-29.
 
 **Confirmed (owner, 2026-09-30):** the two jsDelivr sounds (click beep, hover) are free to use.
 
+**Decision (owner, 2026-10-01):** a visitor who turned sound on gets it again on the next visit, as on Webflow: it plays immediately where the browser allows autoplay, otherwise after the first interaction. First visits still start muted (ADR-014).
+
 ## 6. Indexed URLs / Search Console
 
 **Confirmed**
@@ -197,7 +199,7 @@ Layout, spacing, type scale, colors, breakpoints, section order, copy, slider be
 - Wistia videos embedded directly (no Embedly).
 
 ### Intentionally changed (owner-approved or bug fixes)
-- Sound starts **muted** (owner decision §5).
+- Sound starts **muted** on a first visit; a remembered "on" resumes on revisit (owner decisions §5, ADR-014).
 - Only 6 projects; 4 removed URLs redirect to `/` (§1).
 - Content typos fixed; "What People Says" → "What People Say"; "What are your waiting for" → "What are you waiting for?".
 - Accessibility labels: social links, the wrong card alt text, JS logo alt text, form labels, a real `mailto:` link for the email.

@@ -238,3 +238,23 @@ Leave the duplication (fewer files but drift risk); a generic Section component 
 
 Trade-offs:
 One more indirection when reading a section. The lint rule is off globally, so reviewers must keep using `next/image` for photos (documented in architecture.md).
+
+## ADR-014 — Remembered sound and once-per-visit intro
+
+Date:
+2026-10-01
+
+Decision:
+(1) A remembered "sound on" starts audio on the next visit: immediately if the browser allows autoplay, otherwise on the first interaction. (2) The homepage preloader and intro play once per browser tab. Back/Forward restores the previous scroll position without replaying them; a reload replays them.
+
+Context:
+After launch the owner compared the site with Webflow: there, sound came back on revisit, and going back to the homepage returned to the same spot without the preloader (full page loads plus the browser's back-forward cache). Client-side navigation in Next.js re-mounted the homepage, replaying the intro and resetting the scroll position.
+
+Reason:
+Preserve the original experience (CLAUDE.md: the Webflow site is the reference). Browser autoplay rules still apply, and no site can bypass them.
+
+Alternatives:
+Keep "always start muted" (earlier choice, replaced by the owner). Disable client-side navigation (loses fast navigation and prefetching).
+
+Trade-offs:
+Returning sound-on visitors download about 400 KB of audio on page load (the 1.4 MB ambient track loads when it starts). A `sessionStorage` flag and an inline head-script check add a little complexity; reduced-motion visitors are unaffected (no intro).

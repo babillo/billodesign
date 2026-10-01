@@ -58,7 +58,10 @@ export default function HomePage() {
       <Preloader />
       <HomeIntro />
       <SplineOrb variant="home">
-        <OrbSpeech lines={orbLines.hero} typeSpeed={25} hideAfter={INTRO_DURATION_MS} className={styles.heroTip} />
+        {/* The welcome message is part of the intro: hidden once it has played this visit. */}
+        <div className="intro-once" data-intro-once="">
+          <OrbSpeech lines={orbLines.hero} typeSpeed={25} hideAfter={INTRO_DURATION_MS} className={styles.heroTip} />
+        </div>
       </SplineOrb>
       <Hero />
       <WeGotYou />

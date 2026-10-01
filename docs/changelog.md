@@ -95,3 +95,5 @@
 - billodesign.com served by Vercel (apex primary; `www` and `http` redirect), Webflow subdomain indexing off
 - Verified: share previews (LinkedIn, opengraph.xyz), GA4 Realtime, Spline orb on real phone and laptop, sitemap submitted in Search Console, contact email delivery, AI chat
 - Sound toggle: icon and audio could get out of sync after a reload (first click raced the remembered-state resume); the remembered state now shows immediately
+- Sound: a remembered "on" plays again on revisit (immediately if the browser allows autoplay, else on the first interaction); no duplicate loops on unlock (owner decision, ADR-014)
+- Homepage intro plays once per tab; Back/Forward restores the scroll position without the preloader or welcome message (ADR-014)

@@ -8,7 +8,7 @@ import styles from "./Preloader.module.css";
  */
 export function Preloader() {
   return (
-    <div className={styles.preloader} aria-hidden="true" data-intro-keep="">
+    <div className={styles.preloader} aria-hidden="true" data-intro-keep="" data-intro-once="">
       <div className={styles.curtains}>
         <div className={`${styles.curtain} ${styles.left1}`} />
         <div className={`${styles.curtain} ${styles.left2}`} />
