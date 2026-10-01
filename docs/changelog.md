@@ -158,3 +158,4 @@
 - Stat cards: cycling cyan border like the service cards (`.gradient-border-glass`, keeps the glass see-through)
 - Hero heading and paragraph decode too (text-node based, keeps line breaks; case-matched glyphs; longer text takes longer)
 - Bio: years of experience computed from 2022 (owner correction: 4+ years, not 3+)
+- Bio: "Nominee · Awwwards" replaced by "Google UX · Certified"; Webflow stat reads "Webflow · Certified Partner"; smaller values on phones so they fit one line

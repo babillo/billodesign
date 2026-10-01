@@ -58,8 +58,8 @@ const CAREER_START_YEAR = 2022;
 export const bioStats = [
   { value: `${new Date().getFullYear() - CAREER_START_YEAR}+`, label: "Years experience" },
   { value: "15+", label: "Projects shipped" },
-  { value: "Certified", label: "Webflow Partner" },
-  { value: "Nominee", label: "Awwwards" },
+  { value: "Webflow", label: "Certified Partner" },
+  { value: "Google UX", label: "Certified" },
 ];
 
 export const services = [

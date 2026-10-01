@@ -127,6 +127,11 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  /* Keeps "Google UX" on one line in a half-width cell. */
+  .stat dd {
+    font-size: 1.25rem;
+  }
+
   .stat:nth-child(2) {
     border-right: 0;
   }
