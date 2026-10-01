@@ -44,7 +44,11 @@ export const viewport: Viewport = { themeColor: "#000000", colorScheme: "dark" }
 
 // Runs before first paint: enables the scroll-reveal start state only when
 // motion is allowed, so content is never hidden without JS or for reduced motion.
-const motionScript = `if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion')`;
+// On the homepage it also starts the intro (content hidden while the orb speaks)
+// before the first paint; setting it after hydration made the hero flash.
+// HomeIntro takes over once React loads; the 15s timeout is a failsafe so the
+// page never stays hidden if JavaScript fails.
+const motionScript = `if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var d=document.documentElement;d.classList.add('motion');if(location.pathname==='/'){d.dataset.intro='boot';setTimeout(function(){if(d.dataset.intro==='boot')delete d.dataset.intro},15000)}}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

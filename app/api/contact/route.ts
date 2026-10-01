@@ -24,13 +24,19 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
     // Local development without Turnstile keys; production must be configured.
     return process.env.NODE_ENV !== "production";
   }
-  if (!token) return false;
+  if (!token) {
+    console.error("Turnstile verification failed: no token sent");
+    return false;
+  }
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
     body: new URLSearchParams({ secret, response: token, remoteip: ip }),
   });
-  const data = (await res.json().catch(() => null)) as { success?: boolean } | null;
-  return data?.success === true;
+  const data = (await res.json().catch(() => null)) as { success?: boolean; "error-codes"?: string[]; hostname?: string } | null;
+  if (data?.success === true) return true;
+  // Visible in Vercel → Logs; e.g. "invalid-input-secret" means the secret doesn't match the site key's widget.
+  console.error("Turnstile verification failed", data?.["error-codes"], data?.hostname);
+  return false;
 }
 
 export async function POST(request: Request) {

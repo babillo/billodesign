@@ -79,3 +79,10 @@
 - Security headers; `noindex` on `*.vercel.app` hosts
 - Error page (`app/error.tsx`)
 - deployment.md rewritten: environment-variable status, contact form setup, domain cutover steps, post-deploy checks, rollback
+
+### Fixed (live-site feedback, 2026-09-30)
+- Hero content flashed before the intro hid it: the intro flag is now set before the first paint
+- Tech-stack Lottie and word-scrub animations froze: ScrollTriggers are re-measured when the intro ends
+- "We got your back" subtitle was invisible (looked as if the dashboard image covered it): split words kept `position: static`
+- Ambient background sound never played: non-preloaded sounds are loaded before playing
+- Contact form: no submission without a Turnstile token; widget errors are shown; the server logs Turnstile error codes

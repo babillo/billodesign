@@ -38,3 +38,9 @@ Inline `<svg>` in HTML is forgiving: the HTML parser fixes attribute casing (`vi
 
 ## React Compiler lint rules
 ESLint (`react-hooks`) flags `setState` called synchronously inside `useEffect` and ref reads during render. Fixes used here: set state from timer or event callbacks; "adjust state when a prop changes" during render using previous-value state (`CtaOrbTips`); keep previous values in state instead of refs (`Slider`).
+
+## `background-clip: text` and positioned children
+Gradient text is `background-image` + `background-clip: text` + transparent `-webkit-text-fill-color`. Text inside a **positioned** (`relative`/`absolute`) descendant isn't part of the parent's clip, yet it inherits the transparent fill, so it disappears. Text-splitting libraries often add `position: relative` to each word, so reset it to `static` on gradient headings.
+
+## Before-paint scripts
+React effects run after the browser has painted the server HTML. State that must be true from the very first frame (hide content, theme class, motion flags) belongs in a small inline `<script>` in `<head>`. `suppressHydrationWarning` on `<html>` lets it change attributes without hydration warnings.

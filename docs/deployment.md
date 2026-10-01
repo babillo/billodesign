@@ -16,12 +16,12 @@ Set in Vercel → Project → Settings → Environment Variables. Listed in `.en
 
 | Variable | Scope | Purpose | Status |
 |---|---|---|---|
-| `OPENAI_API_KEY` | server | AI chat; without it the chat uses fallback replies | ⚠ not working yet: production returns fallback replies |
-| `RESEND_API_KEY` | server | contact form delivery | ? |
-| `CONTACT_TO_EMAIL` | server | your Zoho inbox (never exposed to the browser) | ? |
-| `CONTACT_FROM_EMAIL` | server | e.g. `Billodesign <contact@send.billodesign.com>` | ? |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **baked in at build time** | Turnstile widget | ⚠ missing from the production build |
-| `TURNSTILE_SECRET_KEY` | server | Turnstile verification; required in production | ? |
+| `OPENAI_API_KEY` | server | AI chat; without it the chat uses fallback replies | ✅ verified 2026-09-30 (real answers about the projects) |
+| `RESEND_API_KEY` | server | contact form delivery | set; awaiting a real-browser test email |
+| `CONTACT_TO_EMAIL` | server | your Zoho inbox (never exposed to the browser) | set; awaiting a real-browser test email |
+| `CONTACT_FROM_EMAIL` | server | e.g. `Billodesign <contact@send.billodesign.com>` | set; awaiting a real-browser test email |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **baked in at build time** | Turnstile widget | ✅ in the build; widget renders |
+| `TURNSTILE_SECRET_KEY` | server | Turnstile verification; required in production | set; awaiting a real-browser test email |
 | `NEXT_PUBLIC_SITE_URL` | public | optional, defaults to `https://billodesign.com` | default is correct |
 
 **Important:** variables are read when a deployment is built. After adding or changing any variable, **redeploy** (Deployments → latest → ⋯ → Redeploy). `NEXT_PUBLIC_*` values in particular are compiled into the JavaScript.
@@ -31,7 +31,7 @@ Set in Vercel → Project → Settings → Environment Variables. Listed in `.en
 1. **Resend** (resend.com): add the domain **`send.billodesign.com`** (a subdomain, so your Zoho MX records on `billodesign.com` stay untouched). Add the DNS records Resend shows (SPF TXT, DKIM TXT, MX for bounces) in Cloudflare with the proxy **off** (grey cloud), and wait for "Verified". Create an API key with sending access → `RESEND_API_KEY`.
 2. **Turnstile** (Cloudflare → Turnstile → Add widget): hostnames `billodesign.com`, `www.billodesign.com`, `billodesign.vercel.app` (and `localhost` for local tests), mode **Managed**. Site key → `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, secret → `TURNSTILE_SECRET_KEY`.
 3. Set `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL`, then **redeploy**.
-4. Test on the live site: the email arrives with Reply-To = the visitor.
+4. Test on the live site **in a normal browser**: the email arrives with Reply-To = the visitor. (Automated/headless browsers never get a Turnstile token, so they always see "Spam check failed"; that is expected.)
 
 ## Domain cutover: billodesign.com → Vercel
 
