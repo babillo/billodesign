@@ -85,8 +85,13 @@ export function ContactModal() {
               <input id="contact-email" className={styles.field} name="email" placeholder="Email" type="email" maxLength={256} required autoComplete="email" />
               <label className="visually-hidden" htmlFor="contact-message">Message</label>
               <textarea id="contact-message" className={`${styles.field} ${styles.textarea}`} name="message" placeholder="Your Message" maxLength={5000} required />
-              {/* Honeypot: hidden from people, filled in by bots. */}
-              <input className={styles.honeypot} name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+              {/*
+                Honeypot: hidden from people, filled in by bots. The name must not
+                look like a real field: Chrome autofill ignores autocomplete="off"
+                and filled the former name="company" with the visitor's profile,
+                so genuine messages were silently dropped.
+              */}
+              <input className={styles.honeypot} name="hp_check" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               {isOpen && (
                 <Turnstile
                   onToken={(token) => {
