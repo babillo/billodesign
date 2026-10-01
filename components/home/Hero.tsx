@@ -3,20 +3,20 @@ import { Container } from "@/components/ui/Container";
 import styles from "./Hero.module.css";
 
 /*
- * The hero copy is intentionally static: the Webflow h1/p carried
- * "letters-fade-in-delay" attributes that no script handled, so they never
- * animated on the live site.
+ * Webflow's h1/p carried "letters-fade-in-delay" attributes that no script
+ * handled, so they never animated there. Phase 6 (owner): both "decode" when
+ * they come into view (after the homepage intro, and on every return).
  */
 export function Hero() {
   return (
     <section className={styles.section}>
       <Container>
         <div className={styles.content}>
-          <h1>
+          <h1 data-text="decode">
             Design Beyond Pixels. <br />
             Build Beyond Limits.
           </h1>
-          <p className={styles.paragraph}>
+          <p className={styles.paragraph} data-text="decode">
             Webflow sites that don’t just look stunning — <br />
             they think, scale, and convert.
           </p>

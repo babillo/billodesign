@@ -16,7 +16,7 @@ import { prefersReducedMotion } from "@/lib/motion";
  *   data-text="scrub-words"      words brighten from 40% opacity while scrolling
  *   data-text="decode"           (Phase 6) scrambles through random glyphs and
  *                                resolves left to right, every time it scrolls
- *                                into view (section labels and titles)
+ *                                into view (hero, section labels and titles)
  *
  * The original script also defined words-slide-up, words-rotate-in,
  * words-slide-from-right and letters-slide-up, but no element used them.
@@ -32,36 +32,65 @@ function keepGradientText(...groups: Element[][]) {
 }
 
 const DECODE_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/?$@";
-const DECODE_MS = 650;
+// 650ms for short labels, up to 1.4s for a paragraph, so long text stays readable.
+const decodeDuration = (length: number) => Math.min(1400, 650 + Math.max(0, length - 12) * 12);
+
+// Original text of every text node, stored on first run so a replay that
+// starts mid-scramble still resolves to the right words.
+const originals = new WeakMap<Text, string>();
 
 /*
- * Phase 6: "decoding" text, like the orb decoding a message. The real text is
- * exposed as aria-label so screen readers never hear the scramble. Returns a
- * cleanup that stops it and restores the text.
+ * Phase 6: "decoding" text, like the orb decoding a message. Scrambles each
+ * text node in place, so line breaks (<br>) and inline markup survive, and
+ * resolves left to right across the whole element. Headings expose the real
+ * text as aria-label; other elements are aria-hidden while scrambling, so
+ * screen readers never hear the scramble. Returns a cleanup that stops it and
+ * restores the text.
  */
 function decode(el: HTMLElement) {
-  // The real text lives in aria-label (set on first run), so a replay that
-  // starts mid-scramble still resolves to the right words.
-  const text = el.getAttribute("aria-label") ?? el.textContent ?? "";
-  el.setAttribute("aria-label", text);
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const nodes: Text[] = [];
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) nodes.push(n as Text);
+  for (const n of nodes) if (!originals.has(n)) originals.set(n, n.data);
+  const texts = nodes.map((n) => originals.get(n)!);
+  const full = texts.join("");
+  const isHeading = /^H[1-6]$/.test(el.tagName);
+  if (isHeading) el.setAttribute("aria-label", full.replace(/\s+/g, " ").trim());
+  else el.setAttribute("aria-hidden", "true");
+
+  const duration = decodeDuration(full.trim().length);
   let frame = 0;
   const start = performance.now();
+  const restore = () => {
+    nodes.forEach((n, i) => (n.data = texts[i]));
+    if (!isHeading) el.removeAttribute("aria-hidden");
+  };
   const tick = (now: number) => {
-    const p = Math.min(1, (now - start) / DECODE_MS);
-    const resolved = Math.floor(p * text.length);
-    let out = "";
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      out += i < resolved || c === " " ? c : DECODE_GLYPHS[(Math.random() * DECODE_GLYPHS.length) | 0];
-    }
-    el.textContent = out;
+    const p = Math.min(1, (now - start) / duration);
+    let resolved = Math.floor(p * full.length);
+    nodes.forEach((n, i) => {
+      const t = texts[i];
+      let out = "";
+      for (let j = 0; j < t.length; j++) {
+        const c = t[j];
+        if (resolved > j || /\s/.test(c)) {
+          out += c;
+          continue;
+        }
+        const g = DECODE_GLYPHS[(Math.random() * DECODE_GLYPHS.length) | 0];
+        // Match the original case so mixed-case text keeps its visual weight.
+        out += c === c.toLowerCase() && c !== c.toUpperCase() ? g.toLowerCase() : g;
+      }
+      resolved -= t.length;
+      n.data = out;
+    });
     if (p < 1) frame = requestAnimationFrame(tick);
-    else el.textContent = text;
+    else restore();
   };
   frame = requestAnimationFrame(tick);
   return () => {
     cancelAnimationFrame(frame);
-    el.textContent = text;
+    restore();
   };
 }
 

@@ -77,9 +77,9 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **QA note:** headless screenshots taken mid-transition can come out black, because Chrome pauses rendering while it captures and the visitor keeps seeing the old page. Judge transitions in a real browser.
 
 ## Decoding labels (Phase 6)
-- **Where:** `ScrollEffects` (`data-text="decode"`), on every `SectionHeading` eyebrow **and title**, plus "We got your back!".
-- **Behaviour:** every time the text scrolls into view (owner request); a running decode is stopped before replaying. When it enters (IntersectionObserver, bottom margin -10%), characters cycle through random glyphs (`A–Z 0–9 #%&/?$@`) and resolve left to right in 650ms (rAF). Spaces are kept; the monospace font keeps the width stable.
-- **Accessibility:** the real text is set as `aria-label`, so screen readers never read the scramble. Skipped with reduced motion (ScrollEffects returns early). The text is restored if the page changes mid-animation.
+- **Where:** `ScrollEffects` (`data-text="decode"`), on every `SectionHeading` eyebrow **and title**, "We got your back!", and the **hero h1 and paragraph** (they decode as the intro ends, and on every return to the top).
+- **Behaviour:** every time the text scrolls into view (owner request); a running decode is stopped before replaying. When it enters (IntersectionObserver, bottom margin -10%), characters cycle through random glyphs (`A–Z 0–9 #%&/?$@`, case-matched to the original letter) and resolve left to right (rAF). Duration scales with length: 650ms for labels, up to 1.4s for a paragraph. Each text node is scrambled in place, so `<br>` and inline markup survive and the markup is restored exactly. Whitespace is kept.
+- **Accessibility:** headings get the real text as `aria-label`; non-heading elements (the hero paragraph) are `aria-hidden` only while scrambling, so screen readers never read the scramble. Skipped with reduced motion (ScrollEffects returns early). The text is restored if the page changes mid-animation.
 
 ## Counting stats (Phase 6)
 - **Where:** `PerformanceStats`. Uptime, Lighthouse rings (`stroke-dashoffset`) and response time animate from 0 to final in 1.6s (ease-out cubic) when 40% of the cards are visible, once. Reduced motion shows final values. (An earlier "already on screen?" shortcut misfired during the homepage intro, when content is `display:none` and reports top = 0, so the stats stayed static; it was removed.) Re-renders only during the 1.6s count.
