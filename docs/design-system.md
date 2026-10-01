@@ -56,4 +56,12 @@ Tokens live in `app/globals.css` (`:root`).
 
 ## Phase 6 values
 
-_None yet._
+New values introduced in Phase 6, approved by the owner (see `phase-6-proposals.md`). Everything not listed here is still the original Webflow value.
+
+| Item | Original Webflow | Phase 6 | Where |
+|---|---|---|---|
+| Awwwards badge on ≤767px (#1) | 53×171px | 34×110px, same position | `AwwwardsBadge.module.css` |
+| Navbar after scrolling > 8px (#4) | transparent, `blur(5px)` | `rgb(0 0 0 / 0.7)`, `blur(12px)`, bottom border `rgb(255 255 255 / 0.06)`, 0.4s fade; unchanged at the top of the page | `Navbar.module.css` |
+| Slider dot hit area (#6) | same as the bar (80×12px, 32×4.8px on ≤767px) | 32px tall (bar unchanged, drawn by `::before`); width unchanged, so no overlap | `Slider.module.css` |
+| Social-share description (#10) | the 149-character meta description | `site.shareDescription` (101 characters) for Open Graph and X; the meta description is unchanged | `lib/site.ts` |
+| Services heading | "What I&nbsp;&nbsp;Build" (two spaces) | "What I Build" | `Services.tsx` |

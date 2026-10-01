@@ -64,24 +64,47 @@
   bottom: -5rem;
   left: 0;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   height: 40px;
-  padding-top: 10px;
-  text-align: center;
+  /* 10px + the 5px the original inline-block dots sat below the line top. */
+  padding-top: 15px;
 }
 
+/*
+ * Phase 6 (#6): the visible bar is drawn by ::before; the button around it is
+ * taller (--pad above and below) so it's an easy touch target. Negative
+ * vertical margins cancel the padding, so the bars sit exactly where they did.
+ * Hit areas only grow vertically, so neighbouring dots never overlap.
+ */
 .dot {
+  --bar: 0.75rem;
+  --pad: 10px;
+  position: relative;
   display: inline-block;
   width: 5rem;
-  height: 0.75rem;
-  margin: 0 4px 0.5em;
+  height: calc(var(--bar) + 2 * var(--pad));
+  margin: calc(-1 * var(--pad)) 4px calc(0.5em - var(--pad));
   padding: 0;
   border: 0;
-  background: #383838;
+  background: none;
+  vertical-align: top;
   cursor: pointer;
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  top: var(--pad);
+  right: 0;
+  left: 0;
+  height: var(--bar);
+  background: #383838;
   transition: background-color 0.1s;
 }
 
-.dotActive {
+.dotActive::before {
   background: #00afcd;
 }
 
@@ -95,9 +118,8 @@
   }
 
   .nav {
-    display: flex;
-    justify-content: center;
     bottom: -4rem;
+    padding-top: 10px;
   }
 }
 
@@ -112,8 +134,9 @@
   }
 
   .dot {
+    --bar: 0.3rem;
+    --pad: 13.6px;
     width: 2rem;
-    height: 0.3rem;
   }
 
   .nav {

@@ -105,3 +105,11 @@
 
 ### Fixed
 - Content typos in the OrbitAI case study ("maintainance", two missing spaces), also added to the importer's typo list
+
+### Batch A (owner-approved 2026-10-01)
+- #1 Awwwards badge smaller on phones (34×110px), same position
+- #2 Scroll, swipe or key press skips the rest of the homepage intro (after the preloader)
+- #4 Navbar gets a dark glass backdrop after scrolling
+- #6 Slider dots: 32px-tall touch areas, bars pixel-identical, no overlap
+- #10 Shorter social-share description (`site.shareDescription`)
+- "What I Build" heading: double space removed

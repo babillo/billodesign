@@ -1,6 +1,24 @@
 # Phase 6 — Design enhancement proposals
 
-**Status:** proposals, awaiting owner selection (2026-10-01). Nothing below is built yet except the content typo fixes at the end.
+**Status:** owner decisions recorded 2026-10-01. Being built in batches.
+
+**Owner decisions (2026-10-01):**
+
+| # | Decision |
+|---|---|
+| 1 | ✅ Approved, **size only**: the badge stays in the same position, just smaller on phones |
+| 2 | ✅ Approved |
+| 3 | ❌ Not approved: the orb keeps its current behaviour |
+| 4 | ✅ Approved |
+| 5 | ✅ Approved |
+| 6 | ✅ Approved: the enlarged tap areas must not overlap each other |
+| 7 | ✅ Approved |
+| 8 | ✅ Approved |
+| 9 | ✅ Approved |
+| 10 | ✅ Approved (wording as proposed) |
+| 11 | ❌ Not needed |
+| — | "What I  Build" double space: fix it |
+
 
 **How this list was made:** I reviewed the live site (billodesign.com) page by page at 1440×900 and 390×844, scrolling through every section with the intro skipped. I also measured tap targets, heading structure, keyboard focus and reading sizes in a local production build. Every proposal keeps the existing identity: dark space theme, the orb, IBM Plex Mono headings, cyan accents.
 
@@ -127,7 +145,7 @@ Applied in this PR, in `content/projects.json` and in the importer's typo list, 
 - "to-do **lists.They** struggle" → lists. They
 - "adapt to the **tool.OrbitAI** was" → tool. OrbitAI
 
-Left as is, needs your call: the services heading is written "What I&nbsp;&nbsp;Build" (two spaces) in both Webflow and the code. It renders with a slightly wider gap. Is that intentional?
+The services heading was written "What I&nbsp;&nbsp;Build" (two spaces) in both Webflow and the code; the owner asked for it to be fixed (single space).
 
 ## Not proposed (checked, already fine)
 
