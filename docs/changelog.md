@@ -86,3 +86,4 @@
 - "We got your back" subtitle was invisible (looked as if the dashboard image covered it): split words kept `position: static`
 - Ambient background sound never played: non-preloaded sounds are loaded before playing
 - Contact form: no submission without a Turnstile token; widget errors are shown; the server logs Turnstile error codes
+- Contact form silently dropped real messages: Chrome autofill filled the honeypot (`company`); renamed to `hp_check` and drops are logged

@@ -150,3 +150,15 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Contact form "nothing was sent".** Headless browsers can't pass Turnstile, so this has to be checked in a real browser with the server logs. The form now refuses to submit without a token and shows Turnstile's error code. `/api/contact` logs `Turnstile verification failed [codes] hostname`, `Resend error <status> <body>`, or `Resend is not configured` (Vercel → Logs). The Resend dashboard → Emails also shows whether a message was accepted or delivered.
 
 **Sandbox note:** in the QA sandbox the agent proxy sometimes returns 502 for the Spline runtime chunk in Chromium, although `curl` gets 200 from Vercel. That's a sandbox artifact, not a site bug; `OrbErrorBoundary` handles it.
+
+## Contact form showed success but no email was sent (honeypot false positive)
+
+**Symptoms:** on a phone (Chrome, Android) the form showed the success message. Vercel showed `POST /api/contact` 200 with **"No outgoing requests"** and no logs; nothing appeared in Resend.
+
+**Cause:** the hidden honeypot input was named `company`. Chrome autofill treats that as an address field, ignores `autocomplete="off"`, and filled it from the visitor's saved profile. The API treats a filled honeypot as a bot and deliberately returns a fake success without calling Turnstile or Resend.
+
+**Investigation:** "No outgoing requests" plus status 200 left only one code path in `app/api/contact/route.ts`: the honeypot early return.
+
+**Solution:** the honeypot is now `hp_check`, a name autofill doesn't recognise, and a filled honeypot is logged (`Contact form: honeypot filled, message dropped`).
+
+**Prevention:** never give a honeypot a realistic field name (`company`, `website`, `phone`, `address`…). Log silent drops so false positives are visible.

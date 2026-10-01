@@ -54,8 +54,12 @@ export async function POST(request: Request) {
   const email = str("email");
   const message = str("message");
 
-  // Honeypot filled in: pretend success so bots don't learn anything.
-  if (str("company")) return Response.json({ ok: true });
+  // Honeypot filled in: pretend success so bots don't learn anything, but log it
+  // so a false positive (e.g. browser autofill) shows up in Vercel → Logs.
+  if (str("hp_check")) {
+    console.warn("Contact form: honeypot filled, message dropped");
+    return Response.json({ ok: true });
+  }
 
   if (!name || !email || !message || name.length > LIMITS.name || email.length > LIMITS.email || message.length > LIMITS.message || !EMAIL_RE.test(email)) {
     return Response.json({ error: "Please fill in all fields with a valid email." }, { status: 400 });

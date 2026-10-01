@@ -1,6 +1,6 @@
 # Deployment
 
-**Status (2026-09-30):** deployed on Vercel at https://billodesign.vercel.app from `main`. Domain cutover to `billodesign.com` pending.
+**Status (2026-10-01):** deployed on Vercel from `main` and live on the custom domain. ⚠ Currently `billodesign.com` redirects to `www.billodesign.com`, while canonical URLs point to `billodesign.com`. Make the apex the primary domain (step 1 below).
 
 ## How deployment works
 
