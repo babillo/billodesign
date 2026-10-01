@@ -175,6 +175,6 @@ Mockups were made on the live site first. Owner decisions:
 | Hero scroll cue + "View my work" link | ✅ Built, with a little more space between the two buttons (2.5rem) |
 | "Available for projects" navbar pill | ✅ Built (desktop/tablet; opens the contact form) |
 | Dashboard as live counting stats | ✅ Built, owner variant: the original image stays as a **fixed background** and the text and stats scroll over it; **thin** type (no bold); glass cards like the site's cards, no cyan fill |
-| Testimonials 2×2 grid on desktop | ✅ Built (phones keep the slider) |
+| Testimonials 2×2 grid on desktop | Built, then **dropped by the owner**: the slider works well |
 | Bio stats strip | ✅ Built, no bold; owner figures: 3+ years, 15+ projects |
 | Decoding section labels | ✅ Built (the owner had planned this idea already) |

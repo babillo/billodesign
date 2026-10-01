@@ -15,7 +15,8 @@ import { prefersReducedMotion } from "@/lib/motion";
  *   data-text="letters-fade-in"  letters fade in one by one (GSAP + SplitText)
  *   data-text="scrub-words"      words brighten from 40% opacity while scrolling
  *   data-text="decode"           (Phase 6) scrambles through random glyphs and
- *                                resolves left to right, once, when scrolled in
+ *                                resolves left to right, every time it scrolls
+ *                                into view (section labels and titles)
  *
  * The original script also defined words-slide-up, words-rotate-in,
  * words-slide-from-right and letters-slide-up, but no element used them.
@@ -36,10 +37,12 @@ const DECODE_MS = 650;
 /*
  * Phase 6: "decoding" text, like the orb decoding a message. The real text is
  * exposed as aria-label so screen readers never hear the scramble. Returns a
- * cleanup that restores the text if the page changes mid-animation.
+ * cleanup that stops it and restores the text.
  */
-function decodeOnce(el: HTMLElement) {
-  const text = el.textContent ?? "";
+function decode(el: HTMLElement) {
+  // The real text lives in aria-label (set on first run), so a replay that
+  // starts mid-scramble still resolves to the right words.
+  const text = el.getAttribute("aria-label") ?? el.textContent ?? "";
   el.setAttribute("aria-label", text);
   let frame = 0;
   const start = performance.now();
@@ -80,13 +83,15 @@ export function ScrollEffects() {
     );
     document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
 
-    const decodeCleanups: (() => void)[] = [];
+    // Replays on every entry into view (owner request); a running decode is
+    // stopped first so a quick in/out/in never stacks two animations.
+    const decoding = new Map<Element, () => void>();
     const decodeIo = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          decodeIo.unobserve(entry.target);
-          decodeCleanups.push(decodeOnce(entry.target as HTMLElement));
+          decoding.get(entry.target)?.();
+          decoding.set(entry.target, decode(entry.target as HTMLElement));
         }
       },
       { rootMargin: "0px 0px -10% 0px" },
@@ -121,7 +126,7 @@ export function ScrollEffects() {
       io.disconnect();
       ctx.revert();
       decodeIo.disconnect();
-      decodeCleanups.forEach((restore) => restore());
+      decoding.forEach((restore) => restore());
     };
   }, [pathname]);
 

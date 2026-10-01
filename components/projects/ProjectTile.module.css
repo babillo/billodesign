@@ -110,8 +110,9 @@
   height: 26px;
 }
 
-/* Hover only where a real pointer can hover. */
-@media (hover: hover) {
+/* Hover only with a precise pointer (mouse/trackpad). Some phones report
+   hover: hover, so pointer: fine is required too. */
+@media (hover: hover) and (pointer: fine) {
   .tile:hover .media,
   .tile:has(.link:focus-visible) .media {
     border-color: var(--color-cyan);
@@ -131,8 +132,8 @@
   }
 }
 
-/* Touch screens: no hover, so the button is always shown. */
-@media (hover: none) {
+/* Touch screens and phones: no hover, so the button is always shown. */
+@media (hover: none), (pointer: coarse), (max-width: 767px) {
   .cta {
     opacity: 1;
     transform: none;

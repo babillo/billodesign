@@ -198,3 +198,13 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Cause:** the bubble was triggered by a `#page-end` marker at the bottom of the footer. With a one-line footer that coincided with the bubble's spot under the CTA. The taller Phase 6 footer moved the page end down, and on phones the bubble (positioned under the CTA) was already above the viewport when the marker appeared.
 
 **Solution (first):** observe an invisible anchor at the bubble's own position. It worked technically, but the bubble then appeared while the orb was elsewhere on screen, so it no longer read as the orb speaking. **Final:** the owner reverted the footer (2026-10-02), restoring the original composition and `#page-end` trigger. **Lesson:** some layout relationships (orb + bubble + empty space) are part of the design; check them before adding content nearby.
+
+## Stats didn't count on first visits
+
+**Cause:** `PerformanceStats` skipped the animation if the cards were "already on screen" at mount (`getBoundingClientRect().top < innerHeight`). During the homepage intro the content is `display:none`, so every element reports `top = 0`, and the check wrongly concluded the cards were visible. QA had skipped the intro (`sessionStorage.introSeen`), which hid the bug.
+
+**Fix:** always start from 0 and count when the IntersectionObserver reports the cards visible. **Lesson:** measurements taken while content is `display:none` are meaningless; also test first visits with the intro.
+
+## "View case study" hidden on some phones until tapped
+
+**Cause:** the always-visible rule used `@media (hover: none)`, but some Android browsers report `hover: hover`. **Fix:** hover effects require `(hover: hover) and (pointer: fine)`; the button is always shown for `(hover: none), (pointer: coarse), (max-width: 767px)`.

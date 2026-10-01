@@ -22,8 +22,9 @@ export function PerformanceStats() {
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-    // Start from zero only if the cards haven't been seen yet.
-    if (el.getBoundingClientRect().top < window.innerHeight) return;
+    // Always start from zero and count when the cards become visible. (An
+    // "already on screen?" check misfired during the homepage intro, when the
+    // content is display:none and every element reports top = 0.)
     let frame = 0;
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -49,7 +50,7 @@ export function PerformanceStats() {
 
   return (
     <div ref={ref} className={styles.stats}>
-      <div className={styles.stat}>
+      <div className={`${styles.stat} gradient-border-glass`}>
         <span className={styles.label}>Uptime</span>
         <span className={styles.number} aria-hidden="true">
           {(stats.uptime * p).toFixed(2)}
@@ -63,7 +64,7 @@ export function PerformanceStats() {
         </span>
       </div>
 
-      <div className={`${styles.stat} ${styles.wide}`}>
+      <div className={`${styles.stat} ${styles.wide} gradient-border-glass`}>
         <span className={styles.label}>Google Lighthouse</span>
         <div className={styles.rings}>
           {stats.lighthouse.map((s) => (
@@ -91,7 +92,7 @@ export function PerformanceStats() {
         </div>
       </div>
 
-      <div className={styles.stat}>
+      <div className={`${styles.stat} gradient-border-glass`}>
         <span className={styles.label}>Response time</span>
         <span className={styles.number} aria-hidden="true">
           {Math.round(stats.responseMs / Math.max(p, 0.35))}

@@ -146,3 +146,13 @@
 - Bio: stats strip (3+ years, 15+ projects, Certified Webflow Partner, Awwwards Nominee)
 - Section labels "decode" from random glyphs when scrolled in
 - "We got your back": content centred again (row flex had shrunk it to the left)
+
+### Round 3 follow-ups (owner feedback 2026-10-02)
+- Hero: only "Work With Me" on phones
+- Stats now count on first visits (the counter skipped itself while the intro hid the page)
+- Testimonials: back to the slider everywhere (grid dropped)
+- Project tiles: "View case study" always visible on touch devices (some phones report hover support); 5rem/4rem row gap
+- No hover/orb sounds from taps on touch screens
+- Navbar status dot: cyan
+- Decoding now also plays on section titles, and replays every time they scroll into view
+- Stat cards: cycling cyan border like the service cards (`.gradient-border-glass`, keeps the glass see-through)

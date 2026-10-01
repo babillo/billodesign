@@ -302,8 +302,36 @@ figcaption {
   animation: rotate-angle 8s linear infinite;
 }
 
+/*
+ * Same cycling border for translucent (glass) cards. .gradient-border paints
+ * the gradient under the whole box, which would show through a see-through
+ * background, so here a pseudo-element draws it in a 1px ring only (mask).
+ */
+.gradient-border-glass {
+  position: relative;
+  border-color: transparent !important;
+}
+
+.gradient-border-glass::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  background: linear-gradient(var(--angle), #000, var(--color-cyan-bright));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: rotate-angle 8s linear infinite;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .gradient-border {
+  .gradient-border,
+  .gradient-border-glass::before {
     animation: none;
     --angle: 135deg;
   }

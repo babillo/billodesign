@@ -64,7 +64,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **First visit: muted.** Nothing downloads until the visitor turns sound on. The choice is saved in `localStorage.soundOn` and read with `useSyncExternalStore`, so a remembered "on" shows the unmuted icon immediately.
 - **Revisit with sound on (owner decision 2026-10-01, as on Webflow):** Howler loads on page load and the ambient loop starts at once if the browser allows autoplay for the site (Chrome does for sites you use often; Safari and Firefox usually don't). Otherwise audio is *locked*: nothing is started while `AudioContext.state !== "running"` (Howler would queue every `play()` and fire duplicates on unlock), the first click, tap or key press (capture-phase listener) resumes the context, and a `statechange` listener then starts the loops. A first click on the toggle itself mutes. `Howler.autoSuspend` is off, so "suspended" always means "locked by the browser".
 - **Loops** are started with `howl.play(savedId)`, so repeated starts resume the same sound instead of stacking copies.
-- **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden. The ambient track (1.4 MB) isn't preloaded; `start()` calls `howl.load()` first, because Howler never loads a `preload: false` sound on `play()`.
+- **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`, **mouse only**: a tap on phones fires pointerover/out and made the orb react to every tap); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden. The ambient track (1.4 MB) isn't preloaded; `start()` calls `howl.load()` first, because Howler never loads a `preload: false` sound on `play()`.
 - **Files:** `public/audio/*.mp3`. `click-beep.mp3` and `hover.mp3` came from a third party's GitHub via jsDelivr; the owner confirmed they are free to use.
 
 ## Page transitions (Phase 6 #9)
@@ -77,12 +77,12 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **QA note:** headless screenshots taken mid-transition can come out black, because Chrome pauses rendering while it captures and the visitor keeps seeing the old page. Judge transitions in a real browser.
 
 ## Decoding labels (Phase 6)
-- **Where:** `ScrollEffects` (`data-text="decode"`), used on every `SectionHeading` eyebrow and "We got your back!".
-- **Behaviour:** once, when the label scrolls into view (IntersectionObserver, bottom margin -10%), characters cycle through random glyphs (`A–Z 0–9 #%&/?$@`) and resolve left to right in 650ms (rAF). Spaces are kept; the monospace font keeps the width stable.
+- **Where:** `ScrollEffects` (`data-text="decode"`), on every `SectionHeading` eyebrow **and title**, plus "We got your back!".
+- **Behaviour:** every time the text scrolls into view (owner request); a running decode is stopped before replaying. When it enters (IntersectionObserver, bottom margin -10%), characters cycle through random glyphs (`A–Z 0–9 #%&/?$@`) and resolve left to right in 650ms (rAF). Spaces are kept; the monospace font keeps the width stable.
 - **Accessibility:** the real text is set as `aria-label`, so screen readers never read the scramble. Skipped with reduced motion (ScrollEffects returns early). The text is restored if the page changes mid-animation.
 
 ## Counting stats (Phase 6)
-- **Where:** `PerformanceStats`. Uptime, Lighthouse rings (`stroke-dashoffset`) and response time animate from 0 to final in 1.6s (ease-out cubic) when 40% of the cards are visible, once. If already on screen at load, or with reduced motion, they show final values. Re-renders only during the 1.6s count.
+- **Where:** `PerformanceStats`. Uptime, Lighthouse rings (`stroke-dashoffset`) and response time animate from 0 to final in 1.6s (ease-out cubic) when 40% of the cards are visible, once. Reduced motion shows final values. (An earlier "already on screen?" shortcut misfired during the homepage intro, when content is `display:none` and reports top = 0, so the stats stayed static; it was removed.) Re-renders only during the 1.6s count.
 
 ## Fixed backdrop (Phase 6)
 - "We got your back" image: `position: fixed` inside a `clip-path: inset(0)` section, so content scrolls over a still image. No JS. The section must not get `transform`/`filter`/`backdrop-filter`, which would make the fixed layer scroll with it.
