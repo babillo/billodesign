@@ -8,8 +8,10 @@
 .section {
   position: relative;
   min-height: 100svh;
+  /* Column flex: vertically centred, full width (a row flex shrank the content to the left). */
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   background-color: #000;
   clip-path: inset(0);
 }

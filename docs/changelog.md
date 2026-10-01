@@ -145,3 +145,4 @@
 - Testimonials: 2×2 grid on desktop
 - Bio: stats strip (3+ years, 15+ projects, Certified Webflow Partner, Awwwards Nominee)
 - Section labels "decode" from random glyphs when scrolled in
+- "We got your back": content centred again (row flex had shrunk it to the left)
