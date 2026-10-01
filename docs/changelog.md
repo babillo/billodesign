@@ -118,3 +118,8 @@
 - #5 Case-study screenshots open full-screen (`ImageLightbox`): keyboard, swipe, captions, counter
 - Accessibility: the 31 case-study images had Webflow's placeholder alt text `__wf_reserved_inherit`, which screen readers read out; they now use their caption or "<Project> screenshot" (importer `fixImageAlts`)
 - Typo: "OrbitAI Dashboad" → Dashboard
+
+### Batch C
+- #7 Case studies: reading-progress line and "Sections" jump menu (`CaseStudyNav`)
+- #8 New footer: name, role, availability, nav, contact, email, back to top
+- Layout shift fixed: rich-text images now carry width/height (importer `addImageDimensions`), and fullwidth figure wrappers are block-level so the space is reserved. Case-study pages no longer grow by up to about 11,000px while scrolling (OrbitAI: 11,888 → 22,054px before, now 22,185px from the first paint); final figure positions verified identical on all 6 projects at 1440/390

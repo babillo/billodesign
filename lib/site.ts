@@ -11,6 +11,8 @@ export const site = {
   // The meta description above stays the original for search results.
   shareDescription: "Webflow Certified Partner building fast, custom, AI-ready websites — from UI/UX design to clean code.",
   email: "hello@billodesign.com",
+  // Footer availability line (Phase 6 #8). Update when your status changes.
+  availability: "Available for new projects",
   ogImage: "/images/og-image.jpg",
   gaMeasurementId: "G-MVZCKN2L6C",
   awwwardsUrl: "https://www.awwwards.com/sites/billodesign-living-portfolio",

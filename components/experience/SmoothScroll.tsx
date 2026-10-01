@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
+import { setLenis } from "@/lib/scroll";
 
 /*
  * Lenis smooth scrolling, same settings as the Webflow site (duration 2).
@@ -28,6 +29,7 @@ export function SmoothScroll() {
 
     const instance = new Lenis({ duration: 2, anchors: true });
     lenis.current = instance;
+    setLenis(instance);
     instance.on("scroll", ScrollTrigger.update);
     const raf = (time: number) => instance.raf(time * 1000);
     gsap.ticker.add(raf);
@@ -37,6 +39,7 @@ export function SmoothScroll() {
       gsap.ticker.remove(raf);
       instance.destroy();
       lenis.current = null;
+      setLenis(null);
     };
   }, []);
 

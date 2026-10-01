@@ -56,3 +56,9 @@ An `AudioContext` created without a user gesture starts `suspended` in Safari an
 
 ## Scroll restoration with client-side navigation
 Browsers restore scroll on Back for full page loads (or the back-forward cache). With client-side routing the new page renders asynchronously, so restoration fails if the content isn't there yet: here the homepage intro hid the content. Save positions per path yourself (on link clicks and `popstate`) and restore after render; with Lenis, use `lenis.scrollTo(y, { immediate: true })` so its internal position stays in sync.
+
+## Reserving space for images (CLS)
+`width`/`height` attributes give the browser an aspect ratio before the image loads, and with `width: 100%; height: auto` the image stays fluid. That only works if its container has a definite width: a shrink-to-fit wrapper (`inline-block`, `display: table`, floats, `width: max-content`) sizes from its content, and an unloaded image has none, so it collapses to 0 anyway.
+
+## `scroll-margin-top`
+Sets how far below the top of the viewport an element stops when scrolled to (anchor links, `scrollIntoView`, Lenis). Use it to clear a fixed header instead of hard-coding offsets in JavaScript.

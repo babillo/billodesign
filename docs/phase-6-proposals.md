@@ -1,6 +1,6 @@
 # Phase 6 — Design enhancement proposals
 
-**Status:** owner decisions recorded 2026-10-01. Being built in batches.
+**Status:** owner decisions recorded 2026-10-01. Built: batch A (#1, #2, #4, #6, #10, heading space), batch B (#5), batch C (#7, #8). Remaining: #9.
 
 **Owner decisions (2026-10-01):**
 

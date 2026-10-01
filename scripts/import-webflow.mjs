@@ -206,6 +206,19 @@ function fixImageAlts(html, projectName) {
     .replaceAll('alt="__wf_reserved_inherit"', `alt="${attr(`${projectName} screenshot`)}"`);
 }
 
+// Rich-text images had no width/height, so the page grew by thousands of
+// pixels as lazy images loaded (layout shift; in-page jumps and Back scroll
+// positions landed in the wrong place). The CSS keeps them fluid (width:100%,
+// height:auto); the attributes only let the browser reserve the right space.
+async function addImageDimensions(html) {
+  for (const [tag, before, src, after] of html.matchAll(/<img ([^>]*)src="(\/media\/[^"]+)"([^>]*)>/g)) {
+    if (/\swidth="/.test(tag)) continue;
+    const { width, height } = await imageSize(src);
+    html = html.replace(tag, `<img ${before}src="${src}" width="${width}" height="${height}"${after}>`);
+  }
+  return html;
+}
+
 function parseHomepage() {
   const html = fs.readFileSync(path.join(EXPORT, "index.html"), "utf8");
   const slider = html.slice(html.indexOf("projects_mask"), html.indexOf("section_home-testimoinal"));
@@ -283,7 +296,7 @@ async function main() {
     const sections = {};
     for (const [col, key] of Object.entries(RICH_TEXT_FIELDS)) {
       const cleaned = await cleanRichText(r[col] ?? "", slug);
-      if (cleaned) sections[key] = fixImageAlts(cleaned, r.Title.split(/\s+[—–-]\s+/)[0].trim());
+      if (cleaned) sections[key] = await addImageDimensions(fixImageAlts(cleaned, r.Title.split(/\s+[—–-]\s+/)[0].trim()));
     }
 
     const text = (v) => (v ? fixTypos(v.trim()) : null);
