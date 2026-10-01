@@ -17,7 +17,9 @@ export function SectionHeading({ eyebrow, title, intro, className }: Props) {
   return (
     <div className={`${styles.wrap} ${className ?? ""}`}>
       <div>
-        <h2 data-reveal="">{eyebrow}</h2>
+        <h2 data-reveal="" data-text="decode">
+          {eyebrow}
+        </h2>
         <h3>{title}</h3>
       </div>
       {intro && <p data-text="scrub-words">{intro}</p>}

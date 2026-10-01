@@ -59,3 +59,11 @@ Client components are marked **(client)**. Everything else is a server component
 ### Home additions (Phase 6 round 2)
 - `components/home/Projects.tsx`: the slider was replaced by a 2-column grid of `ProjectTile` (1 column ≤767px). `Slider` is still used by Testimonials; `ProjectCard` is still used for "Next Project" on case-study pages.
 - `components/home/CursorGlow.tsx` (client): pointer-following cyan glow inside `[data-glow]` elements (the service cards). It only writes `--glow-x/--glow-y`; the gradient is `.card::after` in `Services.module.css`. Disabled on touch screens (`hover: none`).
+
+### Phase 6 round 3 (2026-10-02)
+- `home/Hero`: "Work With Me" + "View my work ↓" (`#portfolio`) in `.actions` (gap 2.5rem); decorative scroll cue (mouse icon + "Scroll") at the bottom of the hero.
+- `layout/Navbar`: "Available for projects" status pill (`site.availability`), a button that opens the contact form; hidden ≤767px.
+- `home/WeGotYou` + `home/PerformanceStats` (client): the dashboard image is a **fixed backdrop** inside the section (`clip-path: inset(0)` + `position: fixed`), and the heading and three glass stat cards (uptime, Lighthouse rings, response time; data `performanceStats` in `lib/site.ts`) scroll over it. Numbers count up once when scrolled in (1.6s ease-out); server/no-JS/reduced motion show final values; screen readers get the final values.
+- `home/Testimonials`: 2×2 grid ≥992px, slider below (both rendered, CSS switches; no layout flash).
+- `home/Bio`: stats strip `<dl>` from `bioStats` in `lib/site.ts`.
+- `ui/SectionHeading`: eyebrow h2 has `data-text="decode"` (see animations.md).

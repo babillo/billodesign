@@ -71,3 +71,14 @@ New values introduced in Phase 6, approved by the owner (see `phase-6-proposals.
 | Reading progress (#7) | none | 2px `--color-cyan` line with a 6px cyan glow, fixed at the top (z 11) | `CaseStudyNav.module.css` |
 | Sections menu (#7) | none | 44px pill, `rgb(0 0 0 / 0.7)` + blur(8px), `--color-cyan-deep` border, `--button-glow`; panel max 22rem / 60svh, radius 12px; sub-items indented, grey 0.8rem; current item cyan | `CaseStudyNav.module.css` |
 | Footer (#8) | divider + copyright only | **Reverted by the owner (2026-10-02)**: original footer kept | `Footer.module.css` |
+
+#### Round 3 values (owner-approved 2026-10-02): thin type, 1px lines, no bold
+| Item | Value | Where |
+|---|---|---|
+| Hero actions | gap 1.5rem × 2.5rem; "View my work" mono 1rem weight 300, 1px cyan underline | `Hero.module.css` |
+| Scroll cue | 22×34px outline mouse, 1px cyan, glow 12px; wheel dot loops 1.8s; label mono 0.7rem/300, letter-spacing .35em | `Hero.module.css` |
+| Status pill | 1px `--color-cyan-deep`, `rgb(0 0 0/.4)`, mono 0.75rem/300; dot 7px `#2bd67b` with 2s pulse | `Navbar.module.css` |
+| Stat cards (We got your back) | glass: `rgb(1 1 1/.45)` + blur(5px), 1px `--color-cyan-deep`, **no cyan fill**; numbers mono 2.6rem **300** (tabular); labels mono 0.7rem/300 .25em; rings 72px, stroke 1.5px; bars 1px cyan top line | `WeGotYou.module.css` |
+| Dashboard backdrop | original image, fixed, centred, `min(895px, 92vw)`, opacity .85 | `WeGotYou.module.css` |
+| Testimonials grid | 2 columns, gap 1.5rem, ≥992px | `Testimonials.module.css` |
+| Bio stats | 1px `--color-cyan-deep` grid (4 cols, 2×2 ≤767px); values mono 1.5rem **300**; labels mono 0.68rem/300 | `Bio.module.css` |

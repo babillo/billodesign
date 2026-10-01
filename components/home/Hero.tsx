@@ -20,11 +20,22 @@ export function Hero() {
             Webflow sites that don’t just look stunning — <br />
             they think, scale, and convert.
           </p>
-          <Button data-open-contact="" data-sound-hover="" data-sound-click="" data-reveal="">
-            Work With Me
-          </Button>
+          <div className={styles.actions} data-reveal="">
+            <Button data-open-contact="" data-sound-hover="" data-sound-click="">
+              Work With Me
+            </Button>
+            {/* Phase 6: lighter second action for visitors not ready to get in touch. */}
+            <a href="#portfolio" className={styles.workLink} data-sound-click="">
+              View my work <span aria-hidden="true">↓</span>
+            </a>
+          </div>
         </div>
       </Container>
+      {/* Phase 6: scroll cue (decorative; the orb's bubble also says "Scroll down"). */}
+      <div className={styles.cue} aria-hidden="true">
+        <span className={styles.mouse} />
+        Scroll
+      </div>
     </section>
   );
 }

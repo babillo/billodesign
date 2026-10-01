@@ -137,3 +137,11 @@
 ### Round 2 (owner-approved 2026-10-02)
 - "Selected Work": the slider is replaced by a grid showing all 6 projects (`ProjectTile`): screenshot, title, one-line tag, tools, Visit site; the whole card opens the case study; rectangular "View case study" button
 - Services cards: pointer-following cyan glow on hover (`CursorGlow`)
+
+### Round 3 (owner-approved 2026-10-02)
+- Hero: "View my work ↓" link next to "Work With Me", plus a scroll cue
+- Navbar: "Available for projects" status pill (opens the contact form)
+- "We got your back": fixed dashboard backdrop with thin glass stat cards that count up
+- Testimonials: 2×2 grid on desktop
+- Bio: stats strip (3+ years, 15+ projects, Certified Webflow Partner, Awwwards Nominee)
+- Section labels "decode" from random glyphs when scrolled in

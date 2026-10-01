@@ -1,18 +1,39 @@
+/*
+ * Phase 6: clip-path makes the section a clipping container for the
+ * position:fixed backdrop, so the dashboard image stays still while the
+ * section scrolls over it (works on iOS, unlike background-attachment:fixed).
+ * No filter/backdrop-filter/transform on .section: those would turn the fixed
+ * layer into a scrolling one.
+ */
 .section {
-  min-height: 80svh;
-  overflow: visible;
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
   background-color: #000;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  clip-path: inset(0);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.dashboard {
+  width: min(895px, 92vw);
+  height: auto;
+  opacity: 0.85;
 }
 
 .content {
   position: relative;
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
   text-align: center;
 }
 
@@ -25,24 +46,149 @@
   max-width: 60rem;
 }
 
-/*
- * .absolute_position: taken out of flow and pushed 4rem down, so the heading
- * (z-index 1) sits over the dashboard graphic, as in Webflow.
- */
-.dashboard {
+/* ---------- Stat cards: thin type, glass like the site's cards ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 1rem;
+  width: min(900px, 100%);
+  text-align: left;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--color-cyan-deep);
+  background: rgb(1 1 1 / 0.45);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.label {
+  color: var(--color-grey-radial);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.number {
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 2.6rem;
+  font-weight: 300;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.number small {
+  font-size: 1rem;
+  color: var(--color-grey-radial);
+}
+
+.sub {
+  color: var(--color-grey-radial);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 300;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 40px;
+}
+
+.bars i {
+  flex: 1;
+  border-top: 1px solid var(--color-cyan);
+  background: linear-gradient(rgb(0 173 204 / 0.35), transparent);
+}
+
+.rings {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ringGraphic {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+}
+
+.ringGraphic svg {
   position: absolute;
-  margin-top: 4rem;
-  height: auto;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.ringTrack,
+.ringValue {
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.ringTrack {
+  stroke: rgb(255 255 255 / 0.12);
+}
+
+.ringValue {
+  stroke: var(--color-cyan);
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px var(--color-cyan));
+}
+
+.ringGraphic b {
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.ringLabel {
+  color: var(--color-grey-radial);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 991px) {
   .section {
-    min-height: 75svh;
+    min-height: 90svh;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wide {
+    grid-column: 1 / -1;
+    order: -1;
   }
 }
 
-@media (max-width: 767px) {
-  .section {
-    min-height: 50svh;
+@media (max-width: 479px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .number {
+    font-size: 2.2rem;
   }
 }

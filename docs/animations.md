@@ -75,3 +75,17 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Orb:** each page still mounts its own `SplineOrb`, so the orb crossfades with the page. Keeping one persistent orb across pages (smoother and avoids re-initialising the scene) changes how the orb loads, so it's a Phase 7 proposal (see CLAUDE.md).
 - **Reduced motion:** all view-transition animations are disabled.
 - **QA note:** headless screenshots taken mid-transition can come out black, because Chrome pauses rendering while it captures and the visitor keeps seeing the old page. Judge transitions in a real browser.
+
+## Decoding labels (Phase 6)
+- **Where:** `ScrollEffects` (`data-text="decode"`), used on every `SectionHeading` eyebrow and "We got your back!".
+- **Behaviour:** once, when the label scrolls into view (IntersectionObserver, bottom margin -10%), characters cycle through random glyphs (`A–Z 0–9 #%&/?$@`) and resolve left to right in 650ms (rAF). Spaces are kept; the monospace font keeps the width stable.
+- **Accessibility:** the real text is set as `aria-label`, so screen readers never read the scramble. Skipped with reduced motion (ScrollEffects returns early). The text is restored if the page changes mid-animation.
+
+## Counting stats (Phase 6)
+- **Where:** `PerformanceStats`. Uptime, Lighthouse rings (`stroke-dashoffset`) and response time animate from 0 to final in 1.6s (ease-out cubic) when 40% of the cards are visible, once. If already on screen at load, or with reduced motion, they show final values. Re-renders only during the 1.6s count.
+
+## Fixed backdrop (Phase 6)
+- "We got your back" image: `position: fixed` inside a `clip-path: inset(0)` section, so content scrolls over a still image. No JS. The section must not get `transform`/`filter`/`backdrop-filter`, which would make the fixed layer scroll with it.
+
+## Hero scroll cue / status pill
+- CSS keyframes only (wheel dot 1.8s, status dot pulse 2s); both disabled with reduced motion.

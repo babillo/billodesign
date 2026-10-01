@@ -23,6 +23,46 @@
   font-size: 1.375rem;
 }
 
+/* Phase 6: stats strip. Thin type and 1px lines like the rest of the site. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: start;
+  margin: 0.5rem 0 0.25rem;
+  border: 1px solid var(--color-cyan-deep);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  padding: 0.85rem 1.3rem;
+  border-right: 1px solid var(--color-cyan-deep);
+}
+
+.stat:last-child {
+  border-right: 0;
+}
+
+.stat dd {
+  margin: 0;
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.stat dt {
+  color: var(--color-grey-radial);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .email {
   display: flex;
   justify-content: flex-start;
@@ -79,5 +119,19 @@
 @media (max-width: 479px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat:nth-child(2) {
+    border-right: 0;
+  }
+
+  .stat:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--color-cyan-deep);
   }
 }
