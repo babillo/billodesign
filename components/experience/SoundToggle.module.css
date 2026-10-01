@@ -19,19 +19,16 @@
   cursor: pointer;
 }
 
+/* Icons keep their natural 32px size inside the 3.2rem hit area, as in Webflow. */
 .icon {
-  width: 100%;
-  height: 100%;
-}
-
-/* "Sound on" icon sits on top and fades in when sound is enabled. */
-.on {
   position: absolute;
-  inset: 0;
-  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 2rem;
   transition: opacity 0.3s;
 }
 
-.visible {
-  opacity: 1;
+.hidden {
+  opacity: 0;
 }

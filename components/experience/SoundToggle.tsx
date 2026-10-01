@@ -9,8 +9,8 @@ export function SoundToggle() {
   return (
     <div className={styles.wrap}>
       <button type="button" className={styles.button} onClick={toggle} aria-pressed={enabled} aria-label="Sound">
-        <img src="/images/sound-off.svg" alt="" className={styles.icon} />
-        <img src="/images/sound-on.svg" alt="" className={`${styles.icon} ${styles.on} ${enabled ? styles.visible : ""}`} />
+        <img src="/images/sound-off.svg" alt="" className={`${styles.icon} ${enabled ? styles.hidden : ""}`} />
+        <img src="/images/sound-on.svg" alt="" className={`${styles.icon} ${enabled ? "" : styles.hidden}`} />
       </button>
     </div>
   );
