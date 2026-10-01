@@ -41,6 +41,9 @@ const TYPO_FIXES = [
   ["Photoshp", "Photoshop"],
   ["Hgh-performance", "High-performance"],
   ["Fadi Al Ibahim", "Fadi Al Ibrahim"],
+  ["maintainance", "maintenance"],
+  ["lists.They", "lists. They"],
+  ["tool.<strong>OrbitAI", "tool. <strong>OrbitAI"],
 ];
 
 const RICH_TEXT_FIELDS = {

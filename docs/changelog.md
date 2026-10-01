@@ -97,3 +97,11 @@
 - Sound toggle: icon and audio could get out of sync after a reload (first click raced the remembered-state resume); the remembered state now shows immediately
 - Sound: a remembered "on" plays again on revisit (immediately if the browser allows autoplay, else on the first interaction); no duplicate loops on unlock (owner decision, ADR-014)
 - Homepage intro plays once per tab; Back/Forward restores the scroll position without the preloader or welcome message (ADR-014)
+
+## Phase 6 — Design enhancement (started 2026-10-01)
+
+### Added
+- `docs/phase-6-proposals.md`: 11 prioritized proposals from a page-by-page review at desktop and mobile
+
+### Fixed
+- Content typos in the OrbitAI case study ("maintainance", two missing spaces), also added to the importer's typo list
