@@ -4,11 +4,11 @@ Client components are marked **(client)**. Everything else is a server component
 
 ## Layout (`components/layout/`)
 
-> `Footer` (Phase 6 #8): brand + role + availability (`site.availability` in `lib/site.ts`), nav links + Contact (opens the modal via `data-open-contact`), email, back to top, then the original divider line and copyright. Social icons are deliberately not repeated (the CTA above shows them). `#page-end` marker kept for `CtaOrbTips`.
+> `Footer` (Phase 6 #8): brand + role + availability (`site.availability` in `lib/site.ts`), nav links + Contact (opens the modal via `data-open-contact`), email, back to top, then the original divider line and copyright. Social icons are deliberately not repeated (the CTA above shows them).
 | Component | Purpose | Notes |
 |---|---|---|
 | `Navbar` (client) | fixed blurred navbar, logo, Portfolio / About me / Contact | collapses to a burger ≤767px; "Contact" has `data-open-contact` |
-| `Footer` | divider line, copyright, `#page-end` marker | the marker triggers the CTA bubble |
+| `Footer` | brand, availability, nav, email, back to top, divider, copyright | see the Phase 6 note above |
 | `SocialLinks` | LinkedIn, Upwork, Contra, Webflow, Behance icons | data in `lib/site.ts`; accessible names fixed |
 | `AwwwardsBadge` | fixed ribbon on the right edge | |
 

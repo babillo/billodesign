@@ -192,3 +192,9 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Cause:** `new Lenis({ anchors: true })` handles every same-page `#hash` link click itself (listener on `window`) and scrolls to the element, ignoring a custom offset. It does honour the target's CSS `scroll-margin-top`.
 
 **Solution:** `scroll-margin-top: 96px` on case-study headings, and `scrollToElement` (`lib/scroll.ts`) relies on it. The menu's click handler stops propagation, so only one scroll runs. Lenis's cached limit can also lag behind a page that just grew: `lenis.resize()` before `scrollTo`.
+
+## CTA orb bubble disappeared after the new footer
+
+**Cause:** the bubble was triggered by a `#page-end` marker at the bottom of the footer. With a one-line footer that coincided with the bubble's spot under the CTA. The taller Phase 6 footer moved the page end down, and on phones the bubble (positioned under the CTA) was already above the viewport when the marker appeared.
+
+**Solution:** observe an invisible anchor at the bubble's own position (`.tipAnchor`, threshold 1); the marker was removed. **Lesson:** trigger UI from where it appears, not from a distant proxy that only coincides with it.

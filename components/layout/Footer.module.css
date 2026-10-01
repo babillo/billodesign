@@ -105,10 +105,6 @@
   font-weight: 400;
 }
 
-.pageEnd {
-  height: 1rem;
-}
-
 @media (max-width: 767px) {
   .grid {
     grid-template-columns: 1fr;

@@ -1,5 +1,4 @@
 import { PulseDot } from "@/components/ui/Button";
-import { PAGE_END_ID } from "@/components/sections/CtaOrbTips";
 import { navLinks, site } from "@/lib/site";
 import styles from "./Footer.module.css";
 
@@ -56,8 +55,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-        {/* Reaching this marker shows the CTA orb speech bubble (see CtaOrbTips). */}
-        <div id={PAGE_END_ID} className={styles.pageEnd} />
       </div>
     </footer>
   );
