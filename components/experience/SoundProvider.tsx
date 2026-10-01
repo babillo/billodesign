@@ -1,7 +1,7 @@
 "use client";
 
 import type { Howl } from "howler";
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useSyncExternalStore } from "react";
 
 /*
  * Sound design, rebuilt from the original Howler script (docs/animations.md#sound).
@@ -40,10 +40,42 @@ const SoundContext = createContext<SoundContextValue | null>(null);
 
 const STORAGE_KEY = "soundOn";
 
+/*
+ * The on/off choice lives in localStorage (as on the Webflow site), so it's
+ * read as an external store: the server renders "off", the client then shows
+ * the remembered choice without a setState-in-effect round trip. The module
+ * variable keeps working when storage is blocked.
+ */
+let soundOn: boolean | null = null;
+const listeners = new Set<() => void>();
+
+function getSoundOn() {
+  if (soundOn === null) {
+    try {
+      soundOn = localStorage.getItem(STORAGE_KEY) === "true";
+    } catch {
+      soundOn = false;
+    }
+  }
+  return soundOn;
+}
+
+function setSoundOn(on: boolean) {
+  soundOn = on;
+  try {
+    localStorage.setItem(STORAGE_KEY, String(on));
+  } catch {}
+  for (const listener of listeners) listener();
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
 export function SoundProvider({ children }: { children: React.ReactNode }) {
-  const [enabled, setEnabled] = useState(false);
+  const enabled = useSyncExternalStore(subscribe, getSoundOn, () => false);
   const howls = useRef<Partial<Record<SoundName, Howl>>>({});
-  const enabledRef = useRef(false);
   // Loops that should be running right now, so they can resume after unmute or tab focus.
   const activeLoops = useRef(new Set<SoundName>());
 
@@ -73,7 +105,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const play = useCallback(
     (name: SoundName) => {
       if ("loop" in SOUNDS[name]) activeLoops.current.add(name);
-      if (enabledRef.current) start(name);
+      if (getSoundOn()) start(name);
     },
     [start],
   );
@@ -87,13 +119,11 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
   const setSound = useCallback(
     async (on: boolean) => {
-      enabledRef.current = on;
-      setEnabled(on);
-      try {
-        localStorage.setItem(STORAGE_KEY, String(on));
-      } catch {}
+      setSoundOn(on);
       if (on) {
         await load();
+        // Turned off again while Howler was still loading: don't start anything.
+        if (!getSoundOn()) return;
         activeLoops.current.add("ambient");
         for (const name of activeLoops.current) start(name);
       } else {
@@ -103,29 +133,34 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     [load, start],
   );
 
-  const toggle = useCallback(() => void setSound(!enabledRef.current), [setSound]);
+  const toggle = useCallback(() => void setSound(!getSoundOn()), [setSound]);
 
-  // Restore a previous "sound on" choice. Browsers block audio until the first
-  // user gesture, so playback starts on the first interaction.
+  // Restore a previous "sound on" choice. The icon shows it right away, but
+  // browsers block audio until the first user gesture, so playback starts on
+  // the first interaction. A first click on the toggle itself is left to the
+  // toggle (it means "mute"); resuming there too made the two race, and sound
+  // played while the muted icon showed.
   useEffect(() => {
-    let saved: string | null = null;
-    try {
-      saved = localStorage.getItem(STORAGE_KEY);
-    } catch {}
-    if (saved !== "true") return;
-    const resume = () => void setSound(true);
-    window.addEventListener("pointerdown", resume, { once: true });
-    window.addEventListener("keydown", resume, { once: true });
-    return () => {
+    if (!getSoundOn()) return;
+    const resume = (e: Event) => {
+      removeListeners();
+      if (!getSoundOn()) return;
+      if ((e.target as Element | null)?.closest?.("[data-sound-toggle]")) return;
+      void setSound(true);
+    };
+    const removeListeners = () => {
       window.removeEventListener("pointerdown", resume);
       window.removeEventListener("keydown", resume);
     };
+    window.addEventListener("pointerdown", resume);
+    window.addEventListener("keydown", resume);
+    return removeListeners;
   }, [setSound]);
 
   // Pause loops while the tab is hidden, resume when visible (original behavior).
   useEffect(() => {
     const onVisibility = () => {
-      if (!enabledRef.current) return;
+      if (!getSoundOn()) return;
       for (const name of activeLoops.current) {
         const howl = howls.current[name];
         if (document.hidden) howl?.pause();
