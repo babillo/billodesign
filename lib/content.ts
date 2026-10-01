@@ -45,10 +45,12 @@ export type Project = {
   sections: Partial<Record<ProjectSectionKey, string>>;
   testimonial: string | null;
   nextProject: string;
-  /** Homepage slider card; hand-written in Webflow, so it differs from title/summary. */
+  /** Homepage card; hand-written in Webflow, so it differs from title/summary. */
   card: {
     title: string;
     description: string;
+    /** One-line tag shown in the homepage project grid (Phase 6). */
+    tag: string;
     image: string;
     imageAlt: string;
     imageSize: ImageSize;

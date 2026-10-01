@@ -32,6 +32,27 @@
   backdrop-filter: blur(5px);
 }
 
+/* Phase 6: pointer-following glow (CursorGlow sets --glow-x/--glow-y). */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgb(0 173 204 / 0.32), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .card:hover::after {
+    opacity: 1;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 28px rgb(0 173 204 / 0.22);
+  }
+}
+
 .icon {
   width: 6rem;
   height: 6rem;

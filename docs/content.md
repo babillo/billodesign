@@ -64,3 +64,6 @@ Webflow stores `alt="__wf_reserved_inherit"` when no alt was set. The importer (
 
 ## Rich-text image dimensions
 The importer adds `width`/`height` to every rich-text image (`addImageDimensions`, sizes read with sharp), so the browser reserves the space before the image loads. If you add an image to `content/projects.json` by hand, give it width and height too.
+
+## Project card tags
+Each project's `card.tag` is the one-line tag under its title in the homepage grid (e.g. "AI productivity app · Product design & Webflow"). It isn't part of the Webflow CMS: it lives in `CARD_TAGS` in `scripts/import-webflow.mjs` and is written into `content/projects.json`. To change a tag, edit both, or edit `CARD_TAGS` and re-run the importer.

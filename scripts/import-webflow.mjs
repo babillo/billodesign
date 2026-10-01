@@ -244,6 +244,17 @@ const TOOL_ICONS = {
   "Frame-38.avif": "JavaScript",
 };
 
+// One-line tags for the homepage project grid (Phase 6, written with the owner;
+// not in the Webflow CMS).
+const CARD_TAGS = {
+  "personal-brand-it-portfolio": "Personal brand site · Design & Webflow",
+  "orbitai": "AI productivity app · Product design & Webflow",
+  "elegantnast": "Luxury beauty brand · Multilingual Webflow site",
+  "timms-team-landing-page": "Renovation company · Landing page",
+  "macrostate-landing-page": "UniFi door access · Solution landing page",
+  "flexibank---online-banking-mobile-app": "Mobile banking app · UI/UX design",
+};
+
 // The first card reused OrbitAI's alt text in Webflow; this describes the real image.
 const CARD_ALT_OVERRIDES = {
   "personal-brand-it-portfolio":
@@ -326,6 +337,7 @@ async function main() {
       card: {
         title: fixTypos(card.title),
         description: fixTypos(card.description),
+        tag: CARD_TAGS[slug],
         image: cardImage,
         imageAlt: CARD_ALT_OVERRIDES[slug] ?? card.imageAlt,
         imageSize: await imageSize(cardImage),

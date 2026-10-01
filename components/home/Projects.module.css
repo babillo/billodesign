@@ -15,8 +15,14 @@
   scroll-margin-top: 6rem;
 }
 
-.mask {
-  width: 40%;
+/* Phase 6: two columns of project tiles (one on phones). */
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem 2rem;
+  margin-top: 1rem;
 }
 
 @media (max-width: 991px) {
@@ -24,23 +30,14 @@
     gap: 1rem;
   }
 
-  .sliderWrap {
-    padding-bottom: 4rem;
-  }
-
-  .mask {
-    width: 60%;
+  .grid {
+    margin-top: 2rem;
   }
 }
 
 @media (max-width: 767px) {
-  .mask {
-    width: 70%;
-  }
-}
-
-@media (max-width: 479px) {
-  .mask {
-    width: 90%;
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 }
