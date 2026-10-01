@@ -31,6 +31,7 @@ Client components are marked **(client)**. Everything else is a server component
 | `ProjectSection` | project page | one case-study card with rich-text HTML; `visual` disables the screen blend |
 | `VisitSiteLink` | cards, header | external link with arrow |
 | `CaseStudyNav` (client) | project page | Phase 6 #7. 2px cyan reading-progress line at the top of the viewport (transform written directly, no re-render per frame) and a "Sections" pill at the bottom centre (shown after 60% of a screen of scrolling) that lists the card titles (h2) and rich-text chapters (h3), highlights the current one and jumps there via `scrollToElement` (`lib/scroll.ts`). Headings get ids on mount; `scroll-margin-top: 96px` (globals.css) keeps them clear of the navbar. |
+| `ProjectTile` | homepage "Selected Work" grid | Phase 6 round 2. Screenshot (16:10, `object-fit: cover`, top-aligned), title, one-line `card.tag`, tool icons, "Visit site ↗". The title link is stretched over the card (`::after`), so the whole card opens the case study while "Visit site" (z-index 2) stays separate. Hover/focus: cyan border glow, image zoom 1.04, rectangular "View case study →" button; on touch screens the button is always shown. Square corners. |
 | `ImageLightbox` (client) | project page | Phase 6 #5. Turns every `main .rich-text figure img` into a keyboard-focusable "Enlarge image" button and opens it in a native `<dialog>`: caption + counter, ←/→ keys, swipe, Escape/backdrop to close, focus back to the image. `data-lenis-prevent` stops the page scrolling behind. No props. |
 
 ## Home (`components/home/`)
@@ -54,3 +55,7 @@ Client components are marked **(client)**. Everything else is a server component
 | `SmoothScroll` | Lenis |
 | `useModalDialog(open)` | hook: syncs a native `<dialog>` with React state |
 | `ScrollEffects` | `data-reveal` and `data-text` effects |
+
+### Home additions (Phase 6 round 2)
+- `components/home/Projects.tsx`: the slider was replaced by a 2-column grid of `ProjectTile` (1 column ≤767px). `Slider` is still used by Testimonials; `ProjectCard` is still used for "Next Project" on case-study pages.
+- `components/home/CursorGlow.tsx` (client): pointer-following cyan glow inside `[data-glow]` elements (the service cards). It only writes `--glow-x/--glow-y`; the gradient is `.card::after` in `Services.module.css`. Disabled on touch screens (`hover: none`).

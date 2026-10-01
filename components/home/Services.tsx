@@ -1,4 +1,5 @@
 import { Ellipses } from "@/components/ui/Ellipses";
+import { CursorGlow } from "./CursorGlow";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ShadowTitle } from "@/components/ui/ShadowTitle";
 import { services } from "@/lib/site";
@@ -17,7 +18,7 @@ export function Services() {
           />
           <ul className={styles.grid}>
             {services.map((service) => (
-              <li key={service.title} className={`${styles.card} gradient-border`} data-reveal="">
+              <li key={service.title} className={`${styles.card} gradient-border`} data-reveal="" data-glow="">
                 <img src={service.icon} alt="" className={styles.icon} />
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
@@ -26,6 +27,7 @@ export function Services() {
             ))}
           </ul>
           <ShadowTitle>Services</ShadowTitle>
+          <CursorGlow />
         </div>
       </Container>
     </section>

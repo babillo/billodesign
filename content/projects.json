@@ -36,6 +36,7 @@
     "card": {
       "title": "IT System Administrator Portfolio",
       "description": "This project involved transforming Fadi’s professional vision into a premium, enterprise-grade digital presence.",
+      "tag": "Personal brand site · Design & Webflow",
       "image": "/media/projects/personal-brand-it-portfolio/card-hero.avif",
       "imageAlt": "Fadi Al-Ibrahim portfolio homepage: dark purple hero reading 'System Administrator' with a glowing emblem and Active Directory and VMware Virtualization callouts.",
       "imageSize": {
@@ -83,6 +84,7 @@
     "card": {
       "title": "OrbitAI",
       "description": "OrbitAI is a personal AI productivity hub designed to help users focus, plan intelligently, and work in alignment with their energy — not against it.",
+      "tag": "AI productivity app · Product design & Webflow",
       "image": "/media/projects/orbitai/card-thumbnail.jpg",
       "imageAlt": "OrbitAI homepage with dark space background, headline stating 'Your personal AI that plans your day effortlessly,' and a dashboard interface showing task scheduling, focus mode timer, and insights.",
       "imageSize": {
@@ -128,6 +130,7 @@
     "card": {
       "title": "Elegantnast",
       "description": "Luxury Beauty Brand Website - Created a multilingual luxury website for Elegantnast, focusing on elegance and premium brand aesthetics.",
+      "tag": "Luxury beauty brand · Multilingual Webflow site",
       "image": "/media/projects/elegantnast/card-frame-93-min.avif",
       "imageAlt": "Website homepage for luxury eyelash extensions featuring a profile of a woman, sections highlighting certified expertise, natural beauty, premium products, and a lash artist named Lisa.",
       "imageSize": {
@@ -173,6 +176,7 @@
     "card": {
       "title": "Timms-Team",
       "description": "High-Converting Landing Page designed and developed for Timms Team, a German renovation and interior construction company.",
+      "tag": "Renovation company · Landing page",
       "image": "/media/projects/timms-team-landing-page/card-www.timms-team.de-1-min.jpg",
       "imageAlt": "Two construction workers installing a ceiling panel; promotional text about saving energy and modernizing homes.",
       "imageSize": {
@@ -218,6 +222,7 @@
     "card": {
       "title": "Macrostate Landing Page",
       "description": "I designed and developed a high-converting solution landing page for MacroState in Webflow, showcasing their UniFi Door Access solutions...",
+      "tag": "UniFi door access · Solution landing page",
       "image": "/media/projects/macrostate-landing-page/card-70913ef1bacda83a29a665e1c49d3fe6_macrostate.ae-2-copy-1600px.avif",
       "imageAlt": "Laptop screen displaying a new landing page for Unifi Door Access Solutions with menu options and a customer testimonial on a purple background.",
       "imageSize": {
@@ -271,6 +276,7 @@
     "card": {
       "title": "Online Banking Mobile App",
       "description": "FlexiBank is a modern mobile banking app designed to provide a seamless and secure digital banking experience....",
+      "tag": "Mobile banking app · UI/UX design",
       "image": "/media/projects/flexibank---online-banking-mobile-app/card-cover-page-2-2-min.avif",
       "imageAlt": "Screens of FlexiBank online banking mobile app showing login, debit card details, home screen with skyscraper, fingerprint scan, and face unlock.",
       "imageSize": {

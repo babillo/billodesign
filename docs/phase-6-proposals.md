@@ -8,7 +8,7 @@
 |---|---|
 | 1 | ✅ Approved, **size only**: the badge stays in the same position, just smaller on phones |
 | 2 | ✅ Approved |
-| 3 | ❌ Not approved: the orb keeps its current behaviour |
+| 3 | ❌ Not approved. Revisited 2026-10-02 with mockups on the live site (B: dim + blur at 35%/3px; C: smaller, 50%, top-right). **Final: skip.** The orb covers only about 5% of the screen and the text is readable after a little scrolling, so the trade-off (less orb presence and character) isn't worth it |
 | 4 | ✅ Approved |
 | 5 | ✅ Approved |
 | 6 | ✅ Approved: the enlarged tap areas must not overlap each other |
@@ -154,3 +154,15 @@ The services heading was written "What I&nbsp;&nbsp;Build" (two spaces) in both 
 - **Case-study reading size:** body text is 22px desktop and 19px mobile, with about 75 characters per line.
 - **Sliders:** swipe already works.
 - **Reduced motion:** intro, Lenis and text effects are already skipped.
+
+---
+
+## Round 2 (2026-10-02)
+
+The owner asked for more visual ideas and about replacing the project slider. Mockups were made on the live site before deciding.
+
+| Idea | Decision |
+|---|---|
+| Replace the "Selected Work" slider with a grid showing all projects (image-led: screenshot, title, one-line tag, tools, Visit site). Not a marquee: moving cards are hard to read and click, need a pause control, compete with the orb, and visibly repeat with six items. | ✅ Approved and built. Tags approved as drafted. "View case study" button **rectangular** (owner: the site uses square shapes) |
+| Pointer-following glow on the service cards | ✅ Approved and built |
+| Hero scroll cue + "View work" link; animated dashboard numbers; testimonials 2×2 grid on desktop; bio stats strip | Proposed, not yet mocked up or approved |

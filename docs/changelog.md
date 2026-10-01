@@ -133,3 +133,7 @@
 
 ### Reverted (owner decision, 2026-10-02)
 - #8 footer: back to the original Webflow footer (divider + copyright). The space under the CTA belongs to the orb's speech bubble ("What are you waiting for?"), which appears next to the orb at the page end; the fuller footer crowded it. The CTA bubble trigger is back to the original `#page-end` marker
+
+### Round 2 (owner-approved 2026-10-02)
+- "Selected Work": the slider is replaced by a grid showing all 6 projects (`ProjectTile`): screenshot, title, one-line tag, tools, Visit site; the whole card opens the case study; rectangular "View case study" button
+- Services cards: pointer-following cyan glow on hover (`CursorGlow`)
