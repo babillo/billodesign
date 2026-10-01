@@ -2,7 +2,7 @@
 
 Portfolio of Muhammad (Billodesign), migrated from Webflow to Next.js. It will be deployed on Vercel at https://billodesign.com.
 
-**Status (2026-10-01):** Phases 1–5 done. Live at https://billodesign.com (Vercel). Phase 6: proposals ready for selection (phase-6-proposals.md).
+**Status (2026-10-01):** Phases 1–5 done. Live at https://billodesign.com (Vercel). Phase 6: approved items built, pending merge. Next: Phase 7 (performance, SEO, accessibility).
 
 ## Stack
 Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules · GSAP + Lenis · Spline · lottie-web · Howler · OpenAI (chat) · Vercel
@@ -42,5 +42,5 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 - ✅ AI chat live (gpt-4o-mini, real project knowledge)
 - ✅ Contact form live (Turnstile → Resend → Zoho, branded notification email)
 - ✅ Phase 5: billodesign.com on Vercel, `www`/`http` → apex, GA4, sitemap in Search Console, Webflow subdomain indexing off, Spline orb verified on real devices
-- ⏳ Phase 6 design enhancement: 11 proposals awaiting selection
+- ✅ Phase 6 design enhancement: approved items 1, 2, 4–10 built (3 and 11 declined); see phase-6-proposals.md
 - Later (Phase 7): `og:description` is 149 characters (kept from Webflow; previews may truncate), per-project OG image sizes, performance budget

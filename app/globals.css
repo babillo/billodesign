@@ -513,3 +513,19 @@ main section h2.as-h3,
 main .rich-text h3 {
   scroll-margin-top: 96px;
 }
+
+/* Phase 6 (#9): page crossfade between routes (React <ViewTransition> in app/layout.tsx). */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

@@ -1,6 +1,6 @@
 # Phase 6 — Design enhancement proposals
 
-**Status:** owner decisions recorded 2026-10-01. Built: batch A (#1, #2, #4, #6, #10, heading space), batch B (#5), batch C (#7, #8). Remaining: #9.
+**Status:** owner decisions recorded 2026-10-01. **All approved items built** (2026-10-01): batch A (#1, #2, #4, #6, #10, heading space), B (#5), C (#7, #8), D (#9). #9 crossfades the page content; the orb isn't kept persistent across pages (that changes how the orb loads, so it's proposed for Phase 7).
 
 **Owner decisions (2026-10-01):**
 

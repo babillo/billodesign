@@ -3,7 +3,7 @@
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 import { setLenis } from "@/lib/scroll";
@@ -62,19 +62,19 @@ export function SmoothScroll() {
     };
   }, []);
 
-  // After Back/Forward, scroll the restored page to its saved position once it has rendered.
-  useEffect(() => {
+  // After Back/Forward, scroll the restored page to its saved position. A layout
+  // effect runs before paint (and before the page-transition snapshot), so the
+  // page never flashes at the top first.
+  useLayoutEffect(() => {
     currentPath.current = pathname;
     if (!restorePending.current) return;
     restorePending.current = false;
     const y = positions.current.get(pathname) ?? 0;
-    let frame = requestAnimationFrame(() => {
-      frame = requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-        if (lenis.current) lenis.current.scrollTo(y, { immediate: true, force: true });
-        else window.scrollTo(0, y);
-      });
-    });
+    if (lenis.current) {
+      lenis.current.resize();
+      lenis.current.scrollTo(y, { immediate: true, force: true });
+    } else window.scrollTo(0, y);
+    const frame = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(frame);
   }, [pathname]);
 

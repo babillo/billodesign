@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Lato } from "next/font/google";
 import Script from "next/script";
@@ -69,7 +70,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               Skip to content
             </a>
             <Navbar />
-            <main id="main">{children}</main>
+            <main id="main">
+              {/* Phase 6 (#9): page content crossfades on navigation (View Transitions; no-op where unsupported). */}
+              <ViewTransition>{children}</ViewTransition>
+            </main>
             <Footer />
             <SoundToggle />
             <AwwwardsBadge />

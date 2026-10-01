@@ -66,3 +66,12 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Loops** are started with `howl.play(savedId)`, so repeated starts resume the same sound instead of stacking copies.
 - **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden. The ambient track (1.4 MB) isn't preloaded; `start()` calls `howl.load()` first, because Howler never loads a `preload: false` sound on `play()`.
 - **Files:** `public/audio/*.mp3`. `click-beep.mp3` and `hover.mp3` came from a third party's GitHub via jsDelivr; the owner confirmed they are free to use.
+
+## Page transitions (Phase 6 #9)
+- **Where:** `app/layout.tsx` wraps the page content in React's `<ViewTransition>`; timing in `globals.css` (`::view-transition-*`, 0.3s ease).
+- **Trigger:** client-side navigations (link clicks). Next.js navigations are React transitions, so React calls `document.startViewTransition` and the old and new page content crossfade. Browser Back/Forward (popstate) navigates instantly without the crossfade.
+- **Technology:** the browser's View Transitions API through React; no library. Unsupported browsers (older Safari, Firefox before support) just navigate.
+- **Scroll:** the Back/Forward scroll restore in `SmoothScroll` runs in a layout effect (before paint and before the "after" snapshot), so a restored page never flashes at the top.
+- **Orb:** each page still mounts its own `SplineOrb`, so the orb crossfades with the page. Keeping one persistent orb across pages (smoother and avoids re-initialising the scene) changes how the orb loads, so it's a Phase 7 proposal (see CLAUDE.md).
+- **Reduced motion:** all view-transition animations are disabled.
+- **QA note:** headless screenshots taken mid-transition can come out black, because Chrome pauses rendering while it captures and the visitor keeps seeing the old page. Judge transitions in a real browser.
