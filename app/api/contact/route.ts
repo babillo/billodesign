@@ -7,6 +7,7 @@
 //   CONTACT_FROM_EMAIL    verified sender on a Resend-verified domain, e.g. "Billodesign <contact@send.billodesign.com>"
 //   TURNSTILE_SECRET_KEY  Turnstile secret (widget site key is NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
+import { buildContactEmail } from "@/lib/server/contact-email";
 import { clientIp, createRateLimiter } from "@/lib/server/rate-limit";
 
 const LIMITS = { name: 256, email: 256, message: 5000 };
@@ -15,8 +16,14 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // 5 submissions per 10 minutes per IP (ADR-004).
 const isRateLimited = createRateLimiter({ windowMs: 10 * 60_000, max: 5 });
 
-const escapeHtml = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+// Only the path of the page the form was sent from (informational, from Referer).
+function sourcePage(request: Request) {
+  try {
+    return new URL(request.headers.get("referer") ?? "").pathname;
+  } catch {
+    return undefined;
+  }
+}
 
 async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -84,9 +91,7 @@ export async function POST(request: Request) {
       from: CONTACT_FROM_EMAIL,
       to: [CONTACT_TO_EMAIL],
       reply_to: email,
-      subject: `New transmission from ${name.slice(0, 80)}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<p><strong>Name:</strong> ${escapeHtml(name)}<br><strong>Email:</strong> ${escapeHtml(email)}</p><p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
+      ...buildContactEmail({ name, email, message, page: sourcePage(request) }),
     }),
   });
 

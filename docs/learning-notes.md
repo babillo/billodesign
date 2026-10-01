@@ -44,3 +44,6 @@ Gradient text is `background-image` + `background-clip: text` + transparent `-we
 
 ## Before-paint scripts
 React effects run after the browser has painted the server HTML. State that must be true from the very first frame (hide content, theme class, motion flags) belongs in a small inline `<script>` in `<head>`. `suppressHydrationWarning` on `<html>` lets it change attributes without hydration warnings.
+
+## HTML email is not web HTML
+Gmail, Outlook and others strip `<style>` blocks, CSS variables, flexbox and grid, and often block images until the reader allows them. Reliable emails use nested `<table role="presentation">` layouts, inline `style=""` on every element, web-safe font stacks, and a plain-text alternative. The contact notification (`lib/server/contact-email.ts`) follows these rules, and every visitor-supplied value is HTML-escaped.
