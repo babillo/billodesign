@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { navLinks } from "@/lib/site";
+import { navLinks, site } from "@/lib/site";
 import styles from "./Navbar.module.css";
 
 /*
@@ -78,6 +78,11 @@ export function Navbar() {
           </button>
 
           <nav id="site-menu" aria-label="Main" className={`${styles.menu} ${open ? styles.menuOpen : ""}`}>
+            {/* Phase 6: availability status, opens the contact form. Hidden in the phone menu. */}
+            <button type="button" className={styles.status} data-open-contact="" data-sound-click="">
+              <span className={styles.statusDot} aria-hidden="true" />
+              {site.availability}
+            </button>
             {navLinks.map((link) => (
               <Link
                 key={link.href}

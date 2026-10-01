@@ -11,6 +11,8 @@ export const site = {
   // The meta description above stays the original for search results.
   shareDescription: "Webflow Certified Partner building fast, custom, AI-ready websites — from UI/UX design to clean code.",
   email: "hello@billodesign.com",
+  // Navbar status pill (Phase 6). Change the text when your availability changes.
+  availability: "Available for projects",
   ogImage: "/images/og-image.jpg",
   gaMeasurementId: "G-MVZCKN2L6C",
   awwwardsUrl: "https://www.awwwards.com/sites/billodesign-living-portfolio",
@@ -35,6 +37,26 @@ export const socialLinks = [
   { label: "Webflow profile", href: "https://webflow.com/@billodesign-work", icon: "/icons/social-webflow.svg" },
   { label: "Behance", href: "https://www.behance.net/muhammadsalman201", icon: "/icons/social-behance.svg" },
 ] as const;
+
+// "We got your back" stat cards (Phase 6), the same figures as the dashboard
+// image behind them. Numbers count up when scrolled into view.
+export const performanceStats = {
+  uptime: 99.99,
+  lighthouse: [
+    { label: "Performance", value: 97 },
+    { label: "Accessibility", value: 97 },
+    { label: "SEO", value: 97 },
+  ],
+  responseMs: 42,
+};
+
+// Bio stats strip (Phase 6), figures provided by the owner.
+export const bioStats = [
+  { value: "3+", label: "Years experience" },
+  { value: "15+", label: "Projects shipped" },
+  { value: "Certified", label: "Webflow Partner" },
+  { value: "Nominee", label: "Awwwards" },
+];
 
 export const services = [
   {

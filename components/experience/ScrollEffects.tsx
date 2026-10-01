@@ -14,6 +14,8 @@ import { prefersReducedMotion } from "@/lib/motion";
  *   data-reveal="delay"    same, 0.5s later
  *   data-text="letters-fade-in"  letters fade in one by one (GSAP + SplitText)
  *   data-text="scrub-words"      words brighten from 40% opacity while scrolling
+ *   data-text="decode"           (Phase 6) scrambles through random glyphs and
+ *                                resolves left to right, once, when scrolled in
  *
  * The original script also defined words-slide-up, words-rotate-in,
  * words-slide-from-right and letters-slide-up, but no element used them.
@@ -26,6 +28,38 @@ import { prefersReducedMotion } from "@/lib/motion";
  */
 function keepGradientText(...groups: Element[][]) {
   for (const els of groups) gsap.set(els, { position: "static" });
+}
+
+const DECODE_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/?$@";
+const DECODE_MS = 650;
+
+/*
+ * Phase 6: "decoding" text, like the orb decoding a message. The real text is
+ * exposed as aria-label so screen readers never hear the scramble. Returns a
+ * cleanup that restores the text if the page changes mid-animation.
+ */
+function decodeOnce(el: HTMLElement) {
+  const text = el.textContent ?? "";
+  el.setAttribute("aria-label", text);
+  let frame = 0;
+  const start = performance.now();
+  const tick = (now: number) => {
+    const p = Math.min(1, (now - start) / DECODE_MS);
+    const resolved = Math.floor(p * text.length);
+    let out = "";
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      out += i < resolved || c === " " ? c : DECODE_GLYPHS[(Math.random() * DECODE_GLYPHS.length) | 0];
+    }
+    el.textContent = out;
+    if (p < 1) frame = requestAnimationFrame(tick);
+    else el.textContent = text;
+  };
+  frame = requestAnimationFrame(tick);
+  return () => {
+    cancelAnimationFrame(frame);
+    el.textContent = text;
+  };
 }
 
 export function ScrollEffects() {
@@ -45,6 +79,19 @@ export function ScrollEffects() {
       { threshold: 0 },
     );
     document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+
+    const decodeCleanups: (() => void)[] = [];
+    const decodeIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          decodeIo.unobserve(entry.target);
+          decodeCleanups.push(decodeOnce(entry.target as HTMLElement));
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    document.querySelectorAll('[data-text="decode"]').forEach((el) => decodeIo.observe(el));
 
     const ctx = gsap.context(() => {
       document.querySelectorAll<HTMLElement>('[data-text="letters-fade-in"]').forEach((el) => {
@@ -73,6 +120,8 @@ export function ScrollEffects() {
     return () => {
       io.disconnect();
       ctx.revert();
+      decodeIo.disconnect();
+      decodeCleanups.forEach((restore) => restore());
     };
   }, [pathname]);
 

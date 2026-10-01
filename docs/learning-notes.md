@@ -62,3 +62,9 @@ Browsers restore scroll on Back for full page loads (or the back-forward cache).
 
 ## `scroll-margin-top`
 Sets how far below the top of the viewport an element stops when scrolled to (anchor links, `scrollIntoView`, Lenis). Use it to clear a fixed header instead of hard-coding offsets in JavaScript.
+
+## Fixed backgrounds that work on iOS
+`background-attachment: fixed` is ignored on iOS Safari. Instead, put a `position: fixed` layer inside a section with `clip-path: inset(0)`: the clip limits the fixed layer to the section's box, so the image appears still while the section scrolls. Avoid `transform`, `filter` or `backdrop-filter` on that section, because they make it the containing block for fixed children (they'd scroll with it).
+
+## Animating numbers accessibly
+Render the final value on the server, animate a copy marked `aria-hidden`, and keep the real value in visually hidden text. No-JS users, screen readers and reduced-motion users all get the correct number, never a half-counted one.

@@ -20,11 +20,38 @@
   width: 100%;
 }
 
+/* Phase 6: 2×2 grid on desktop; the slider takes over below 992px. */
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.grid > * {
+  height: 100%;
+  margin: 0;
+}
+
+@media (min-width: 992px) {
+  .sliderWrap {
+    display: none;
+  }
+}
+
 .mask {
   width: 40%;
 }
 
 @media (max-width: 991px) {
+  .grid {
+    display: none;
+  }
+
   .content {
     gap: 1rem;
   }

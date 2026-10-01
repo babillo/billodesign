@@ -67,3 +67,9 @@ The importer adds `width`/`height` to every rich-text image (`addImageDimensions
 
 ## Project card tags
 Each project's `card.tag` is the one-line tag under its title in the homepage grid (e.g. "AI productivity app · Product design & Webflow"). It isn't part of the Webflow CMS: it lives in `CARD_TAGS` in `scripts/import-webflow.mjs` and is written into `content/projects.json`. To change a tag, edit both, or edit `CARD_TAGS` and re-run the importer.
+
+## Site-wide figures (Phase 6)
+In `lib/site.ts`:
+- `site.availability`: navbar status pill text.
+- `performanceStats`: uptime, Lighthouse scores, response time (same figures as the dashboard image).
+- `bioStats`: bio strip; owner-provided figures (3+ years, 15+ projects, Certified Webflow Partner, Awwwards Nominee).
