@@ -1,6 +1,6 @@
 # Deployment
 
-**Status (2026-10-01):** deployed on Vercel from `main` and live on the custom domain. ⚠ Currently `billodesign.com` redirects to `www.billodesign.com`, while canonical URLs point to `billodesign.com`. Make the apex the primary domain (step 1 below).
+**Status (2026-10-01):** live at https://billodesign.com (Vercel, from `main`). `www.` and `http://` redirect to the apex; post-deployment checks below done on 2026-10-01.
 
 ## How deployment works
 
@@ -47,13 +47,13 @@ Today `billodesign.com` 301-redirects to `billodesign.webflow.io` through a **Cl
 
 ## Post-deployment checks
 
-- [ ] `https://billodesign.com` loads; `http://` and `www.` redirect to it
-- [ ] All 6 project URLs load; `/projects/gwp` (removed) → `/`; unknown URL → 404 page
-- [ ] `/robots.txt` allows crawling and lists the sitemap; `/sitemap.xml` lists 7 URLs on `billodesign.com`
-- [ ] Response headers on `billodesign.com` have **no** `X-Robots-Tag: noindex` (that header is only for `*.vercel.app`)
+- [x] `https://billodesign.com` loads; `http://` and `www.` redirect to it
+- [x] All 6 project URLs load; `/projects/gwp` (removed) → `/`; unknown URL → 404 page
+- [x] `/robots.txt` allows crawling and lists the sitemap; `/sitemap.xml` lists 7 URLs on `billodesign.com`
+- [x] Response headers on `billodesign.com` have **no** `X-Robots-Tag: noindex` (that header is only for `*.vercel.app`)
 - [ ] Share preview: paste the URL into LinkedIn Post Inspector / opengraph.xyz and check the image and title
-- [ ] AI chat answers with real project knowledge (not the canned fallback)
-- [ ] Contact form: submit a test message and receive it in Zoho
+- [x] AI chat answers with real project knowledge (not the canned fallback)
+- [x] Contact form: submit a test message and receive it in Zoho
 - [ ] Google Analytics Realtime shows your visit (GA4 `G-MVZCKN2L6C`)
 - [ ] Spline orb on a real phone and laptop
 - [ ] Google Search Console: add the `billodesign.com` property (DNS verification in Cloudflare) and submit `sitemap.xml`
