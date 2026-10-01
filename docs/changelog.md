@@ -127,3 +127,6 @@
 ### Batch D
 - #9 Page transitions: content crossfades between routes (React `<ViewTransition>`, 0.3s, reduced motion respected)
 - Back/Forward scroll restore moved to a layout effect (no flash at the top)
+
+### Fixed (after merge)
+- CTA "What are you waiting for?" bubble didn't show on phones after the new footer: it is now triggered by its own spot under the social links instead of the page end
