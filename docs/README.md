@@ -2,7 +2,7 @@
 
 Portfolio of Muhammad (Billodesign), migrated from Webflow to Next.js. It will be deployed on Vercel at https://billodesign.com.
 
-**Status:** Phases 1–4 done. Phase 5 in progress: live at https://billodesign.vercel.app; domain cutover and API keys pending (deployment.md). Homepage, 6 case studies, 404, sitemap/robots, redirects and the AI chat endpoint are built; the site builds and runs. Open items are listed under "Current status" below.
+**Status (2026-10-01):** Phases 1–5 done. Live at https://billodesign.com (Vercel). Next: Phase 6 design-enhancement proposals.
 
 ## Stack
 Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules · GSAP + Lenis · Spline · lottie-web · Howler · OpenAI (chat) · Vercel
@@ -37,8 +37,9 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 | [changelog.md](changelog.md) | changes by phase |
 
 ## Current status
-- ✅ Visual rebuild of all pages (first pass, not yet compared side by side with the live site: Phase 4)
-- ✅ AI chat: original prompt + generated project knowledge + fallbacks; needs `OPENAI_API_KEY` in Vercel
-- ✅ Contact form: Resend + Turnstile implemented; needs accounts/keys (deployment.md)
-- ✅ Phase 3 refinement, ✅ Phase 4 visual QA (orb still to check on a real device)
-- ⏳ Phase 5 deployment
+- ✅ Visual rebuild of all pages, side-by-side QA against Webflow (Phase 4)
+- ✅ AI chat live (gpt-4o-mini, real project knowledge)
+- ✅ Contact form live (Turnstile → Resend → Zoho, branded notification email)
+- ✅ Phase 5: billodesign.com on Vercel, `www`/`http` → apex, GA4, sitemap in Search Console, Webflow subdomain indexing off, Spline orb verified on real devices
+- ⏳ Phase 6 design enhancement (proposals first)
+- Later (Phase 7): `og:description` is 149 characters (kept from Webflow; previews may truncate), per-project OG image sizes, performance budget

@@ -28,7 +28,8 @@
 
 ## Open items (Phase 5 / 7)
 
-- After cutover: redirect or noindex `billodesign.webflow.io` so it isn't duplicate content (migration.md §6).
-- Owner to check Search Console for indexed URLs and queries.
+- ✅ Webflow subdomain indexing turned off after cutover (2026-10-01), so `billodesign.webflow.io` sends `Disallow: /`.
+- ✅ `billodesign.com` property set up in Search Console with `sitemap.xml` submitted (2026-10-01). Check coverage and queries after a few weeks.
 - Ask Awwwards / Made in Webflow / Contra to update links to `billodesign.com`.
 - Per-project OG images are large originals (up to ~3000px). Consider resized OG variants.
+- `og:description` is 149 characters (the original Webflow text); opengraph.xyz warns that previews may truncate around 110. Candidate for Phase 6/7 copy tightening.

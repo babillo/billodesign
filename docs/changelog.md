@@ -72,7 +72,7 @@
 - Layout identical before and after (home at 1440/390, OrbitAI at 390)
 - Dependencies: all used; initial JS measured (see architecture.md)
 
-## Phase 5 — Production / deployment (in progress)
+## Phase 5 — Production / deployment (completed 2026-10-01)
 
 ### Added
 - Deployed on Vercel: https://billodesign.vercel.app (verified: all routes, redirects, 404, sitemap, robots, assets, no client errors at 1440/390, layout identical to the local build)
@@ -90,3 +90,7 @@
 - Contact notification email redesigned (`lib/server/contact-email.ts`): branded dark layout, sender details, source page, message block, "Reply to …" button, plain-text version
 - Sound toggle: the muted (slashed) icon stayed visible under the "on" icon; the icons now cross-fade. Icon size back to the original 32px (was stretched to 51px)
 - Sound toggle moved onto the same row as the AI chat launcher (24px inset, vertically centred; 20px on ≤768px). Owner change, not in the Webflow original
+
+### Completed (2026-10-01)
+- billodesign.com served by Vercel (apex primary; `www` and `http` redirect), Webflow subdomain indexing off
+- Verified: share previews (LinkedIn, opengraph.xyz), GA4 Realtime, Spline orb on real phone and laptop, sitemap submitted in Search Console, contact email delivery, AI chat

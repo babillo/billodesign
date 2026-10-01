@@ -42,7 +42,7 @@ Today `billodesign.com` 301-redirects to `billodesign.webflow.io` through a **Cl
 3. **Cloudflare → DNS:** create or replace the records exactly as Vercel shows them (typically an `A` record for the apex and a `CNAME` for `www`). Set them to **DNS only (grey cloud)**. Vercel provides the CDN and SSL certificates, and Cloudflare's proxy in front of Vercel interferes with certificate issuance.
    - **Do not touch** the Zoho `MX`/`TXT` records (email) or the Resend records.
 4. Wait for Vercel to show both domains as **Valid Configuration** (usually minutes; DNS can take up to a few hours).
-5. **Webflow:** keep the site published for now as a fallback, but turn "Webflow subdomain indexing" **Off** so `billodesign.webflow.io` stops competing with the new site in search.
+5. **Webflow:** ✅ done 2026-10-01. Keep the site published for now as a fallback, with "Webflow subdomain indexing" **Off** so `billodesign.webflow.io` stops competing with the new site in search.
 6. Run the post-deployment checks below on `https://billodesign.com`.
 
 ## Post-deployment checks
@@ -51,12 +51,12 @@ Today `billodesign.com` 301-redirects to `billodesign.webflow.io` through a **Cl
 - [x] All 6 project URLs load; `/projects/gwp` (removed) → `/`; unknown URL → 404 page
 - [x] `/robots.txt` allows crawling and lists the sitemap; `/sitemap.xml` lists 7 URLs on `billodesign.com`
 - [x] Response headers on `billodesign.com` have **no** `X-Robots-Tag: noindex` (that header is only for `*.vercel.app`)
-- [ ] Share preview: paste the URL into LinkedIn Post Inspector / opengraph.xyz and check the image and title
+- [x] Share preview: paste the URL into LinkedIn Post Inspector / opengraph.xyz and check the image and title
 - [x] AI chat answers with real project knowledge (not the canned fallback)
 - [x] Contact form: submit a test message and receive it in Zoho
-- [ ] Google Analytics Realtime shows your visit (GA4 `G-MVZCKN2L6C`)
-- [ ] Spline orb on a real phone and laptop
-- [ ] Google Search Console: add the `billodesign.com` property (DNS verification in Cloudflare) and submit `sitemap.xml`
+- [x] Google Analytics Realtime shows your visit (GA4 `G-MVZCKN2L6C`)
+- [x] Spline orb on a real phone and laptop
+- [x] Google Search Console: add the `billodesign.com` property (DNS verification in Cloudflare) and submit `sitemap.xml`
 
 ## Production settings already in the code
 
