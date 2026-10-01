@@ -64,6 +64,3 @@ Webflow stores `alt="__wf_reserved_inherit"` when no alt was set. The importer (
 
 ## Rich-text image dimensions
 The importer adds `width`/`height` to every rich-text image (`addImageDimensions`, sizes read with sharp), so the browser reserves the space before the image loads. If you add an image to `content/projects.json` by hand, give it width and height too.
-
-## Footer availability
-The footer's availability line is `site.availability` in `lib/site.ts`; change it when your status changes.

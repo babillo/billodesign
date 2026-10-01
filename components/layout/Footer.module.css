@@ -1,138 +1,30 @@
-/* Phase 6 (#8): three columns on desktop, stacked and centred on phones. */
-.grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 2rem;
-  align-items: start;
-  padding-bottom: 2.5rem;
-}
-
-.name {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-white);
-}
-
-.role {
-  margin: 0.4rem 0 0;
-  color: var(--color-grey-radial);
-  font-size: 0.9rem;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 1rem 0 0;
-  color: var(--color-cyan);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-}
-
-.links ul {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.links a,
-.links button {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--color-white);
-  font: inherit;
-  font-size: 0.95rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.links a:hover,
-.links button:hover,
-.email:hover,
-.top:hover {
-  color: var(--color-cyan);
-}
-
-.contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.75rem;
-}
-
-.email {
-  color: var(--color-white);
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.top {
-  color: var(--color-grey-radial);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-/* Original Webflow footer: divider line + copyright, centred. */
-.bottom {
+.content {
   display: flex;
   flex-flow: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   text-align: center;
 }
 
-.divider {
-  max-width: 100%;
-  height: auto;
-}
-
 .copyright {
-  margin: 0;
   color: var(--color-grey-radial);
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 
-@media (max-width: 767px) {
-  .grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 1.75rem;
-    text-align: center;
-  }
+.pageEnd {
+  height: 1rem;
+}
 
-  .status {
-    justify-content: center;
+@media (max-width: 991px) {
+  .content {
+    gap: 1rem;
   }
+}
 
-  .links ul {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem 1.5rem;
-  }
-
-  .contact {
-    align-items: center;
-  }
-
-  /* Keep the copyright clear of the fixed sound and chat buttons. */
-  .bottom {
-    padding-bottom: 4.5rem;
-  }
-
+@media (max-width: 479px) {
   .copyright {
     font-size: 0.7rem;
   }

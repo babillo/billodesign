@@ -130,3 +130,6 @@
 
 ### Fixed (after merge)
 - CTA "What are you waiting for?" bubble didn't show on phones after the new footer: it is now triggered by its own spot under the social links instead of the page end
+
+### Reverted (owner decision, 2026-10-02)
+- #8 footer: back to the original Webflow footer (divider + copyright). The space under the CTA belongs to the orb's speech bubble ("What are you waiting for?"), which appears next to the orb at the page end; the fuller footer crowded it. The CTA bubble trigger is back to the original `#page-end` marker

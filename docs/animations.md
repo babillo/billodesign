@@ -30,7 +30,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 ## Orb speech bubbles (typewriter)
 - **Where:** `OrbSpeech` + `TypedText`. Hero (disappears after 8.5s), CTA ×2, contact modal.
 - **Behavior:** types each line, pauses (`backDelay`), deletes instantly, then types the next; optional loop. Plays the typing sound while a bubble is on screen.
-- **CTA logic** (`CtaOrbTips`): the "waiting" bubble shows once its spot under the social links is fully on screen (an invisible `.tipAnchor` box at the bubble's position, IntersectionObserver threshold 1). Webflow triggered it at the page end, which was the same place while the footer was one line; since the Phase 6 footer the page end is further down, and on phones the bubble had scrolled off-screen before the marker appeared. hovering the CTA button swaps it for the "press it NOW" bubble; opening the modal hides both.
+- **CTA logic** (`CtaOrbTips`): reaching the footer marker (`#page-end`) shows the "waiting" bubble; hovering the CTA button swaps it for the "press it NOW" bubble; opening the modal hides both. This relies on the footer staying one line, so the page end coincides with the bubble's spot under the CTA, next to the orb (see the reverted Phase 6 #8). hovering the CTA button swaps it for the "press it NOW" bubble; opening the modal hides both.
 - **Reduced motion:** first line shown statically.
 
 ## Scroll reveal ("subtle slide from bottom")
