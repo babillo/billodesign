@@ -15,6 +15,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Behavior:** from page load until the hero speech bubble finishes (8.5s), the page content (main sections and footer) is hidden. Only the navbar, the orb and its bubble ("Hey there... Welcome to BilloDesign 👋" → "Let's build beyond pixels." → "Scroll down and I'll guide you.") are visible after the preloader. Then the content appears.
 - **Origin:** Webflow IX2. The "Preloader" action hid `.main-wrapper`, and "hide orb text tip delay hero" showed it again after 8.5s. Verified on the live site with a browser timeline (content hidden from about 4.3s to about 12s after navigation).
 - **Kept visible:** elements marked `data-intro-keep` (preloader, orb layer).
+- **Skip (Phase 6 #2):** after the preloader (3.2s), a scroll, swipe or key press ends the intro immediately (`wheel`, `touchmove`, `keydown` listeners). Visitors who just watch get the full 8.5s.
 - **Once per visit:** the intro plays once per browser tab (`sessionStorage.introSeen`). Back/Forward or a link back to the homepage skips the preloader and the welcome bubble (`html[data-intro-seen] [data-intro-once] { display: none }`). A reload plays it again, as a Webflow page load did.
 - **Scroll memory:** `SmoothScroll` saves each page's scroll position (on internal link clicks and on `popstate`) and restores it after Back/Forward with `lenis.scrollTo(y, { immediate: true })`.
 - **Start before paint:** on a full page load, the inline head script in `app/layout.tsx` sets `data-intro` on `/` before the first paint, and `HomeIntro` takes over after hydration. A 15s failsafe in that script un-hides the content if JavaScript never runs. Setting the flag only in `useEffect` made the hero flash on slower connections.
@@ -65,3 +66,12 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Loops** are started with `howl.play(savedId)`, so repeated starts resume the same sound instead of stacking copies.
 - **Sounds:** ambient loop; click beep (`data-sound-click`); hover beep + happy orb, and a sad orb on leave (`data-sound-hover`); happy/sad orb on modal open/close; typing loop while an orb bubble is visible; chat typing while the assistant types. Loops pause when the tab is hidden. The ambient track (1.4 MB) isn't preloaded; `start()` calls `howl.load()` first, because Howler never loads a `preload: false` sound on `play()`.
 - **Files:** `public/audio/*.mp3`. `click-beep.mp3` and `hover.mp3` came from a third party's GitHub via jsDelivr; the owner confirmed they are free to use.
+
+## Page transitions (Phase 6 #9)
+- **Where:** `app/layout.tsx` wraps the page content in React's `<ViewTransition>`; timing in `globals.css` (`::view-transition-*`, 0.3s ease).
+- **Trigger:** client-side navigations (link clicks). Next.js navigations are React transitions, so React calls `document.startViewTransition` and the old and new page content crossfade. Browser Back/Forward (popstate) navigates instantly without the crossfade.
+- **Technology:** the browser's View Transitions API through React; no library. Unsupported browsers (older Safari, Firefox before support) just navigate.
+- **Scroll:** the Back/Forward scroll restore in `SmoothScroll` runs in a layout effect (before paint and before the "after" snapshot), so a restored page never flashes at the top.
+- **Orb:** each page still mounts its own `SplineOrb`, so the orb crossfades with the page. Keeping one persistent orb across pages (smoother and avoids re-initialising the scene) changes how the orb loads, so it's a Phase 7 proposal (see CLAUDE.md).
+- **Reduced motion:** all view-transition animations are disabled.
+- **QA note:** headless screenshots taken mid-transition can come out black, because Chrome pauses rendering while it captures and the visitor keeps seeing the old page. Judge transitions in a real browser.

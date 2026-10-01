@@ -13,7 +13,17 @@ import styles from "./Navbar.module.css";
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+
+  // Phase 6 (#4): darker glass backdrop once the page has scrolled, so content
+  // passing underneath doesn't clash with the logo and links.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Highlight the link whose section is in view (Webflow adds .w--current to
   // in-page anchor links automatically). The section counts once it crosses
@@ -47,7 +57,7 @@ export function Navbar() {
   const close = () => setOpen(false);
 
   return (
-    <header className={styles.nav}>
+    <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <div className="padding-global">
         <div className={styles.container}>
           <Link href="/" className={styles.brand} aria-label="Billodesign home" onClick={close}>

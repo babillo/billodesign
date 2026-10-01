@@ -6,6 +6,8 @@ import { prefersReducedMotion } from "@/lib/motion";
 
 // Keep in sync with the hero OrbSpeech `hideAfter` in app/page.tsx.
 export const INTRO_DURATION_MS = 8500;
+// Preloader length (components/home/Preloader.module.css, hide at 3.2s).
+const PRELOADER_DURATION_MS = 3200;
 // Same key as the inline head script in app/layout.tsx.
 const SEEN_KEY = "introSeen";
 
@@ -37,15 +39,36 @@ export function HomeIntro() {
       sessionStorage.setItem(SEEN_KEY, "1");
     } catch {}
     const startedAt = Date.now();
-    const t = setTimeout(() => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      clearTimeout(armTimer);
+      removeSkipListeners();
       delete root.dataset.intro;
       root.dataset.introSeen = "";
       // Content was display:none, so every ScrollTrigger created meanwhile
       // (Lottie scrub, word scrub) measured zero-size elements. Re-measure now.
       ScrollTrigger.refresh();
-    }, INTRO_DURATION_MS);
+    };
+    const timer = setTimeout(finish, INTRO_DURATION_MS);
+
+    // Phase 6 (#2): scrolling, swiping or pressing a key ends the intro early
+    // (the bubble itself says "Scroll down and I'll guide you"). Armed after
+    // the preloader, which always plays in full.
+    const skipEvents = ["wheel", "touchmove", "keydown"] as const;
+    const removeSkipListeners = () => {
+      for (const type of skipEvents) window.removeEventListener(type, finish);
+    };
+    const armTimer = setTimeout(() => {
+      for (const type of skipEvents) window.addEventListener(type, finish, { passive: true });
+    }, PRELOADER_DURATION_MS);
+
     return () => {
-      clearTimeout(t);
+      clearTimeout(timer);
+      clearTimeout(armTimer);
+      removeSkipListeners();
       delete root.dataset.intro;
       // Leaving mid-intro counts as seen. The guard skips React's dev-only
       // mount → unmount → mount check, which would otherwise cancel the intro.

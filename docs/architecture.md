@@ -100,3 +100,6 @@ See [animations.md](animations.md). In short: CSS for simple loops and transitio
 ## Deployment
 
 Vercel, static pages + two serverless routes. See [deployment.md](deployment.md) (Phase 5).
+
+### Decision: page transitions with React `<ViewTransition>` (Phase 6)
+**Decision →** wrap page content in `<ViewTransition>` (React canary bundled with Next.js 16; no config). **Reason →** native browser API, no JS animation library, progressive (no-op where unsupported). **Alternative considered →** Framer Motion/GSAP route transitions (extra dependency, manual mount/unmount handling, fights Lenis). **Consequence →** crossfade on link navigations only; layout-effect scroll restore so snapshots are correct.

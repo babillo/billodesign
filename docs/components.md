@@ -3,6 +3,8 @@
 Client components are marked **(client)**. Everything else is a server component.
 
 ## Layout (`components/layout/`)
+
+> `Footer` (Phase 6 #8): brand + role + availability (`site.availability` in `lib/site.ts`), nav links + Contact (opens the modal via `data-open-contact`), email, back to top, then the original divider line and copyright. Social icons are deliberately not repeated (the CTA above shows them). `#page-end` marker kept for `CtaOrbTips`.
 | Component | Purpose | Notes |
 |---|---|---|
 | `Navbar` (client) | fixed blurred navbar, logo, Portfolio / About me / Contact | collapses to a burger ≤767px; "Contact" has `data-open-contact` |
@@ -28,6 +30,8 @@ Client components are marked **(client)**. Everything else is a server component
 | `ProjectHeader` | project page | h1, Wistia video **or** thumbnail, Visit Site, meta `<dl>` (empty rows hidden) |
 | `ProjectSection` | project page | one case-study card with rich-text HTML; `visual` disables the screen blend |
 | `VisitSiteLink` | cards, header | external link with arrow |
+| `CaseStudyNav` (client) | project page | Phase 6 #7. 2px cyan reading-progress line at the top of the viewport (transform written directly, no re-render per frame) and a "Sections" pill at the bottom centre (shown after 60% of a screen of scrolling) that lists the card titles (h2) and rich-text chapters (h3), highlights the current one and jumps there via `scrollToElement` (`lib/scroll.ts`). Headings get ids on mount; `scroll-margin-top: 96px` (globals.css) keeps them clear of the navbar. |
+| `ImageLightbox` (client) | project page | Phase 6 #5. Turns every `main .rich-text figure img` into a keyboard-focusable "Enlarge image" button and opens it in a native `<dialog>`: caption + counter, ←/→ keys, swipe, Escape/backdrop to close, focus back to the image. `data-lenis-prevent` stops the page scrolling behind. No props. |
 
 ## Home (`components/home/`)
 `Hero`, `WeGotYou`, `Services`, `TechStack` (+ `TechStackLottie`, client), `Projects`, `Testimonials`, `Bio`, `Preloader` (CSS-only). Each maps 1:1 to a Webflow section. See routes.md.

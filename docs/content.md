@@ -58,3 +58,12 @@ Rendered section order and headings are defined in `SECTIONS` in `app/projects/[
 ## How to change navigation or social links
 
 Edit `navLinks` / `socialLinks` in `lib/site.ts`. "Contact" in the navbar opens the contact modal and is defined in `components/layout/Navbar.tsx`.
+
+## Rich-text image alt text
+Webflow stores `alt="__wf_reserved_inherit"` when no alt was set. The importer (`fixImageAlts`) replaces it with the figure's caption, or "<Project name> screenshot" when there is none. To give an image a better description, edit its caption in the content, or the `alt` in `content/projects.json`.
+
+## Rich-text image dimensions
+The importer adds `width`/`height` to every rich-text image (`addImageDimensions`, sizes read with sharp), so the browser reserves the space before the image loads. If you add an image to `content/projects.json` by hand, give it width and height too.
+
+## Footer availability
+The footer's availability line is `site.availability` in `lib/site.ts`; change it when your status changes.

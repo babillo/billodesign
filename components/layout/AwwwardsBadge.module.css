@@ -10,3 +10,12 @@
 .badge img {
   display: block;
 }
+
+/* Phase 6 (#1, owner: size only, same position): smaller on phones so it
+   covers less of the text column. */
+@media (max-width: 767px) {
+  .badge img {
+    width: 34px;
+    height: auto;
+  }
+}

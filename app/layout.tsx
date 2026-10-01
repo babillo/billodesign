@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Lato } from "next/font/google";
 import Script from "next/script";
@@ -33,10 +34,10 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     title: site.title,
-    description: site.description,
+    description: site.shareDescription,
     images: [{ url: site.ogImage, width: 1200, height: 630 }],
   },
-  twitter: { card: "summary_large_image", title: site.title, description: site.description, images: [site.ogImage] },
+  twitter: { card: "summary_large_image", title: site.title, description: site.shareDescription, images: [site.ogImage] },
   icons: { icon: "/images/favicon.png", apple: "/images/webclip.png" },
 };
 
@@ -69,7 +70,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               Skip to content
             </a>
             <Navbar />
-            <main id="main">{children}</main>
+            <main id="main">
+              {/* Phase 6 (#9): page content crossfades on navigation (View Transitions; no-op where unsupported). */}
+              <ViewTransition>{children}</ViewTransition>
+            </main>
             <Footer />
             <SoundToggle />
             <AwwwardsBadge />

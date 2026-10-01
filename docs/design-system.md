@@ -56,4 +56,16 @@ Tokens live in `app/globals.css` (`:root`).
 
 ## Phase 6 values
 
-_None yet._
+New values introduced in Phase 6, approved by the owner (see `phase-6-proposals.md`). Everything not listed here is still the original Webflow value.
+
+| Item | Original Webflow | Phase 6 | Where |
+|---|---|---|---|
+| Awwwards badge on ≤767px (#1) | 53×171px | 34×110px, same position | `AwwwardsBadge.module.css` |
+| Navbar after scrolling > 8px (#4) | transparent, `blur(5px)` | `rgb(0 0 0 / 0.7)`, `blur(12px)`, bottom border `rgb(255 255 255 / 0.06)`, 0.4s fade; unchanged at the top of the page | `Navbar.module.css` |
+| Slider dot hit area (#6) | same as the bar (80×12px, 32×4.8px on ≤767px) | 32px tall (bar unchanged, drawn by `::before`); width unchanged, so no overlap | `Slider.module.css` |
+| Social-share description (#10) | the 149-character meta description | `site.shareDescription` (101 characters) for Open Graph and X; the meta description is unchanged | `lib/site.ts` |
+| Services heading | "What I&nbsp;&nbsp;Build" (two spaces) | "What I Build" | `Services.tsx` |
+| Image lightbox (#5) | none | backdrop `#000000f2`; round 3rem cyan-outline buttons (contact-modal style); caption in mono 0.875rem grey, counter cyan | `ImageLightbox.module.css` |
+| Reading progress (#7) | none | 2px `--color-cyan` line with a 6px cyan glow, fixed at the top (z 11) | `CaseStudyNav.module.css` |
+| Sections menu (#7) | none | 44px pill, `rgb(0 0 0 / 0.7)` + blur(8px), `--color-cyan-deep` border, `--button-glow`; panel max 22rem / 60svh, radius 12px; sub-items indented, grey 0.8rem; current item cyan | `CaseStudyNav.module.css` |
+| Footer (#8) | divider + copyright only | 3-column grid (stacked and centred ≤767px): name mono 1.1rem bold, role grey 0.9rem, availability cyan mono with pulse dot; links 0.95rem; email mono; copyright 0.85rem with the year | `Footer.module.css` |

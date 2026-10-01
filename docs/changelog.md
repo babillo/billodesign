@@ -97,3 +97,33 @@
 - Sound toggle: icon and audio could get out of sync after a reload (first click raced the remembered-state resume); the remembered state now shows immediately
 - Sound: a remembered "on" plays again on revisit (immediately if the browser allows autoplay, else on the first interaction); no duplicate loops on unlock (owner decision, ADR-014)
 - Homepage intro plays once per tab; Back/Forward restores the scroll position without the preloader or welcome message (ADR-014)
+
+## Phase 6 — Design enhancement (started 2026-10-01)
+
+### Added
+- `docs/phase-6-proposals.md`: 11 prioritized proposals from a page-by-page review at desktop and mobile
+
+### Fixed
+- Content typos in the OrbitAI case study ("maintainance", two missing spaces), also added to the importer's typo list
+
+### Batch A (owner-approved 2026-10-01)
+- #1 Awwwards badge smaller on phones (34×110px), same position
+- #2 Scroll, swipe or key press skips the rest of the homepage intro (after the preloader)
+- #4 Navbar gets a dark glass backdrop after scrolling
+- #6 Slider dots: 32px-tall touch areas, bars pixel-identical, no overlap
+- #10 Shorter social-share description (`site.shareDescription`)
+- "What I Build" heading: double space removed
+
+### Batch B
+- #5 Case-study screenshots open full-screen (`ImageLightbox`): keyboard, swipe, captions, counter
+- Accessibility: the 31 case-study images had Webflow's placeholder alt text `__wf_reserved_inherit`, which screen readers read out; they now use their caption or "<Project> screenshot" (importer `fixImageAlts`)
+- Typo: "OrbitAI Dashboad" → Dashboard
+
+### Batch C
+- #7 Case studies: reading-progress line and "Sections" jump menu (`CaseStudyNav`)
+- #8 New footer: name, role, availability, nav, contact, email, back to top
+- Layout shift fixed: rich-text images now carry width/height (importer `addImageDimensions`), and fullwidth figure wrappers are block-level so the space is reserved. Case-study pages no longer grow by up to about 11,000px while scrolling (OrbitAI: 11,888 → 22,054px before, now 22,185px from the first paint); final figure positions verified identical on all 6 projects at 1440/390
+
+### Batch D
+- #9 Page transitions: content crossfades between routes (React `<ViewTransition>`, 0.3s, reduced motion respected)
+- Back/Forward scroll restore moved to a layout effect (no flash at the top)

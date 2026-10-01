@@ -174,3 +174,21 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 **Solution:** (1) the resume listener ignores gestures on `[data-sound-toggle]`; (2) `setSound` checks the current state again after `await load()`; (3) the preference is read with `useSyncExternalStore`, so the icon shows the remembered choice immediately instead of "off" until the first gesture.
 
 **Prevention:** after an `await`, re-check that the state you acted on is still current.
+
+## Case-study pages grew by thousands of pixels while scrolling (layout shift)
+
+**Symptoms:** the new "Sections" menu jumped to the wrong place, and Lenis stopped short of the target. OrbitAI measured 11,888px at load and 22,054px once all images had loaded.
+
+**Cause:** rich-text `<img>` had no width/height, **and** Webflow's figure wrappers are shrink-to-fit (`display: table`, inner `inline-block` div). Before an image loads its wrapper is 0px wide, so it takes no space, and the page grows as lazy images load during scrolling. Adding width/height alone didn't help, because the 0-width wrapper still collapsed.
+
+**Investigation:** compared `scrollHeight` at load vs. after forcing all images to load; checked the served HTML (attributes present) and the figure CSS.
+
+**Solution:** the importer writes `width`/`height` (read with sharp). Fullwidth figure wrappers became `display: block`: the figure's inline `max-width` equals the image's natural width, so the final size is identical. "Normal" figures size from the width attribute. Verified: every figure on all 6 projects lands at the same position as on the live site (1440 and 390), and page height is final from the first paint.
+
+**Prevention:** always ship intrinsic dimensions for content images, and check that their wrappers aren't shrink-to-fit.
+
+## In-page #links ignored my scroll offset (Lenis anchors)
+
+**Cause:** `new Lenis({ anchors: true })` handles every same-page `#hash` link click itself (listener on `window`) and scrolls to the element, ignoring a custom offset. It does honour the target's CSS `scroll-margin-top`.
+
+**Solution:** `scroll-margin-top: 96px` on case-study headings, and `scrollToElement` (`lib/scroll.ts`) relies on it. The menu's click handler stops propagation, so only one scroll runs. Lenis's cached limit can also lag behind a page that just grew: `lenis.resize()` before `scrollTo`.

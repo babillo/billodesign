@@ -12,7 +12,7 @@ export function Services() {
         <div className={styles.content}>
           <SectionHeading
             eyebrow="Services"
-            title="What I  Build"
+            title="What I Build"
             intro="From concept to clean Webflow code — I design and develop future-proof digital experiences."
           />
           <ul className={styles.grid}>

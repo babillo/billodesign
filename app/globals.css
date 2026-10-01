@@ -413,6 +413,23 @@ figcaption {
   display: block;
 }
 
+/*
+ * Phase 6 (layout shift): the importer now writes width/height on rich-text
+ * images, but shrink-to-fit wrappers (Webflow's inline-block div / table) are
+ * 0px wide until the image loads, so no space could be reserved and the page
+ * grew by thousands of pixels while scrolling. Fullwidth figures already carry
+ * an inline max-width equal to the image's natural width, so a block wrapper
+ * gives the same final size; "normal" figures size from the width attribute.
+ */
+.rich-text .w-richtext-figure-type-image.w-richtext-align-fullwidth > div {
+  display: block;
+}
+
+.rich-text .w-richtext-figure-type-image.w-richtext-align-normal img {
+  width: auto;
+  max-width: 100%;
+}
+
 /* Webflow's center/float alignments are omitted: no project content uses them. */
 
 /* ---------- Scroll reveal (Webflow IX2 "subtle slide from bottom") ---------- */
@@ -478,4 +495,37 @@ html[data-intro] footer {
 
 html[data-intro-seen] [data-intro-once] {
   display: none;
+}
+
+/* Phase 6 (#5): case-study screenshots open in ImageLightbox. */
+.rich-text img[data-lightbox-index] {
+  cursor: zoom-in;
+}
+
+.rich-text img[data-lightbox-index]:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 4px;
+}
+
+/* Phase 6 (#7): case-study headings are jump targets (CaseStudyNav, #links);
+   keep them clear of the fixed navbar. Lenis honours scroll-margin. */
+main section h2.as-h3,
+main .rich-text h3 {
+  scroll-margin-top: 96px;
+}
+
+/* Phase 6 (#9): page crossfade between routes (React <ViewTransition> in app/layout.tsx). */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

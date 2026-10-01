@@ -20,6 +20,7 @@
 | JSON-LD `sameAs` | Behance, LinkedIn | all 5 profiles | complete |
 | Heading outline (projects) | meta labels were `h2` ("Role", ":") | `<dl>`; section titles `h2` styled as h3 | correct hierarchy, same look |
 | OG image | AVIF | JPEG 1200×630 | social platforms don't render AVIF (ADR-010) |
+| Rich-text image alt (Phase 6) | `__wf_reserved_inherit` placeholder on all 31 case-study images | figure caption, or "<Project> screenshot" | screen readers, image search |
 | Alt text | some wrong (OrbitAI text on Fadi's card; JS logo called a "yellow bird") | corrected | accuracy |
 
 ## Deployment hosts (Phase 5)

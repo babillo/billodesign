@@ -8,6 +8,17 @@
   backdrop-filter: blur(5px);
   padding-top: 1rem;
   padding-bottom: 1rem;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+/* Phase 6 (#4): after scrolling. At the top of the page it looks as in Webflow. */
+.scrolled {
+  border-bottom-color: rgb(255 255 255 / 0.06);
+  background-color: rgb(0 0 0 / 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .container {

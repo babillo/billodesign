@@ -7,7 +7,12 @@ export const site = {
   title: "Billodesign — Building Beyond Limits.",
   description:
     "Webflow Certified Partner crafting custom, speed-optimized, AI-ready websites. From UI/UX design to clean code—build digital experiences that evolve.",
+  // Phase 6 (#10): link previews (Open Graph / X) cut text around 110 characters.
+  // The meta description above stays the original for search results.
+  shareDescription: "Webflow Certified Partner building fast, custom, AI-ready websites — from UI/UX design to clean code.",
   email: "hello@billodesign.com",
+  // Footer availability line (Phase 6 #8). Update when your status changes.
+  availability: "Available for new projects",
   ogImage: "/images/og-image.jpg",
   gaMeasurementId: "G-MVZCKN2L6C",
   awwwardsUrl: "https://www.awwwards.com/sites/billodesign-living-portfolio",
