@@ -4,11 +4,11 @@ Client components are marked **(client)**. Everything else is a server component
 
 ## Layout (`components/layout/`)
 
-> `Footer` (Phase 6 #8): brand + role + availability (`site.availability` in `lib/site.ts`), nav links + Contact (opens the modal via `data-open-contact`), email, back to top, then the original divider line and copyright. Social icons are deliberately not repeated (the CTA above shows them).
+> `Footer`: the original Webflow footer (divider line + copyright) and the `#page-end` marker. A fuller Phase 6 footer (#8) was built and then reverted by the owner (2026-10-02): the empty space under the CTA is where the orb's speech bubble appears, and extra footer content made that area crowded.
 | Component | Purpose | Notes |
 |---|---|---|
 | `Navbar` (client) | fixed blurred navbar, logo, Portfolio / About me / Contact | collapses to a burger ≤767px; "Contact" has `data-open-contact` |
-| `Footer` | brand, availability, nav, email, back to top, divider, copyright | see the Phase 6 note above |
+| `Footer` | divider line, copyright, `#page-end` marker | the marker triggers the CTA bubble |
 | `SocialLinks` | LinkedIn, Upwork, Contra, Webflow, Behance icons | data in `lib/site.ts`; accessible names fixed |
 | `AwwwardsBadge` | fixed ribbon on the right edge | |
 

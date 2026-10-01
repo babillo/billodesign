@@ -197,4 +197,4 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 
 **Cause:** the bubble was triggered by a `#page-end` marker at the bottom of the footer. With a one-line footer that coincided with the bubble's spot under the CTA. The taller Phase 6 footer moved the page end down, and on phones the bubble (positioned under the CTA) was already above the viewport when the marker appeared.
 
-**Solution:** observe an invisible anchor at the bubble's own position (`.tipAnchor`, threshold 1); the marker was removed. **Lesson:** trigger UI from where it appears, not from a distant proxy that only coincides with it.
+**Solution (first):** observe an invisible anchor at the bubble's own position. It worked technically, but the bubble then appeared while the orb was elsewhere on screen, so it no longer read as the orb speaking. **Final:** the owner reverted the footer (2026-10-02), restoring the original composition and `#page-end` trigger. **Lesson:** some layout relationships (orb + bubble + empty space) are part of the design; check them before adding content nearby.

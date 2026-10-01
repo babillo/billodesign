@@ -13,7 +13,7 @@
 | 5 | ✅ Approved |
 | 6 | ✅ Approved: the enlarged tap areas must not overlap each other |
 | 7 | ✅ Approved |
-| 8 | ✅ Approved |
+| 8 | ✅ Approved, built, then **reverted by the owner (2026-10-02)**: the empty space under the CTA is part of the orb's speech-bubble moment; extra footer content made it crowded and distracting |
 | 9 | ✅ Approved |
 | 10 | ✅ Approved (wording as proposed) |
 | 11 | ❌ Not needed |
