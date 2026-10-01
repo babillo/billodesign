@@ -89,3 +89,4 @@
 - Contact form silently dropped real messages: Chrome autofill filled the honeypot (`company`); renamed to `hp_check` and drops are logged
 - Contact notification email redesigned (`lib/server/contact-email.ts`): branded dark layout, sender details, source page, message block, "Reply to …" button, plain-text version
 - Sound toggle: the muted (slashed) icon stayed visible under the "on" icon; the icons now cross-fade. Icon size back to the original 32px (was stretched to 51px)
+- Sound toggle moved onto the same row as the AI chat launcher (24px inset, vertically centred; 20px on ≤768px). Owner change, not in the Webflow original

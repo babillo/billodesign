@@ -50,6 +50,10 @@ Tokens live in `app/globals.css` (`:root`).
 - **Orb speech bubble:** 1px cyan border, radius `30px 0 30px 30px`, blur 20px.
 - **Slider dots:** bars 5rem × 0.75rem (2rem × 0.3rem ≤767), active `#00afcd`, inactive `#383838`.
 
+## Owner adjustments after launch (not Webflow values)
+
+- **Sound toggle position:** Webflow placed the 32px icon 13px from the left, with its top 48px above the viewport bottom. It now shares a row with the AI chat launcher: inset 24px (20px at ≤768px), in a 60px-tall (56px) hit area with the icon vertically centred (`SoundToggle.module.css`). The icon stays 32px.
+
 ## Phase 6 values
 
 _None yet._
