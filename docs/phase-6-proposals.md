@@ -6,19 +6,23 @@
 
 **Priority** = impact on visitors ÷ effort. Effort: **S** < half a day, **M** about a day, **L** several days.
 
-| # | Proposal | Impact | Effort |
-|---|---|---|---|
-| 1 | Awwwards badge stops covering text on phones | High | S |
-| 2 | Let visitors skip the homepage intro by scrolling | High | S |
-| 3 | Keep the orb from covering text while reading | High | M |
-| 4 | Navbar backdrop once the page scrolls | Medium | S |
-| 5 | Tap to zoom case-study screenshots | High | M |
-| 6 | Bigger touch area on slider dots | Medium | S |
-| 7 | Case-study progress bar and section jump menu | Medium | M |
-| 8 | A real footer | Medium | S |
-| 9 | Page transitions | Medium | M |
-| 10 | Shorter social-share description | Low | S |
-| 11 | Case-study "at a glance" summary | Medium | M (needs content) |
+**Suggestion key:** **A — Do now** (quick, high value; one PR) · **B — Do next** (bigger, high value) · **C — Then** · **Optional** (nice polish, decide later) · **Needs you** (wording or content from the owner first).
+
+| # | Proposal | Impact | Effort | Suggestion | Trade-off |
+|---|---|---|---|---|---|
+| 1 | Awwwards badge stops covering text on phones | High | S | **A — Do now.** Compact badge on phones; desktop unchanged. | The award is a little less prominent on phones. Awwwards' official badge styling should be respected, so keep its look and change only its size and position. |
+| 2 | Let visitors skip the homepage intro by scrolling | High | S | **A — Do now.** End the intro on the first scroll, swipe or key press. | Visitors who scroll right away miss part of the orb's welcome. The full intro still plays for anyone who just watches. |
+| 3 | Keep the orb from covering text while reading | High | M | **B — Do next,** with before/after screenshots for your approval before merging. | The orb is less present while reading on mobile (smaller or dimmed). Needs careful tuning so it doesn't feel jumpy; adds a small IntersectionObserver. |
+| 4 | Navbar backdrop once the page scrolls | Medium | S | **A — Do now.** Fade in a subtle glass backdrop after the top of the page. | Slightly less "borderless" feel than now. The blur costs a little GPU on low-end phones while scrolling (can fall back to a plain translucent bar there). |
+| 5 | Tap to zoom case-study screenshots | High | M | **B — Do next.** Native `<dialog>` lightbox, no library. | Full-resolution images download when tapped (mobile data). Adds about 2–3 KB of JavaScript to project pages. |
+| 6 | Bigger touch area on slider dots | Medium | S | **A — Do now.** Invisible 24px+ hit area, same look. | None visible. Only care needed: neighbouring dots' hit areas mustn't overlap. |
+| 7 | Case-study progress bar and section jump menu | Medium | M | **C — Then.** Start with the progress bar; add the menu if you like it. | One more element on screen next to the orb, badge and buttons. Relies on consistent headings in each case study's content. |
+| 8 | A real footer | Medium | S | **C — Then.** | More content at the page bottom, and it repeats the nav links. The availability line needs updating when your status changes. |
+| 9 | Page transitions | Medium | M | **Optional.** Polish once the above is done. | Not in every browser: Firefox and older Safari show the normal cut. Needs care alongside Lenis and ScrollTrigger. Adds about 300ms to each navigation. |
+| 10 | Shorter social-share description | Low | S | **Needs you:** approve the wording, then a 1-line change (can ride with batch A). | Drops part of the original Webflow sentence ("digital experiences that evolve"). |
+| 11 | Case-study "at a glance" summary | Medium | M | **Needs you:** results for each project. Skip it if there are no real outcomes to show. | Each project needs a short summary written. Invented or vague results would do more harm than leaving it out. |
+
+**Recommended order:** batch A (1, 2, 4, 6, plus 10 once the wording is approved) → batch B (3, 5) → batch C (7, 8) → optional 9 → 11 when you have the content.
 
 ---
 
@@ -28,6 +32,7 @@
 - **Improvement:** keep it fully visible on desktop. On phones (≤767px) show a smaller version that doesn't sit over the text column, e.g. a compact horizontal badge at the bottom between the sound and chat buttons, or tucked under the navbar.
 - **Why:** reading text that's cut off on the right is the most visible flaw on mobile. The badge stays visible, which matters while it's an Awwwards nominee badge.
 - **Implementation:** CSS only, in `AwwwardsBadge` (a mobile variant). No behaviour change.
+- **Trade-off:** Slightly less prominent award on phones; keep Awwwards' official badge look and change only size and position.
 
 ## 2. Let visitors skip the homepage intro by scrolling
 
@@ -35,6 +40,7 @@
 - **Improvement:** keep the intro exactly as it is, but end it early as soon as the visitor scrolls, swipes or presses a key: the content fades in and the bubble hides.
 - **Why:** first-time visitors, often clients deciding in seconds, can't be locked out for 12s. It also makes the bubble's own instruction work. Visitors who just watch still get the full intro.
 - **Implementation:** `HomeIntro` listens for wheel, touchmove and keydown during the intro and finishes it immediately (same code path as the timer). Small and low-risk.
+- **Trade-off:** Visitors who scroll immediately miss part of the welcome; watchers still get the full intro.
 
 ## 3. Keep the orb from covering text while reading
 
@@ -46,6 +52,7 @@
   - **Desktop:** nudge its resting position so it doesn't sit on the bio text.
 - **Why:** preserves the orb's presence and character without making visitors read through it.
 - **Implementation:** `SplineOrb` position and size per breakpoint and page variant, plus a small IntersectionObserver that sets a "reading" state when rich text is under the orb. CSS transitions on transform and opacity only, so it stays smooth. I'll show before/after screenshots for approval before merging.
+- **Trade-off:** The orb is smaller or dimmer while reading on mobile; needs tuning so it doesn't feel jumpy.
 
 ## 4. Navbar backdrop once the page scrolls
 
@@ -53,6 +60,7 @@
 - **Improvement:** once the page is scrolled past the top, fade in a subtle dark, blurred backdrop behind the navbar, in the same glass style as the site's cards. At the top of the page it looks exactly as now.
 - **Why:** navigation stays readable everywhere; it feels finished without changing the design.
 - **Implementation:** a CSS class toggled from the navbar's existing scroll listener; `backdrop-filter: blur()` with a dark translucent background.
+- **Trade-off:** Slightly less borderless look; `backdrop-filter` costs some GPU on low-end phones (fallback: plain translucent bar).
 
 ## 5. Tap to zoom case-study screenshots
 
@@ -60,6 +68,7 @@
 - **Improvement:** click or tap an image to open it full-screen at full resolution, with its caption, keyboard and swipe navigation between the page's images, and Escape or tap to close.
 - **Why:** the screenshots are the evidence of the work, and making them legible is the biggest improvement to the case studies.
 - **Implementation:** a small lightbox on a native `<dialog>` (same pattern as the contact modal), applied to rich-text images. No library. Images are already self-hosted.
+- **Trade-off:** Full-resolution images download on tap; about 2–3 KB more JavaScript on project pages.
 
 ## 6. Bigger touch area on slider dots
 
@@ -67,6 +76,7 @@
 - **Improvement:** keep the thin bar look, but give each dot an invisible 24–44px tall hit area.
 - **Why:** easier to use on touch screens; it's an accessibility fix with no visual change. Swiping already works.
 - **Implementation:** padding or a pseudo-element on the dot buttons in `Slider.module.css`.
+- **Trade-off:** None visible; hit areas of neighbouring dots mustn't overlap.
 
 ## 7. Case-study progress bar and section jump menu
 
@@ -74,6 +84,7 @@
 - **Improvement:** a thin cyan reading-progress line under the navbar, plus a small "Sections" menu that jumps to each chapter, built from the page's own headings.
 - **Why:** makes long stories easy to scan and revisit, which is how clients read case studies.
 - **Implementation:** a client component that reads the headings in the rich text, adds anchor ids, and tracks scroll progress with transform and opacity. Uses Lenis for smooth jumps.
+- **Trade-off:** Another on-screen element next to the orb, badge and buttons; relies on consistent headings in each case study.
 
 ## 8. A real footer
 
@@ -81,6 +92,7 @@
 - **Improvement:** a compact footer in the site's style: nav links, email, social icons, a short availability line ("Available for new projects"), and back-to-top.
 - **Why:** the bottom of the page is where interested visitors look for contact options, and it also adds internal links (helps SEO).
 - **Implementation:** server component, reusing the existing `SocialLinks`, nav data and tokens.
+- **Trade-off:** More content at the bottom, repeats the nav links; the availability line must be kept current.
 
 ## 9. Page transitions
 
@@ -88,6 +100,7 @@
 - **Improvement:** a short (about 300ms) cross-fade between pages, with the orb staying in place so it feels like one continuous space.
 - **Why:** polish that matches the site's cinematic feel, especially now that navigation stays inside the site.
 - **Implementation:** the browser's View Transitions API (supported by Next.js and React), no animation library. Skipped automatically with reduced motion and in browsers without support.
+- **Trade-off:** No effect in browsers without View Transitions (normal cut); adds about 300ms per navigation; needs care with Lenis and ScrollTrigger.
 
 ## 10. Shorter social-share description
 
@@ -95,6 +108,7 @@
 - **Improvement:** a ≤110-character version, for example: *"Webflow Certified Partner building fast, custom, AI-ready websites — from UI/UX design to clean code."* (101 characters).
 - **Why:** the full message shows in LinkedIn, WhatsApp and Google previews.
 - **Implementation:** one string in `lib/site.ts`. **Needs your wording approval.**
+- **Trade-off:** Drops part of the original Webflow sentence.
 
 ## 11. Case-study "at a glance" summary
 
@@ -102,6 +116,7 @@
 - **Improvement:** a short summary block after the header (Challenge → Approach → Result), ideally with one or two concrete outcomes (e.g. Lighthouse score, launch, client quote).
 - **Why:** decision-makers skim, and the result is what sells the next project.
 - **Implementation:** new optional fields in `content/projects.json` and a small component. **Needs content from you** (results per project), so it's last.
+- **Trade-off:** Content to write per project; only worth it with real, specific results.
 
 ---
 
