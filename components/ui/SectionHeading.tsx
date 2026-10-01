@@ -20,7 +20,7 @@ export function SectionHeading({ eyebrow, title, intro, className }: Props) {
         <h2 data-reveal="" data-text="decode">
           {eyebrow}
         </h2>
-        <h3>{title}</h3>
+        <h3 data-text="decode">{title}</h3>
       </div>
       {intro && <p data-text="scrub-words">{intro}</p>}
     </div>

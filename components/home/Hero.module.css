@@ -118,6 +118,11 @@
     font-size: 1.6rem;
   }
 
+  /* Owner: one hero button on phones. */
+  .workLink {
+    display: none;
+  }
+
   .cue {
     bottom: 1.25rem;
   }

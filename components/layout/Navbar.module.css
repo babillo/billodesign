@@ -78,8 +78,8 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #2bd67b;
-  box-shadow: 0 0 8px #2bd67b;
+  background: var(--color-cyan);
+  box-shadow: 0 0 8px var(--color-cyan);
 }
 
 .statusDot::after {
@@ -87,7 +87,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: #2bd67b;
+  background: var(--color-cyan);
   animation: status-pulse 2s ease-out infinite;
 }
 

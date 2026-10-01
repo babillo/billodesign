@@ -218,7 +218,10 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     const onClick = (e: MouseEvent) => {
       if ((e.target as Element).closest?.("[data-sound-click]")) play("click");
     };
+    // Hover sounds (beep + happy/sad orb) are for mouse hover only; on phones a
+    // tap fires pointerover/out, which made the orb "react" to every tap.
     const onOver = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
       const el = (e.target as Element).closest?.("[data-sound-hover]");
       if (!el || el.contains(e.relatedTarget as Node)) return;
       play("hover");
@@ -226,6 +229,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       play("orbHappyShort");
     };
     const onOut = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
       const el = (e.target as Element).closest?.("[data-sound-hover]");
       if (!el || el.contains(e.relatedTarget as Node)) return;
       stop("orbHappyShort");

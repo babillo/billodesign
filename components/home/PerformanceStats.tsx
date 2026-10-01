@@ -22,8 +22,9 @@ export function PerformanceStats() {
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-    // Start from zero only if the cards haven't been seen yet.
-    if (el.getBoundingClientRect().top < window.innerHeight) return;
+    // Always start from zero and count when the cards become visible. (An
+    // "already on screen?" check misfired during the homepage intro, when the
+    // content is display:none and every element reports top = 0.)
     let frame = 0;
     const io = new IntersectionObserver(
       ([entry]) => {
