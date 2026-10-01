@@ -6,9 +6,11 @@ import { createContext, useCallback, useContext, useEffect, useRef, useSyncExter
 /*
  * Sound design, rebuilt from the original Howler script (docs/animations.md#sound).
  *
- * Differences from Webflow, decided by the owner (docs/migration.md §5):
- * - Starts muted. Nothing is downloaded until the visitor turns sound on.
- * - The choice is remembered in localStorage("soundOn"), as before.
+ * Owner decisions (docs/migration.md §5):
+ * - First visit starts muted; nothing is downloaded until sound is turned on.
+ * - The choice is remembered in localStorage("soundOn"), as on Webflow, and a
+ *   remembered "on" plays again on the next visit (subject to the browser's
+ *   autoplay rules, see below).
  *
  * Markup opts in with data attributes so server components stay handler-free:
  *   data-sound-click  → click beep
@@ -76,12 +78,48 @@ function subscribe(listener: () => void) {
 export function SoundProvider({ children }: { children: React.ReactNode }) {
   const enabled = useSyncExternalStore(subscribe, getSoundOn, () => false);
   const howls = useRef<Partial<Record<SoundName, Howl>>>({});
+  const audioCtx = useRef<AudioContext | null>(null);
   // Loops that should be running right now, so they can resume after unmute or tab focus.
   const activeLoops = useRef(new Set<SoundName>());
+  // Howler sound id per loop, so repeated starts resume that sound instead of stacking copies.
+  const loopIds = useRef<Partial<Record<SoundName, number>>>({});
+
+  // Browsers keep audio locked until the visitor interacts with the page
+  // (unless they've already allowed this site to autoplay). While it's locked,
+  // Howler would queue every play() and fire them all on unlock, so nothing is
+  // started until the AudioContext is running. HTML5-audio fallback: no context.
+  const audioAllowed = useCallback(() => !audioCtx.current || audioCtx.current.state === "running", []);
+
+  // Howler doesn't load a `preload: false` sound (the large ambient track) on
+  // play(); it stays silent until load() is called.
+  const start = useCallback(
+    (name: SoundName) => {
+      const howl = howls.current[name];
+      if (!howl || !audioAllowed()) return;
+      if (howl.state() === "unloaded") howl.load();
+      if (!("loop" in SOUNDS[name])) {
+        howl.play();
+        return;
+      }
+      // play(id) is a no-op for a sound that's already playing.
+      const id = howl.play(loopIds.current[name]);
+      if (typeof id === "number") loopIds.current[name] = id;
+    },
+    [audioAllowed],
+  );
+
+  const startLoops = useCallback(() => {
+    if (!getSoundOn()) return;
+    for (const name of activeLoops.current) start(name);
+  }, [start]);
 
   const load = useCallback(async () => {
     if (Object.keys(howls.current).length) return;
-    const { Howl } = await import("howler");
+    const { Howl, Howler } = await import("howler");
+    if (Object.keys(howls.current).length) return;
+    // Otherwise Howler suspends the context after 30s of silence, which would
+    // look the same as "locked by the browser".
+    Howler.autoSuspend = false;
     for (const [name, cfg] of Object.entries(SOUNDS)) {
       howls.current[name as SoundName] = new Howl({
         src: [cfg.src],
@@ -90,16 +128,17 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         preload: name !== "ambient",
       });
     }
-  }, []);
+    // The context exists once the first Howl is created. When the browser
+    // unlocks it, start whatever should be playing.
+    audioCtx.current = Howler.ctx ?? null;
+    audioCtx.current?.addEventListener("statechange", () => {
+      if (audioAllowed()) startLoops();
+    });
+  }, [audioAllowed, startLoops]);
 
-  // Howler doesn't load a `preload: false` sound (the large ambient track) on
-  // play(); it stays silent until load() is called.
-  const start = useCallback((name: SoundName) => {
-    const howl = howls.current[name];
-    if (!howl) return;
-    if ("loop" in SOUNDS[name] && howl.playing()) return;
-    if (howl.state() === "unloaded") howl.load();
-    howl.play();
+  const unlock = useCallback(() => {
+    const ctx = audioCtx.current;
+    if (ctx && ctx.state !== "running") ctx.resume().catch(() => {});
   }, []);
 
   const play = useCallback(
@@ -125,37 +164,40 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         // Turned off again while Howler was still loading: don't start anything.
         if (!getSoundOn()) return;
         activeLoops.current.add("ambient");
-        for (const name of activeLoops.current) start(name);
+        unlock();
+        startLoops();
       } else {
         for (const howl of Object.values(howls.current)) howl?.pause();
       }
     },
-    [load, start],
+    [load, unlock, startLoops],
   );
 
   const toggle = useCallback(() => void setSound(!getSoundOn()), [setSound]);
 
-  // Restore a previous "sound on" choice. The icon shows it right away, but
-  // browsers block audio until the first user gesture, so playback starts on
-  // the first interaction. A first click on the toggle itself is left to the
-  // toggle (it means "mute"); resuming there too made the two race, and sound
-  // played while the muted icon showed.
+  // Like the Webflow site: a visitor who left sound on gets it again on the
+  // next visit. Playback starts immediately if the browser allows autoplay for
+  // this site; otherwise on the first click/tap/key press. (Owner decision
+  // 2026-10-01, replacing "always start muted".)
   useEffect(() => {
-    if (!getSoundOn()) return;
-    const resume = (e: Event) => {
-      removeListeners();
-      if (!getSoundOn()) return;
-      if ((e.target as Element | null)?.closest?.("[data-sound-toggle]")) return;
-      void setSound(true);
-    };
-    const removeListeners = () => {
-      window.removeEventListener("pointerdown", resume);
-      window.removeEventListener("keydown", resume);
-    };
-    window.addEventListener("pointerdown", resume);
-    window.addEventListener("keydown", resume);
-    return removeListeners;
+    if (getSoundOn()) void setSound(true);
   }, [setSound]);
+
+  // The first interaction unlocks audio. A click on the toggle is left to the
+  // toggle: for someone hearing nothing yet, that click means "mute".
+  useEffect(() => {
+    const onGesture = (e: Event) => {
+      if (!getSoundOn() || audioAllowed()) return;
+      if ((e.target as Element | null)?.closest?.("[data-sound-toggle]")) return;
+      unlock();
+    };
+    // Capture phase: elements like the Spline canvas stop these events from bubbling.
+    const events = ["pointerup", "keydown", "touchend"] as const;
+    for (const type of events) window.addEventListener(type, onGesture, true);
+    return () => {
+      for (const type of events) window.removeEventListener(type, onGesture, true);
+    };
+  }, [audioAllowed, unlock]);
 
   // Pause loops while the tab is hidden, resume when visible (original behavior).
   useEffect(() => {

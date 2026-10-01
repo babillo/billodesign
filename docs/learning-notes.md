@@ -50,3 +50,9 @@ Gmail, Outlook and others strip `<style>` blocks, CSS variables, flexbox and gri
 
 ## `useSyncExternalStore` for browser-stored preferences
 A value that lives outside React (localStorage, `matchMedia`, a module variable) shouldn't be copied into `useState` from an effect: that renders twice and the React Compiler lint rejects it. `useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)` reads it directly. The server snapshot (e.g. `false`) is used for SSR and hydration, then React re-renders with the real client value. Example: the sound preference in `SoundProvider.tsx`.
+
+## Browser autoplay rules
+An `AudioContext` created without a user gesture starts `suspended` in Safari and Firefox, and in Chrome unless the site has a high Media Engagement score. `ctx.resume()` only works during a user activation (click, tap, key press; scrolling doesn't count). Listen in the **capture** phase, because components such as canvases may stop propagation, and clicks inside iframes never reach the parent page. Howler queues `play()` calls while locked and fires them all on unlock, so gate your own calls on `ctx.state === "running"`.
+
+## Scroll restoration with client-side navigation
+Browsers restore scroll on Back for full page loads (or the back-forward cache). With client-side routing the new page renders asynchronously, so restoration fails if the content isn't there yet: here the homepage intro hid the content. Save positions per path yourself (on link clicks and `popstate`) and restore after render; with Lenis, use `lenis.scrollTo(y, { immediate: true })` so its internal position stays in sync.

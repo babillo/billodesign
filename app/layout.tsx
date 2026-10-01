@@ -42,19 +42,25 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#000000", colorScheme: "dark" };
 
-// Runs before first paint: enables the scroll-reveal start state only when
-// motion is allowed, so content is never hidden without JS or for reduced motion.
-// On the homepage it also starts the intro (content hidden while the orb speaks)
-// before the first paint; setting it after hydration made the hero flash.
-// HomeIntro takes over once React loads; the 15s timeout is a failsafe so the
-// page never stays hidden if JavaScript fails.
-const motionScript = `if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var d=document.documentElement;d.classList.add('motion');if(location.pathname==='/'){d.dataset.intro='boot';setTimeout(function(){if(d.dataset.intro==='boot')delete d.dataset.intro},15000)}}`;
+// Runs before first paint:
+// - enables the scroll-reveal start state only when motion is allowed, so
+//   content is never hidden without JS or for reduced motion;
+// - homepage intro (preloader + orb message, content hidden): plays once per
+//   browser tab, like Webflow where going back restored the page instead of
+//   reloading it. A reload plays it again. Setting the flag here, before the
+//   first paint, avoids a hero flash; HomeIntro takes over after hydration and
+//   the 15s timeout is a failsafe so the page never stays hidden if JS fails.
+const headScript = `(function(){var d=document.documentElement;
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+d.classList.add('motion');
+try{var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload')sessionStorage.removeItem('introSeen');if(sessionStorage.getItem('introSeen'))d.dataset.introSeen=''}catch(e){}
+if(location.pathname==='/'&&!('introSeen' in d.dataset)){d.dataset.intro='boot';setTimeout(function(){if(d.dataset.intro==='boot')delete d.dataset.intro},15000)}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${plexMono.variable} ${lato.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: motionScript }} />
+        <script dangerouslySetInnerHTML={{ __html: headScript }} />
       </head>
       <body>
         <SoundProvider>

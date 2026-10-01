@@ -470,3 +470,12 @@ html[data-intro] main > :not([data-intro-keep]),
 html[data-intro] footer {
   display: none;
 }
+
+/* Intro-only elements (preloader, welcome bubble) once the intro has played this visit. */
+.intro-once {
+  display: contents;
+}
+
+html[data-intro-seen] [data-intro-once] {
+  display: none;
+}
