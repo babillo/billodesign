@@ -59,7 +59,7 @@ export const bioStats = [
   { value: `${new Date().getFullYear() - CAREER_START_YEAR}+`, label: "Years experience" },
   { value: "15+", label: "Projects shipped" },
   { value: "Webflow", label: "Certified Partner" },
-  { value: "Google UX", label: "Certified" },
+  { value: "Google UX", label: "Certified Professional" },
 ];
 
 export const services = [
