@@ -258,6 +258,26 @@ With a production server running, open a case-study page at 2880×1200 with the 
 | CLS | < 0.05 | 0–0.05 (bubble) ⚠️ |
 | Lighthouse a11y / SEO / best practices | 100 / 100 / ≥ 96 | 100 / 100 / 100 ✅ |
 
+### P4f — Spline scene profile and checklist (2026-10-02, corrected after full inspection)
+
+Per frame (1440×900 at 2× density): ~320,000 triangles in 51 draw calls, 17 shader programs, 4 full-resolution and 12 1024² offscreen buffers. Inspecting the scene itself (docs/orb-rebuild.md) showed where that comes from. My first reading (reflection capture, post-processing) was wrong: **post-processing is switched off.**
+
+| Cost | Cause | Visible? |
+|---|---|---|
+| ~25 extra draws per frame into 1024² cube faces | the cursor-following light **"pl" casts shadows**; because it moves, its 6-face shadow map is redrawn every frame | **No**: rendering with and without it differs by 0.02–0.03/255 on average (orb-rebuild.md §2) |
+| full-resolution extra renders | **transmission** layer on the glass ball ("Clear Sphere") renders the scene again so it can blur what's behind | barely: what's behind the ball is black |
+| 17 shader programs | many materials/layers + shadow variants | — |
+| never idles | float loop, blink, particles | yes (keep) |
+
+Checklist for the owner (Spline editor; duplicate the file first), most valuable first:
+1. **Light "pl" → turn Shadows off.** Biggest saving, no visible change.
+2. **Clear Sphere material → remove or hide the Transmission layer** (or replace it with a dark colour layer). Compare: the ball should look the same, because the matcap layer gives it its look.
+3. Optional: sphere segments 64 → 32 (Clear Sphere and Sphere), and "Cast/Receive shadow" off on all objects once shadows are gone.
+4. Delete the unused events: the Glass Ball's Scroll and Drag & Drop events, and the disabled Follow event. They don't work on the live page (fixed canvas under the content).
+5. **Publish to the same URL** (`prod.spline.design/mFnZxSV0j4KZp6WS/scene.splinecode`); if it changes, update `SPLINE_SCENE_URL` in `components/experience/SplineOrb.tsx`.
+
+After publishing: re-run this profile and the Lighthouse set; re-render the orb poster only if the look changed.
+
 ### Round 2 candidates (not started)
 - **P4e adaptive quality:** cap the orb's render resolution on high-density phones, poster-only with Save-Data. Needs a real-phone check.
 - **P4f scene check (owner, Spline editor):** polygon counts, texture sizes, lights, post-processing, unused objects. Directly reduces the start-up time that dominates TBT.

@@ -175,3 +175,8 @@
 - Google Analytics loads after the page (`lazyOnload`); Tech Stack Lottie loads when near
 - Accessibility 100: scrub-words start at 50% opacity; no `aria-label` on paragraphs
 - Preloader image sized; unused font weight 600 removed
+
+### Orb investigation (2026-10-02)
+- Full inventory of the Spline scene (objects, materials, reactions, renderer settings) and where its frame cost goes: `docs/orb-rebuild.md`
+- Corrected Spline checklist: the costs are the cursor light's shadow (invisible) and the glass transmission, not post-processing
+- Three.js prototype of the orb at `/lab/orb` (not linked, noindex): near-identical look, ~60% less download, ~70% less blocking time, ~14× less work per frame. Not used on the live pages
