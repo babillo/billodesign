@@ -160,3 +160,8 @@
 - Bio: years of experience computed from 2022 (owner correction: 4+ years, not 3+)
 - Bio: "Nominee · Awwwards" replaced by "Google UX · Certified"; Webflow stat reads "Webflow · Certified Partner"; smaller values on phones so they fit one line
 - Bio: "Google UX · Certified Professional"
+
+## Phase 7 — Performance, SEO & experience optimization
+
+### Baseline (2026-10-02)
+- `docs/phase-7-baseline.md`: Lighthouse (mobile/desktop, home + OrbitAI), orb cost isolation, per-navigation cost, asset audit, proposals P1–P10, proposed budgets including an explicit orb budget
