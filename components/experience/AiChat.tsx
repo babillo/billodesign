@@ -109,7 +109,7 @@ export function AiChat() {
 
           <div className={styles.header}>
             {open && (
-              <img src="/images/orb-blinking-chat.gif" alt="" className={styles.orb} />
+              <img src="/images/orb-blinking-chat.webp" alt="" className={styles.orb} />
             )}
           </div>
 

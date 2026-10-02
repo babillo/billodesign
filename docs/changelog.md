@@ -160,3 +160,18 @@
 - Bio: years of experience computed from 2022 (owner correction: 4+ years, not 3+)
 - Bio: "Nominee · Awwwards" replaced by "Google UX · Certified"; Webflow stat reads "Webflow · Certified Partner"; smaller values on phones so they fit one line
 - Bio: "Google UX · Certified Professional"
+
+## Phase 7 — Performance, SEO & experience optimization
+
+### Baseline (2026-10-02)
+- `docs/phase-7-baseline.md`: Lighthouse (mobile/desktop, home + OrbitAI), orb cost isolation, per-navigation cost, asset audit, proposals P1–P10, proposed budgets including an explicit orb budget
+
+### Round 1 optimizations (owner-approved 2026-10-02)
+- Case-study images served through the Next.js image optimizer (AVIF/WebP, sized to the column): OrbitAI 18.9 MB → 0.3 MB of images
+- GIFs replaced: orb animations → animated WebP (−90%), FlexiBank animation → looping video that plays in view
+- Navbar no longer prefetches the homepage from case studies
+- Spline orb: instant poster image, runtime loads after the page, paused while covered by an opaque section or a modal
+- Case-study header fades in with CSS from first paint (LCP 9.8–12.8 s → 3.7 s in the lab)
+- Google Analytics loads after the page (`lazyOnload`); Tech Stack Lottie loads when near
+- Accessibility 100: scrub-words start at 50% opacity; no `aria-label` on paragraphs
+- Preloader image sized; unused font weight 600 removed

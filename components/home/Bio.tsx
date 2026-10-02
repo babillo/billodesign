@@ -6,7 +6,7 @@ import styles from "./Bio.module.css";
 
 export function Bio() {
   return (
-    <section className={styles.section} aria-label="About me">
+    <section className={styles.section} aria-label="About me" data-orb-cover="">
       <Container spacing="large" id="about-me">
         <div className={styles.grid}>
           <Image

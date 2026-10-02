@@ -28,7 +28,7 @@ export function TechStackLottie() {
     let anim: AnimationItem | undefined;
     let trigger: ScrollTrigger | undefined;
 
-    (async () => {
+    const load = async () => {
       // SVG-only player build: smaller than the full lottie-web bundle.
       const { default: lottie } = await import("lottie-web/build/player/lottie_svg");
       if (cancelled) return;
@@ -50,10 +50,23 @@ export function TechStackLottie() {
         });
         item.goToAndStop(frameAt(trigger.progress), true);
       });
-    })();
+    };
+
+    // Phase 7 (P7): the player (~65 KB gzip) and animation data load when the
+    // section is about a screen away, not with the page.
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        near.disconnect();
+        void load();
+      },
+      { rootMargin: "100% 0px" },
+    );
+    near.observe(el);
 
     return () => {
       cancelled = true;
+      near.disconnect();
       trigger?.kill();
       anim?.destroy();
     };

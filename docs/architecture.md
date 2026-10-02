@@ -79,12 +79,13 @@ See [animations.md](animations.md). In short: CSS for simple loops and transitio
 
 - All images and audio are self-hosted under `public/`. Nothing loads from the Webflow CDN.
 - `next/image` optimizes cards, thumbnails, avatars and the portrait into AVIF/WebP at the right sizes.
-- Case-study images inside rich text are plain `<img loading="lazy">`, not optimized (Phase 7 candidate).
-- Rule of thumb: photos and screenshots use `next/image`. SVG icons, animated GIFs and tiny decorative images use `<img>` (the lint rule is off for this reason, ADR-013).
+- Case-study images inside rich text are rewritten at build time by `lib/rich-text.ts` to use the Next.js image optimizer (`getImageProps`: AVIF/WebP, `srcset` sized to the measured column width). Content files keep the original paths (ADR-015).
+- Animations are animated WebP (orb GIFs: preloader, contact modal, chat) or MP4/WebM video (FlexiBank). No GIFs are served any more.
+- Rule of thumb: photos and screenshots use `next/image`. SVG icons, animated images and tiny decorative images use `<img>` (the lint rule is off for this reason, ADR-013).
 
 ## JavaScript budget (measured Phase 3)
 - Initial JS per page: **about 240 KB gzip**, of which about 160 KB is the React/Next.js runtime and 45 KB is GSAP + ScrollTrigger + SplitText. The rest is app code, Lenis and the providers.
-- Loaded on demand: Spline runtime, lottie-web (SVG build), Howler (only after sound is enabled), the Turnstile script (only with the contact modal open).
+- Loaded on demand: Spline runtime (after the `load` event, ADR-016), lottie-web (SVG build, near Tech Stack), Howler (only after sound is enabled), the Turnstile script (only with the contact modal open).
 - Phase 7 candidate: defer GSAP until after first paint.
 
 ## External services
@@ -94,7 +95,7 @@ See [animations.md](animations.md). In short: CSS for simple loops and transitio
 | Spline (prod.spline.design) | 3D orb scene | `SplineOrb.tsx` |
 | Wistia | project videos | rich text + `ProjectHeader` |
 | OpenAI | AI chat, `gpt-4o-mini` | `app/api/chat/route.ts` |
-| Google Analytics 4 (`G-MVZCKN2L6C`) | analytics (production only) | `app/layout.tsx` |
+| Google Analytics 4 (`G-MVZCKN2L6C`) | analytics (production only, `lazyOnload` since Phase 7) | `app/layout.tsx` |
 | Google Fonts | fetched **at build time** by `next/font`, self-hosted | `app/layout.tsx` |
 
 ## Deployment

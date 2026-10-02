@@ -10,7 +10,7 @@ import styles from "./WeGotYou.module.css";
  */
 export function WeGotYou() {
   return (
-    <section className={styles.section} aria-labelledby="wegotyou-title">
+    <section className={styles.section} aria-labelledby="wegotyou-title" data-orb-cover="">
       <div className={styles.backdrop} aria-hidden="true">
         <Image src="/images/performance-dashboard.avif" alt="" width={895} height={499} className={styles.dashboard} />
       </div>

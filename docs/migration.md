@@ -247,3 +247,10 @@ Position of every section heading and total page height compared at 1440 and 390
 **Fixed in pass 3:** `<strong>` weight (normalize.css sets `bold`; the browser default `bolder` gave 400 on 300-weight paragraphs, which changed line wrapping).
 
 **Not verifiable in headless QA:** the Spline orb (no GPU); check it on a real device.
+
+## Phase 7: intentional differences from Webflow (2026-10-02)
+- **Images:** same pictures, served as AVIF/WebP at screen size instead of the uploaded originals. GIFs became animated WebP or looping video (same frames).
+- **Orb:** a still poster of the same scene shows first and the live orb fades in over it; the live orb pauses while hidden. Same scene, same interaction.
+- **Scrub-words:** start at 50% opacity instead of Webflow's 40%, for AA contrast.
+- **Case-study header:** same fade, run in CSS from first paint instead of JavaScript.
+- Details and measurements: phase-7-baseline.md.

@@ -1,4 +1,5 @@
 import { Ellipses } from "@/components/ui/Ellipses";
+import { optimizeRichText } from "@/lib/rich-text";
 import styles from "./ProjectSection.module.css";
 
 type Props = { title: string; html: string; visual?: boolean };
@@ -13,7 +14,7 @@ export function ProjectSection({ title, html, visual }: Props) {
     <section className={`${styles.card} ${visual ? styles.visual : ""}`} data-reveal="">
       <div className={styles.content}>
         <h2 className="as-h3">{title}</h2>
-        <div className="rich-text" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="rich-text" dangerouslySetInnerHTML={{ __html: optimizeRichText(html) }} />
       </div>
       <Ellipses variant="project" />
     </section>

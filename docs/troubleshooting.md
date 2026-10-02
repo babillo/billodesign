@@ -208,3 +208,18 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 ## "View case study" hidden on some phones until tapped
 
 **Cause:** the always-visible rule used `@media (hover: none)`, but some Android browsers report `hover: hover`. **Fix:** hover effects require `(hover: hover) and (pointer: fine)`; the button is always shown for `(hover: none), (pointer: coarse), (max-width: 767px)`.
+
+## Local Lighthouse scores looked much better than production (the orb never loaded)
+1. **Problem:** the first local Phase 7 runs scored 58–74 where production scored 39–53.
+2. **Symptoms:** no requests to `prod.spline.design`; the page weight was 1 MB smaller than in production.
+3. **Cause:** the sandbox reaches the internet through a proxy with its own certificate; the Lighthouse/Playwright browsers didn't trust it, so the Spline scene failed (error boundary) and the runtime never ran.
+4. **Investigation:** compared per-type transfer sizes (`pw/weight.mjs`): no "Spline" bucket.
+5. **Solution:** launch QA browsers with `--ignore-certificate-errors-spki-list=<proxy key hash>` (authorized by the owner, QA browsers only), then re-measure the "before" numbers.
+6. **Prevention:** before comparing numbers, check that the expensive third-party part actually loaded.
+7. **Related files:** docs/phase-7-baseline.md.
+
+## "Is the orb really paused?" CPU numbers didn't show it
+1. **Problem:** main-thread time looked the same with the orb running or stopped.
+2. **Cause:** WebGL work runs in the GPU process, which `TaskDuration` doesn't include.
+3. **Solution:** count WebGL draw calls per second instead: 85 (desktop) / ~200 (phone) while visible, 0 while covered or behind a modal.
+4. **Related files:** components/experience/SplineOrb.tsx.

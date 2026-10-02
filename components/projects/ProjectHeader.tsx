@@ -19,7 +19,7 @@ export function ProjectHeader({ project }: { project: Project }) {
     <Container spacing="large">
       <div className={styles.wrapper}>
         <div className={styles.spacer} />
-        <h1 data-reveal="">{project.title}</h1>
+        <h1 data-reveal="load">{project.title}</h1>
 
         {project.video ? (
           <div className={styles.video} style={{ paddingTop: `${100 / project.video.aspect}%` }}>
@@ -39,7 +39,7 @@ export function ProjectHeader({ project }: { project: Project }) {
             height={project.thumbnailSize.height}
             sizes="(max-width: 800px) 100vw, 800px"
             priority
-            data-reveal="delay"
+            data-reveal="load-delay"
             className={styles.thumbnail}
           />
         )}
@@ -51,7 +51,7 @@ export function ProjectHeader({ project }: { project: Project }) {
             const value = project.meta[key];
             if (!value) return null;
             return (
-              <div key={key} className={styles.row} data-reveal="">
+              <div key={key} className={styles.row} data-reveal="load">
                 <dt className={styles.label}>
                   <span>{label}</span>
                   <span aria-hidden="true">:</span>

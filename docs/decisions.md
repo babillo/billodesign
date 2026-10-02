@@ -258,3 +258,43 @@ Keep "always start muted" (earlier choice, replaced by the owner). Disable clien
 
 Trade-offs:
 Returning sound-on visitors download about 400 KB of audio on page load (the 1.4 MB ambient track loads when it starts). A `sessionStorage` flag and an inline head-script check add a little complexity; reduced-motion visitors are unaffected (no intro).
+
+## ADR-015 — Optimize rich-text images at render time, not in the content files
+
+Date:
+2026-10-02
+
+Decision:
+Rewrite case-study `<img>` tags when the page renders (static, so at build) with `getImageProps` from `next/image`, so they go through the Next.js image optimizer. `content/projects.json` keeps the original paths.
+
+Context:
+The rich text is HTML from the Webflow CMS export, rendered with `dangerouslySetInnerHTML`, so it never used `next/image`. Pages shipped the original uploads (up to 3060 px) into an 800 px column: 18.4 MB of images on OrbitAI.
+
+Reason:
+One small function (`lib/rich-text.ts`) fixes every current and future project. `getImageProps` produces the same URLs and `srcset` as `<Image>`, so it follows the config (formats, widths). No generated files in the repo, and the importer stays unchanged.
+
+Alternatives:
+Generate AVIF/WebP variants in the importer (≈3 files per image in the repo, a build step to remember); parse the HTML into React elements and use `<Image>` (more code, a parser dependency).
+
+Trade-offs:
+Uses Vercel image transformations (cached; small numbers here). The `<img>` fallback `src` points at the largest width, which only browsers without `srcset` support would use.
+
+## ADR-016 — Orb: poster first, runtime after load, paused when unseen
+
+Date:
+2026-10-02
+
+Decision:
+Show a still render of the Spline scene immediately, start loading the Spline runtime after the window `load` event plus an idle moment, and `stop()` the scene while a modal is open or an opaque section covers it. Spline stays; the scene is unchanged.
+
+Context:
+Phase 7 baseline: the orb's runtime (~700 KB gzip) started at idle and overlapped page loading, and the scene rendered every frame even when nothing could see it. CLAUDE.md: optimize the orb, never remove it; Layer 1 = immediate visual.
+
+Reason:
+The camera scales the scene with the canvas height and centres it, so one 13 KB wide image with `object-fit: cover` matches the live orb at every viewport (verified at 390–1920 px). Visitors see the orb at once, and the expensive part no longer competes with first paint or the case-study header.
+
+Alternatives:
+Replace Spline with Three.js/R3F (large rewrite, fidelity risk, rejected for now); load on first interaction (the main-thread freeze would land exactly when the visitor acts); keep idle loading (baseline behaviour).
+
+Trade-offs:
+The poster must be re-rendered if the scene's look changes. The live orb appears slightly later than before on fast machines (after `load`), hidden by the poster. Lab Total Blocking Time is still dominated by the runtime's own start-up; that's what round 2 (P4e adaptive quality, P4f scene check) targets.

@@ -28,11 +28,12 @@ Client components are marked **(client)**. Everything else is a server component
 |---|---|---|
 | `ProjectCard` | homepage slider, "Next Project" | `next/image` thumbnail with hover zoom, Visit Site, View Project, tool logos |
 | `ProjectHeader` | project page | h1, Wistia video **or** thumbnail, Visit Site, meta `<dl>` (empty rows hidden) |
-| `ProjectSection` | project page | one case-study card with rich-text HTML; `visual` disables the screen blend |
+| `ProjectSection` | project page | one case-study card with rich-text HTML (passed through `optimizeRichText`, `lib/rich-text.ts`); `visual` disables the screen blend |
+| `RichTextVideos` (client) | project page | Phase 7. Plays the rich-text videos made from GIFs (`video[data-autoplay-visible]`) while in view; poster + controls with reduced motion. No props. |
 | `VisitSiteLink` | cards, header | external link with arrow |
 | `CaseStudyNav` (client) | project page | Phase 6 #7. 2px cyan reading-progress line at the top of the viewport (transform written directly, no re-render per frame) and a "Sections" pill at the bottom centre (shown after 60% of a screen of scrolling) that lists the card titles (h2) and rich-text chapters (h3), highlights the current one and jumps there via `scrollToElement` (`lib/scroll.ts`). Headings get ids on mount; `scroll-margin-top: 96px` (globals.css) keeps them clear of the navbar. |
 | `ProjectTile` | homepage "Selected Work" grid | Phase 6 round 2. Screenshot (16:10, `object-fit: cover`, top-aligned), title, one-line `card.tag`, tool icons, "Visit site ↗". The title link is stretched over the card (`::after`), so the whole card opens the case study while "Visit site" (z-index 2) stays separate. Hover/focus: cyan border glow, image zoom 1.04, rectangular "View case study →" button; on touch screens the button is always shown. Square corners. |
-| `ImageLightbox` (client) | project page | Phase 6 #5. Turns every `main .rich-text figure img` into a keyboard-focusable "Enlarge image" button and opens it in a native `<dialog>`: caption + counter, ←/→ keys, swipe, Escape/backdrop to close, focus back to the image. `data-lenis-prevent` stops the page scrolling behind. No props. |
+| `ImageLightbox` (client) | project page | Phase 6 #5. Turns every `main .rich-text figure img` into a keyboard-focusable "Enlarge image" button and opens it in a native `<dialog>`: caption + counter, ←/→ keys, swipe, Escape/backdrop to close, focus back to the image. `data-lenis-prevent` stops the page scrolling behind. Opens the image's `data-full` (1920 px optimized version) rather than the column-sized one. No props. |
 
 ## Home (`components/home/`)
 `Hero`, `WeGotYou`, `Services`, `TechStack` (+ `TechStackLottie`, client), `Projects`, `Testimonials`, `Bio`, `Preloader` (CSS-only). Each maps 1:1 to a Webflow section. See routes.md.
@@ -49,7 +50,7 @@ Client components are marked **(client)**. Everything else is a server component
 | `ContactModalProvider` / `useContactModal()` | modal state, `data-open-contact` listener |
 | `ContactModal` | `<dialog>` contact form → `/api/contact` |
 | `AiChat` | floating chat button + `<dialog>` → `/api/chat` |
-| `SplineOrb` (+ `OrbErrorBoundary`) | lazy 3D orb layer |
+| `SplineOrb` (+ `OrbErrorBoundary`) | 3D orb layer: poster image at once, Spline after `load` + idle, paused while covered (`data-orb-cover`) or behind a modal (animations.md#spline-orb) |
 | `OrbSpeech` | glass speech bubble with `TypedText`; typing sound while visible |
 | `TypedText` | typewriter (replaces Typed.js) |
 | `SmoothScroll` | Lenis |

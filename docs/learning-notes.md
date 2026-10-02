@@ -71,3 +71,18 @@ Render the final value on the server, animate a copy marked `aria-hidden`, and k
 
 ## Gradient borders on translucent elements
 The `padding-box`/`border-box` background trick paints the gradient under the whole element, which shows through a semi-transparent background. For glass cards, draw the border on a `::before` with `padding: 1px` and a mask `linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)`: only the 1px ring stays visible (`.gradient-border-glass` in globals.css).
+
+## `getImageProps`: next/image without the component
+`getImageProps({ src, width, height, sizes, alt })` from `next/image` returns the props `<Image>` would render (`src`, `srcSet`, `sizes`), following `next.config` (formats, widths). Useful when the markup isn't JSX, like CMS rich text: rewrite the `<img>` tags with those values. The optimizer picks AVIF/WebP from the browser's `Accept` header. `sizes` should describe the real rendered width; with plain `100vw`, phones download a size larger than needed.
+
+## LCP and hidden start states
+An element at `opacity: 0` isn't painted, so it can't be the Largest Contentful Paint until it becomes visible. If JavaScript reveals it, LCP waits for that JavaScript, and on a busy phone that took 10 s. A CSS animation (`animation: reveal-in 0.5s both`) starts with the first frame instead, so the same fade costs almost nothing.
+
+## A poster that matches a 3D scene
+A perspective camera with a fixed vertical field of view (Spline's default) keeps the scene's size proportional to the canvas **height** and centred horizontally. Changing the width only reveals more or less of the sides. `object-fit: cover` does the same to an image wider than the container, so one wide render lines up at every viewport. Measure it before relying on it (here: orb diameter / canvas height = 0.133 at five viewports).
+
+## Lab vs real devices for WebGL
+Headless Chrome without a GPU (this sandbox, and many CI and lab environments) draws WebGL in software (SwiftShader), so scene start-up and every frame are many times slower. Treat lab TBT for 3D pages as worst case. The main-thread task time (`TaskDuration`) doesn't include GPU-process work either; to see whether a scene is rendering, count WebGL draw calls (wrap `drawElements`/`drawArrays`).
+
+## Animated images: GIF vs WebP vs video
+GIF is the least efficient option. Animated WebP is a drop-in `<img>` with transparency, typically 85–90% smaller here, and it isn't blocked by iOS Low Power Mode. Video (MP4/WebM) is smaller still for large opaque animations, but needs `muted playsinline`, has no alpha in MP4, and won't autoplay in Low Power Mode, so give it a poster frame.

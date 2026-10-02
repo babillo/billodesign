@@ -12,8 +12,9 @@ import { prefersReducedMotion } from "@/lib/motion";
  *   data-reveal            fade + 10px slide up when scrolled into view
  *                          (Webflow IX2 "subtle slide from bottom")
  *   data-reveal="delay"    same, 0.5s later
+ *   data-reveal="load"     same fade on page load, pure CSS (above-the-fold content)
  *   data-text="letters-fade-in"  letters fade in one by one (GSAP + SplitText)
- *   data-text="scrub-words"      words brighten from 40% opacity while scrolling
+ *   data-text="scrub-words"      words brighten from 50% opacity while scrolling
  *   data-text="decode"           (Phase 6) scrambles through random glyphs and
  *                                resolves left to right, every time it scrolls
  *                                into view (hero, section labels and titles)
@@ -110,7 +111,8 @@ export function ScrollEffects() {
       },
       { threshold: 0 },
     );
-    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+    // data-reveal="load*" elements animate in CSS from first paint (globals.css).
+    document.querySelectorAll('[data-reveal]:not([data-reveal^="load"])').forEach((el) => io.observe(el));
 
     // Replays on every entry into view (owner request); a running decode is
     // stopped first so a quick in/out/in never stacks two animations.
@@ -139,10 +141,13 @@ export function ScrollEffects() {
       });
 
       document.querySelectorAll<HTMLElement>('[data-text="scrub-words"]').forEach((el) => {
-        const split = SplitText.create(el, { type: "words" });
+        // aria "none": SplitText's default puts aria-label on the element, which
+        // isn't allowed on <p>; whole words read correctly without it.
+        const split = SplitText.create(el, { type: "words", aria: "none" });
         keepGradientText(split.words);
+        // Starts at 50%, not Webflow's 40%: 40% white on black fails AA contrast (Phase 7, P8).
         gsap.from(split.words, {
-          opacity: 0.4,
+          opacity: 0.5,
           duration: 0.2,
           stagger: 0.4,
           scrollTrigger: { trigger: el, start: "top 90%", end: "top center", scrub: true },
