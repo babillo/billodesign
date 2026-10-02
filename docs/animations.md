@@ -30,12 +30,13 @@ Every item respects `prefers-reduced-motion` unless noted.
   3. **Live orb:** cross-fades over the poster (0.6s) when the scene loads. Wrapped in an error boundary; if Spline fails, the poster stays.
 - **Pausing (Phase 7):** `app.stop()` while the orb can't be seen, `app.play()` when it can again. It counts as hidden when a modal `<dialog>` is open, or when a section marked `data-orb-cover` with a solid black background fills the viewport (We got your back always; Tech Stack and Bio at ≤991px, where they're opaque). Checked on scroll and resize (once per frame) and with a MutationObserver on dialogs' `open`. Measured: 85–200 WebGL draw calls/s → 0 while covered. The last frame stays on the canvas, so nothing visibly changes.
 - **If the scene changes in Spline:** re-render the poster (see docs/phase-7-baseline.md, "Orb poster").
-- **Reduced motion:** unchanged (the orb's own idle motion is subtle); candidate for round 2.
+- **Reduced motion (Phase 7, V5):** the 3D scene never loads; the still poster stays. The scene floats, blinks, emits particles and follows the cursor continuously, so a still image is the right equivalent (and saves the ~1 MB download).
 
 ## Orb speech bubbles (typewriter)
 - **Where:** `OrbSpeech` + `TypedText`. Hero (disappears after 8.5s), CTA ×2, contact modal.
 - **Behavior:** types each line, pauses (`backDelay`), deletes instantly, then types the next; optional loop. Plays the typing sound while a bubble is on screen.
-- **CTA logic** (`CtaOrbTips`): reaching the footer marker (`#page-end`) shows the "waiting" bubble; hovering the CTA button swaps it for the "press it NOW" bubble; opening the modal hides both. This relies on the footer staying one line, so the page end coincides with the bubble's spot under the CTA, next to the orb (see the reverted Phase 6 #8). hovering the CTA button swaps it for the "press it NOW" bubble; opening the modal hides both.
+- **CTA logic** (`CtaOrbTips`): reaching the footer marker (`#page-end`) shows the "waiting" bubble; hovering the CTA button swaps it for the "press it NOW" bubble; opening the modal hides both. This relies on the footer staying one line, so the page end coincides with the bubble's spot under the CTA, next to the orb (see the reverted Phase 6 #8).
+- **Hero bubble position (Phase 7, V6):** `left: 74%` + `translateX(-100%)` + `width: max-content` instead of Webflow's `right: 26%`. It sits in exactly the same place (verified: right edge 26% from the layer's right, top 42%), but its layout box no longer moves as it grows while typing, which browsers counted as layout shift.
 - **Reduced motion:** first line shown statically.
 
 ## Scroll reveal ("subtle slide from bottom")
@@ -92,6 +93,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 ## Decoding labels (Phase 6)
 - **Where:** `ScrollEffects` (`data-text="decode"`), on every `SectionHeading` eyebrow **and title**, "We got your back!", and the **hero h1 and paragraph** (they decode as the intro ends, and on every return to the top).
 - **Behaviour:** every time the text scrolls into view (owner request); a running decode is stopped before replaying. When it enters (IntersectionObserver, bottom margin -10%), characters cycle through random glyphs (`A–Z 0–9 #%&/?$@`, case-matched to the original letter) and resolve left to right (rAF). Duration scales with length: 650ms for labels, up to 1.4s for a paragraph. Each text node is scrambled in place, so `<br>` and inline markup survive and the markup is restored exactly. Whitespace is kept.
+- **Size lock (Phase 7):** while decoding, the element is held at its resolved width/height (inline style, removed afterwards). Random glyphs have different widths in proportional fonts, so the hero paragraph re-wrapped and the vertically centred hero block jumped: layout shift 0.23 on a 390 px phone. Now 0; scrambled text may briefly spill over its box instead of pushing things.
 - **Accessibility:** headings get the real text as `aria-label`; non-heading elements (the hero paragraph) are `aria-hidden` only while scrambling, so screen readers never read the scramble. Skipped with reduced motion (ScrollEffects returns early). The text is restored if the page changes mid-animation.
 
 ## Counting stats (Phase 6)

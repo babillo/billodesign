@@ -59,12 +59,22 @@ function decode(el: HTMLElement) {
   if (isHeading) el.setAttribute("aria-label", full.replace(/\s+/g, " ").trim());
   else el.setAttribute("aria-hidden", "true");
 
+  // Scrambled glyphs are wider or narrower than the real letters, so the text
+  // re-wraps and the element changes size while it decodes; in the vertically
+  // centred hero that moved the whole block (layout shift 0.23 on phones).
+  // Hold the element at its resolved size until the text settles.
+  const { width, height } = el.getBoundingClientRect();
+  const prevSize = [el.style.width, el.style.height];
+  el.style.width = `${width}px`;
+  el.style.height = `${height}px`;
+
   const duration = decodeDuration(full.trim().length);
   let frame = 0;
   const start = performance.now();
   const restore = () => {
     nodes.forEach((n, i) => (n.data = texts[i]));
     if (!isHeading) el.removeAttribute("aria-hidden");
+    [el.style.width, el.style.height] = prevSize;
   };
   const tick = (now: number) => {
     const p = Math.min(1, (now - start) / duration);

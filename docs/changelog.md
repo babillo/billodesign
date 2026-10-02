@@ -180,3 +180,10 @@
 - Full inventory of the Spline scene (objects, materials, reactions, renderer settings) and where its frame cost goes: `docs/orb-rebuild.md`
 - Corrected Spline checklist: the costs are the cursor light's shadow (invisible) and the glass transmission, not post-processing
 - Three.js prototype of the orb at `/lab/orb` (not linked, noindex): near-identical look, ~60% less download, ~70% less blocking time, ~14× less work per frame. Not used on the live pages
+
+### Polish round (owner-approved 2026-10-02)
+- V1: case-study "Sections" button and menu are rectangular, like the rest of the site
+- V5: reduced-motion visitors get the still orb poster; the 3D scene isn't loaded
+- V6: hero speech bubble no longer causes layout shift while typing (same position)
+- Decoding text no longer resizes its element mid-animation: phone layout shift on the homepage 0.335 → 0.020 (lab, 11 s)
+- S2: Vercel Speed Insights for real-visitor Core Web Vitals (enable it in the Vercel dashboard)

@@ -1,6 +1,6 @@
 # Design System
 
-All values below are **original Webflow values**, reproduced as-is. No Phase 6 changes have been made yet. When they are, record them in a separate "Phase 6 values" section.
+All values below are **original Webflow values**, reproduced as-is. Changes made in Phase 6 (and later polish) are listed separately under "Phase 6 values".
 
 Tokens live in `app/globals.css` (`:root`).
 
@@ -69,7 +69,7 @@ New values introduced in Phase 6, approved by the owner (see `phase-6-proposals.
 | Services hover glow (round 2) | none | `radial-gradient(240px circle at pointer, rgb(0 173 204/.32), transparent 70%)` + `0 0 28px rgb(0 173 204/.22)`; fades in 0.4s; hover-capable devices only | `Services.module.css` |
 | Image lightbox (#5) | none | backdrop `#000000f2`; round 3rem cyan-outline buttons (contact-modal style); caption in mono 0.875rem grey, counter cyan | `ImageLightbox.module.css` |
 | Reading progress (#7) | none | 2px `--color-cyan` line with a 6px cyan glow, fixed at the top (z 11) | `CaseStudyNav.module.css` |
-| Sections menu (#7) | none | 44px pill, `rgb(0 0 0 / 0.7)` + blur(8px), `--color-cyan-deep` border, `--button-glow`; panel max 22rem / 60svh, radius 12px; sub-items indented, grey 0.8rem; current item cyan | `CaseStudyNav.module.css` |
+| Sections menu (#7) | none | 44px button, square corners (was a pill until Phase 7, V1), `rgb(0 0 0 / 0.7)` + blur(8px), `--color-cyan-deep` border, `--button-glow`; panel max 22rem / 60svh, square corners; sub-items indented, grey 0.8rem; current item cyan | `CaseStudyNav.module.css` |
 | Footer (#8) | divider + copyright only | **Reverted by the owner (2026-10-02)**: original footer kept | `Footer.module.css` |
 
 #### Round 3 values (owner-approved 2026-10-02): thin type, 1px lines, no bold
