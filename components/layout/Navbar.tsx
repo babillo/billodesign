@@ -56,11 +56,15 @@ export function Navbar() {
 
   const close = () => setOpen(false);
 
+  // Phase 7 (P3): every link here points at the homepage. Prefetching it from a
+  // case study made the browser preload the homepage's images (~600 KB) that
+  // the visitor may never see; it now loads on click instead.
+
   return (
     <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <div className="padding-global">
         <div className={styles.container}>
-          <Link href="/" className={styles.brand} aria-label="Billodesign home" onClick={close}>
+          <Link href="/" prefetch={false} className={styles.brand} aria-label="Billodesign home" onClick={close}>
             <img src="/icons/logo.svg" alt="" width={196} height={44} className={styles.logo} />
           </Link>
 
@@ -87,6 +91,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
                 className={`${styles.link} ${current === link.href.split("#")[1] ? styles.current : ""}`}
                 aria-current={current === link.href.split("#")[1] ? "location" : undefined}
                 data-sound-click=""

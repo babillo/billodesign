@@ -17,7 +17,8 @@ import "./globals.css";
 
 // Self-hosted by next/font at build time: no request to Google at runtime.
 const plexMono = IBM_Plex_Mono({
-  weight: ["300", "400", "500", "600", "700"],
+  // 600 dropped in Phase 7 (P10): nothing used it.
+  weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-ibm-plex-mono",
   display: "swap",
@@ -83,10 +84,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </SoundProvider>
         <SmoothScroll />
         <ScrollEffects />
+        {/* Phase 7 (P6): analytics after the page has loaded and gone idle (174 KB, ~0.5 s of main thread). */}
         {process.env.NODE_ENV === "production" && (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${site.gaMeasurementId}`} strategy="afterInteractive" />
-            <Script id="ga4" strategy="afterInteractive">
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${site.gaMeasurementId}`} strategy="lazyOnload" />
+            <Script id="ga4" strategy="lazyOnload">
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.gaMeasurementId}');`}
             </Script>
           </>

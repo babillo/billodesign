@@ -2,7 +2,7 @@
 
 Portfolio of Muhammad (Billodesign), migrated from Webflow to Next.js. It will be deployed on Vercel at https://billodesign.com.
 
-**Status (2026-10-02):** Phases 1–6 done. Live at https://billodesign.com (Vercel). Phase 7 (performance, SEO, accessibility): baseline measured, proposals awaiting approval.
+**Status (2026-10-02):** Phases 1–6 done. Live at https://billodesign.com (Vercel). Phase 7 (performance, SEO, accessibility): round 1 optimizations done; round 2 (orb quality, scene check) pending.
 
 ## Stack
 Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules · GSAP + Lenis · Spline · lottie-web · Howler · OpenAI (chat) · Vercel
@@ -23,7 +23,7 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 | [phase-1-audit.md](phase-1-audit.md) | original site audit |
 | [phase-4-visual-qa.md](phase-4-visual-qa.md) | side-by-side comparison checklist |
 | [phase-6-proposals.md](phase-6-proposals.md) | Phase 6 design-enhancement proposals (prioritized) |
-| [phase-7-baseline.md](phase-7-baseline.md) | Phase 7 baseline measurements, optimization proposals, budgets |
+| [phase-7-baseline.md](phase-7-baseline.md) | Phase 7 baseline, round 1 results, optimization decision log, budgets |
 | [migration.md](migration.md) | migration log: Confirmed / Assumption / Decision / Needs investigation, and the Webflow → Next mapping |
 | [architecture.md](architecture.md) | structure, server/client split, services |
 | [routes.md](routes.md) | every URL and redirect |
@@ -44,5 +44,5 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 - ✅ Contact form live (Turnstile → Resend → Zoho, branded notification email)
 - ✅ Phase 5: billodesign.com on Vercel, `www`/`http` → apex, GA4, sitemap in Search Console, Webflow subdomain indexing off, Spline orb verified on real devices
 - ✅ Phase 6 design enhancement: approved items 1, 2, 4–10 built (3 and 11 declined); see phase-6-proposals.md
-- 🔄 Phase 7: baseline measured (see phase-7-baseline.md); proposals P1–P10 awaiting approval
+- 🔄 Phase 7: round 1 done (case-study images −90%+, LCP 3.7 s, a11y 100, orb poster + pausing); round 2 pending (see phase-7-baseline.md)
 - Later (Phase 7): `og:description` is 149 characters (kept from Webflow; previews may truncate), per-project OG image sizes, performance budget

@@ -63,7 +63,8 @@ Today `billodesign.com` 301-redirects to `billodesign.webflow.io` through a **Cl
 - Security headers on every response: `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy` (`next.config.ts`).
 - `X-Robots-Tag: noindex` on any `*.vercel.app` host; robots.txt also disallows everything on preview deployments.
 - Error page (`app/error.tsx`) and 404 page (`app/not-found.tsx`).
-- GA4 loads only in production builds.
+- GA4 loads only in production builds, after the page has loaded (`lazyOnload`).
+- Image optimization (Phase 7): case-study images go through Vercel's image optimizer. Each source image × width × format is transformed once and cached; with ~40 images that's a few hundred transformations, well within the Hobby plan's monthly allowance. Check Vercel → Usage → Image Optimization after the first weeks.
 
 ## Rollback
 

@@ -17,7 +17,7 @@ export function Preloader() {
       </div>
       <div className={styles.content}>
         <div className={styles.title}>
-          <img src="/images/preloader-orb.gif" alt="" className={styles.orb} />
+          <img src="/images/preloader-orb.webp" alt="" width={364} height={290} className={styles.orb} />
           <div className={styles.welcome}>
             <img src="/images/preloader-icon.avif" alt="" width={32} height={32} className={styles.icon} />
             <div className={styles.text}>W e l c o m e</div>

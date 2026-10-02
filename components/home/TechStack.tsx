@@ -5,7 +5,7 @@ import styles from "./TechStack.module.css";
 
 export function TechStack() {
   return (
-    <section className={styles.section} aria-label="Tech stack">
+    <section className={styles.section} aria-label="Tech stack" data-orb-cover="">
       <Container spacing="large">
         <div className={styles.content}>
           <SectionHeading eyebrow="Tech Stack" title="Tools I used" />

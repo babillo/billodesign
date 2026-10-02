@@ -13,15 +13,35 @@
   position: absolute;
   inset: 0 0 0 30%;
   z-index: -2;
+}
+
+/*
+ * Phase 7 (P4b): still render of the scene (2880×1200). The live scene scales
+ * with the canvas height and is centred horizontally; object-fit: cover does
+ * the same as long as the image is wider than the canvas (2.4:1).
+ */
+.poster,
+.live {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.poster {
+  object-fit: cover;
+}
+
+.live {
   opacity: 0;
   transition: opacity 0.6s ease;
 }
 
-.orb.ready {
+.live.ready {
   opacity: 1;
 }
 
-.orb canvas {
+.live canvas {
   width: 100% !important;
   height: 100% !important;
 }

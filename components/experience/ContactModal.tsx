@@ -68,7 +68,7 @@ export function ContactModal() {
     >
       <div className={`${styles.modal} gradient-border`}>
         {isOpen && (
-          <img src="/images/orb-blinking.gif" alt="" className={styles.orb} />
+          <img src="/images/orb-blinking.webp" alt="" className={styles.orb} />
         )}
 
         <div className={styles.formBlock}>

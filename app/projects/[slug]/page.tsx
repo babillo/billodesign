@@ -6,6 +6,7 @@ import { ProjectHeader } from "@/components/projects/ProjectHeader";
 import { CaseStudyNav } from "@/components/projects/CaseStudyNav";
 import { ImageLightbox } from "@/components/projects/ImageLightbox";
 import { ProjectSection } from "@/components/projects/ProjectSection";
+import { RichTextVideos } from "@/components/projects/RichTextVideos";
 import { Cta } from "@/components/sections/Cta";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
 import { getProject, getProjects, getTestimonial, type ProjectSectionKey } from "@/lib/content";
@@ -106,6 +107,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       </Container>
 
       <ImageLightbox />
+      <RichTextVideos />
       <CaseStudyNav />
       <Cta title="Let’s Build Yours" text="Ready to turn your vision into a living, breathing digital experience?" />
     </>

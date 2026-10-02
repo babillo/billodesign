@@ -5,7 +5,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 ## Preloader
 - **Where:** homepage only, `components/home/Preloader.tsx` + `.module.css`
 - **Trigger:** page load
-- **Behavior (~3.2s):** teal overlay with black curtains. The orb GIF, pixel icon and "W e l c o m e" slide up; the progress bar grows, fills in two layers and shrinks; the items slide down; the curtains part; the overlay fades out.
+- **Behavior (~3.2s):** teal overlay with black curtains. The orb animation (animated WebP since Phase 7; was a GIF), pixel icon and "W e l c o m e" slide up; the progress bar grows, fills in two layers and shrinks; the items slide down; the curtains part; the overlay fades out.
 - **Tech:** pure CSS keyframes with delays (timeline documented at the top of the CSS file). Rebuilt from the Webflow IX2 "Preloader" action list.
 - **Reduced motion:** not shown.
 - **Note:** the original showed only once Webflow's JS ran. This version shows before hydration.
@@ -24,8 +24,13 @@ Every item respects `prefers-reduced-motion` unless noted.
 
 ## Spline orb
 - **Where:** `components/experience/SplineOrb.tsx`, a fixed layer behind the content (z-index −2). Home: left 30%. Projects: left 44%.
-- **Loading:** dynamic import after `requestIdleCallback`, fades in (0.6s) when the scene loads, wrapped in an error boundary.
-- **Reduced motion:** unchanged for now (Phase 7 topic).
+- **Loading (Phase 7):**
+  1. **Poster:** `public/images/orb-poster.webp` (2880×1200, 13 KB), a still render of the scene, shows at once. The Spline camera scales the scene with the canvas **height** and centres it horizontally (orb diameter = 0.133 × canvas height at every viewport, measured), so a wide image with `object-fit: cover` lines up with the live orb at every size.
+  2. **Runtime:** the dynamic import starts after the window `load` event plus `requestIdleCallback` (3s timeout). Before Phase 7 it started at idle, which overlapped page loading.
+  3. **Live orb:** cross-fades over the poster (0.6s) when the scene loads. Wrapped in an error boundary; if Spline fails, the poster stays.
+- **Pausing (Phase 7):** `app.stop()` while the orb can't be seen, `app.play()` when it can again. It counts as hidden when a modal `<dialog>` is open, or when a section marked `data-orb-cover` with a solid black background fills the viewport (We got your back always; Tech Stack and Bio at ≤991px, where they're opaque). Checked on scroll and resize (once per frame) and with a MutationObserver on dialogs' `open`. Measured: 85–200 WebGL draw calls/s → 0 while covered. The last frame stays on the canvas, so nothing visibly changes.
+- **If the scene changes in Spline:** re-render the poster (see docs/phase-7-baseline.md, "Orb poster").
+- **Reduced motion:** unchanged (the orb's own idle motion is subtle); candidate for round 2.
 
 ## Orb speech bubbles (typewriter)
 - **Where:** `OrbSpeech` + `TypedText`. Hero (disappears after 8.5s), CTA ×2, contact modal.
@@ -37,17 +42,25 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Where:** any element with `data-reveal` (section eyebrows, hero and CTA buttons, service cards, bio portrait, project cards and meta). `data-reveal="delay"` adds 0.5s.
 - **Behavior:** opacity 0 → 1, translateY 10px → 0, 0.5s ease-in, once, when the element enters the viewport.
 - **Tech:** IntersectionObserver (`ScrollEffects`) + CSS transitions (`globals.css`). The hidden state only applies when `html.motion` is set, so there's no hidden content without JS.
+- **Above the fold (Phase 7):** `data-reveal="load"` / `"load-delay"` run the same fade as a CSS animation from first paint, without JavaScript. Used by the case-study header (title, thumbnail, meta rows). Waiting for JavaScript had left it invisible for up to 10 s on slow phones while the main thread was busy.
 
 ## Text effects (GSAP)
 - `data-text="letters-fade-in"`: CTA heading letters fade in one by one (2s total stagger), play at 60% of the viewport, reset when scrolled back out of view.
-- `data-text="scrub-words"`: words go from 40% to 100% opacity as the element scrolls between 90% and 50% of the viewport. Used on section intros and the bio paragraph.
+- `data-text="scrub-words"`: words go from 50% to 100% opacity (Webflow: 40%; raised in Phase 7 for AA contrast) as the element scrolls between 90% and 50% of the viewport. Used on section intros and the bio paragraph.
 - Split words and characters are forced to `position: static` (`keepGradientText`). SplitText makes them `relative` by default, which breaks the gradient `background-clip: text` of headings, so the text turned invisible.
+- Scrub-words split with `aria: "none"`: SplitText's default puts `aria-label` on the element, which isn't allowed on `<p>` (Lighthouse `aria-prohibited-attr`). Whole words read correctly without it.
 - **Tech:** GSAP SplitText + ScrollTrigger (`components/experience/ScrollEffects.tsx`).
 
 ## Tech stack Lottie
 - **Where:** `components/home/TechStackLottie.tsx`, `public/lottie/tech-stack.json` (896×651)
 - **Behavior:** scrubbed by scroll while in view: 40% → 100% (at 48%), holds until 52%, back to 40%.
+- **Loading (Phase 7):** the player (~65 KB gzip) and JSON load when the section is one screen away (IntersectionObserver, `rootMargin: 100%`), not with the page.
 - **Reduced motion:** shows the final frame.
+
+## Case-study GIF → video (Phase 7)
+- **Where:** FlexiBank "mobile banking app" animation (`RichTextVideos`, `lib/rich-text.ts`).
+- **Behavior:** muted looping video, loads and plays when it scrolls into view (200px margin), pauses off-screen, like the lazy GIF it replaces.
+- **Reduced motion:** stays on its poster frame, with controls.
 
 ## Smooth scrolling
 - Lenis, `duration: 2` (original setting), `anchors: true`, synced with the GSAP ticker. Disabled with reduced motion.

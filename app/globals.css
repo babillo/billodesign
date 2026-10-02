@@ -382,7 +382,8 @@ figcaption {
   max-width: 60%;
 }
 
-.rich-text figure img {
+.rich-text figure img,
+.rich-text figure video {
   width: 100%;
   height: auto;
 }
@@ -481,6 +482,32 @@ html.motion [data-reveal="delay"] {
 html.motion [data-reveal].is-revealed {
   opacity: 1;
   transform: none;
+}
+
+/*
+ * Phase 7 (P5): content that is on screen when the page opens (case-study
+ * header) runs the same fade as a CSS animation from first paint. Waiting for
+ * JavaScript left the header invisible for seconds on slow phones (lab LCP
+ * render delay 10 s while the main thread was busy).
+ */
+html.motion [data-reveal^="load"] {
+  animation: reveal-in 0.5s ease-in both;
+}
+
+html.motion [data-reveal="load-delay"] {
+  animation-delay: 0.5s;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /*

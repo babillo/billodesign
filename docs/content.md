@@ -62,6 +62,20 @@ Edit `navLinks` / `socialLinks` in `lib/site.ts`. "Contact" in the navbar opens 
 ## Rich-text image alt text
 Webflow stores `alt="__wf_reserved_inherit"` when no alt was set. The importer (`fixImageAlts`) replaces it with the figure's caption, or "<Project name> screenshot" when there is none. To give an image a better description, edit its caption in the content, or the `alt` in `content/projects.json`.
 
+## Rich-text images are optimized at build time (Phase 7)
+`content/projects.json` keeps plain `<img src="/media/...">` tags. `ProjectSection` passes the HTML through `optimizeRichText` (`lib/rich-text.ts`), which:
+- points each image at the Next.js image optimizer with a `srcset` (AVIF/WebP, sized to the column), plus `data-full` (1920 px) for the lightbox;
+- turns a `.gif` into a looping `<video>` that expects `<name>.webm`, `<name>.mp4` and `<name>-poster.webp` next to where the GIF was.
+
+So you can keep uploading full-size screenshots; visitors get ~25–80 KB versions. Images need `width`/`height` (below), or they're left as they are.
+
+**Adding an animated GIF:** convert it instead of committing it (ffmpeg):
+```
+ffmpeg -i in.gif -c:v libvpx-vp9 -crf 34 -b:v 0 out.webm
+ffmpeg -i in.gif -movflags +faststart -pix_fmt yuv420p -c:v libx264 -crf 28 -preset veryslow -tune animation out.mp4
+```
+and save its first frame as `out-poster.webp`. GIFs with transparency (like the orb animations) can't be MP4; use animated WebP instead (`sharp(gif, { animated: true }).webp({ quality: 70 })`). Re-running the importer downloads the original GIF again; delete it afterwards.
+
 ## Rich-text image dimensions
 The importer adds `width`/`height` to every rich-text image (`addImageDimensions`, sizes read with sharp), so the browser reserves the space before the image loads. If you add an image to `content/projects.json` by hand, give it width and height too.
 
