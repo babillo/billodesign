@@ -96,6 +96,7 @@ See [animations.md](animations.md). In short: CSS for simple loops and transitio
 | Wistia | project videos | rich text + `ProjectHeader` |
 | OpenAI | AI chat, `gpt-4o-mini` | `app/api/chat/route.ts` |
 | Google Analytics 4 (`G-MVZCKN2L6C`) | analytics (production only, `lazyOnload` since Phase 7) | `app/layout.tsx` |
+| Vercel Speed Insights | real-visitor Core Web Vitals (first-party script `/_vercel/speed-insights/`) | `components/layout/RealUserMetrics.tsx` |
 | Google Fonts | fetched **at build time** by `next/font`, self-hosted | `app/layout.tsx` |
 
 ## Deployment

@@ -230,3 +230,15 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 3. **Investigation:** captured Spline's compiled shaders: `linearToOutputTexel` is `LinearTransferOETF`, and `getDistanceAttenuation` is the legacy `pow(saturate(-d/cutoff + 1), decay)`.
 4. **Solution:** `renderer.outputColorSpace = LinearSRGBColorSpace`, raw colours (`ColorManagement.enabled = false`, textures `NoColorSpace`), and the legacy falloff patched into the lit materials.
 5. **Related files:** components/lab/ThreeOrb.tsx, docs/orb-rebuild.md.
+
+## Homepage jumped on phones while the hero text "decoded"
+1. **Problem:** layout shift 0.23 on a 390 px phone, from the hero content block.
+2. **Cause:** the decode effect swaps letters for random glyphs. In a proportional font they have different widths, so the paragraph re-wrapped (3 ↔ 4 lines) and the vertically centred hero moved up and down for ~1.4 s.
+3. **Investigation:** `PerformanceObserver({ type: "layout-shift" })` grouped by `entry.sources[].node`.
+4. **Solution:** hold the element at its measured width/height while it decodes (`ScrollEffects.tsx`).
+5. **Prevention:** any text effect that changes characters should lock its box or use a monospace font.
+
+## Hero bubble wrapped one word per line after re-anchoring it
+1. **Problem:** moving the bubble from `right: 26%` to `left: 74%` (to stop layout shift) made it very narrow.
+2. **Cause:** an absolutely positioned box shrinks to fit the space between its anchor and the containing block's edge: 74% of the width on the right side before, only 26% after.
+3. **Solution:** `width: max-content` (capped by the bubble's existing `max-width`) plus `translateX(-100%)` to keep the same position.

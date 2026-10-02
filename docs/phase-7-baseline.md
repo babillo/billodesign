@@ -282,4 +282,4 @@ After publishing: re-run this profile and the Lighthouse set; re-render the orb 
 - **P4e adaptive quality:** cap the orb's render resolution on high-density phones, poster-only with Save-Data. Needs a real-phone check.
 - **P4f scene check (owner, Spline editor):** polygon counts, texture sizes, lights, post-processing, unused objects. Directly reduces the start-up time that dominates TBT.
 - **P4d one persistent orb:** keep the scene alive across page changes (~0.7 s re-create per navigation today).
-- **Optional:** anchor the hero speech bubble so typing doesn't register as layout shift (CLS 0.03–0.05 → ~0).
+- ~~Optional: anchor the hero speech bubble so typing doesn't register as layout shift~~ **done (V6)**, together with the decode size lock: homepage layout shift on a phone 0.335 → 0.020 over the first 11 s (lab). Real-visitor CLS now comes from Speed Insights (S2).

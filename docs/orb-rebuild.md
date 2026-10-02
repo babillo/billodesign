@@ -1,6 +1,6 @@
 # Orb: Spline scene inventory and Three.js prototype
 
-**Status (2026-10-02):** investigation + working prototype at `/lab/orb` (not linked, noindex, disallowed in robots.txt). **No decision yet**: the live site still uses Spline. This document is the evidence for that decision (CLAUDE.md Phase 7: replace Spline only on evidence).
+**Status (2026-10-02):** investigation + working prototype at `/lab/orb` (not linked, noindex, disallowed in robots.txt). **Decision: option A** (ADR-017): keep Spline and apply the scene checklist; the owner will report back after editing the scene so it can be re-measured. This document is the evidence for that decision (CLAUDE.md Phase 7: replace Spline only on evidence).
 
 ## 1. What the Spline scene contains
 

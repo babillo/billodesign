@@ -298,3 +298,23 @@ Replace Spline with Three.js/R3F (large rewrite, fidelity risk, rejected for now
 
 Trade-offs:
 The poster must be re-rendered if the scene's look changes. The live orb appears slightly later than before on fast machines (after `load`), hidden by the poster. Lab Total Blocking Time is still dominated by the runtime's own start-up; that's what round 2 (P4e adaptive quality, P4f scene check) targets.
+
+## ADR-017 — Keep Spline for the orb; optimize the scene (option A)
+
+Date:
+2026-10-02
+
+Decision:
+Keep the Spline orb and apply the scene checklist in the Spline editor (turn off the cursor light's shadow, remove the glass transmission layer, optional cleanups). The Three.js prototype stays at `/lab/orb` as evidence and as a fallback option.
+
+Context:
+docs/orb-rebuild.md showed the two biggest per-frame costs are invisible or nearly so, and a Three.js rebuild is feasible (≈60% less download, ≈70% less blocking time) but turns every future orb change into code.
+
+Reason:
+Owner's choice: option A costs minutes, changes nothing visually and keeps designing in Spline.
+
+Alternatives:
+Option B, switch to the Three.js version (best performance, about a day of work, loses the visual editor).
+
+Trade-offs:
+The Spline runtime download (~1 MB) and its start-up cost remain; revisit option B if the re-measured numbers after the checklist are still too high.

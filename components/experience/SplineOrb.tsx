@@ -3,6 +3,7 @@
 import type { Application } from "@splinetool/runtime";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import { OrbErrorBoundary } from "./OrbErrorBoundary";
 import styles from "./SplineOrb.module.css";
 
@@ -31,6 +32,8 @@ type Props = {
  *    the case-study header or the first interactions.
  * 3. The live orb cross-fades over the poster and is paused while it can't be
  *    seen (an opaque section covers the viewport, or a modal dialog is open).
+ * 4. Reduced motion: the poster stays and the 3D scene never loads (Phase 7, V5).
+ *    The scene floats, blinks and follows the cursor continuously.
  */
 export function SplineOrb({ variant = "home", children }: Props) {
   const [load, setLoad] = useState(false);
@@ -38,6 +41,7 @@ export function SplineOrb({ variant = "home", children }: Props) {
   const app = useRef<Application | null>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
     let idle = 0;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const start = () => {

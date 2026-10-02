@@ -12,6 +12,7 @@ import { SoundToggle } from "@/components/experience/SoundToggle";
 import { AwwwardsBadge } from "@/components/layout/AwwwardsBadge";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { RealUserMetrics } from "@/components/layout/RealUserMetrics";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </SoundProvider>
         <SmoothScroll />
         <ScrollEffects />
+        <RealUserMetrics />
         {/* Phase 7 (P6): analytics after the page has loaded and gone idle (174 KB, ~0.5 s of main thread). */}
         {process.env.NODE_ENV === "production" && (
           <>

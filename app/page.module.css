@@ -1,5 +1,15 @@
 /* Hero orb speech bubble, positioned inside the fixed orb layer. */
 .heroTip {
   top: 42%;
-  right: 26%;
+  /*
+   * Same place as Webflow's `right: 26%`, but anchored by its left edge and
+   * pulled back with a transform: anchored on the right, the bubble's left
+   * edge moved with every typed character, which browsers count as layout
+   * shift (Phase 7, V6). Transforms don't count.
+   */
+  left: 74%;
+  transform: translateX(-100%);
+  /* Anchored on the left it could only use the remaining 26% of the width;
+     size to the text instead, up to the bubble's own max-width. */
+  width: max-content;
 }

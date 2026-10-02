@@ -92,3 +92,9 @@ Spline's web runtime is built on Three.js. Load a scene with `@splinetool/runtim
 
 ## Matching another Three.js renderer's colours
 Three things decide the final colour beyond the material: colour management (are inputs treated as sRGB or raw?), the output transform (sRGB encoding or linear), and the light falloff model (Three.js changed to physically based falloff in r155; older code used a linear falloff to the light's range). Spline uses raw inputs, linear output and the legacy falloff. Getting any one wrong makes a faithful copy look paler or darker. Compare sampled pixel values per channel, not just screenshots by eye.
+
+## Layout shift (CLS) and moving things without "shifting" them
+The browser counts a layout shift when a visible element's position in the layout changes between frames, unless it follows recent user input. Changes made with `transform` don't count. Two practical consequences:
+- An absolutely positioned box anchored on the right (`right: 26%`) moves its left edge whenever it grows, so a typing bubble shifts. Anchor it on the left and pull it back with `transform: translateX(-100%)`: same place, no shift.
+- Text effects that change characters re-wrap text in proportional fonts. Lock the element's size during the effect.
+Measure with `new PerformanceObserver(cb).observe({ type: "layout-shift", buffered: true })`; each entry's `sources` names the elements that moved.

@@ -64,6 +64,7 @@ Today `billodesign.com` 301-redirects to `billodesign.webflow.io` through a **Cl
 - `X-Robots-Tag: noindex` on any `*.vercel.app` host; robots.txt also disallows everything on preview deployments.
 - Error page (`app/error.tsx`) and 404 page (`app/not-found.tsx`).
 - GA4 loads only in production builds, after the page has loaded (`lazyOnload`).
+- **Speed Insights (Phase 7, S2) — needs one dashboard step:** Vercel → project → **Speed Insights** → **Enable**. Until then the script returns 404 and nothing is collected (harmless). After enabling, numbers appear once enough real visits have come in; the free tier has a monthly data-point limit (shown on that page). The lab page (`/lab/`) is excluded.
 - Image optimization (Phase 7): case-study images go through Vercel's image optimizer. Each source image × width × format is transformed once and cached; with ~40 images that's a few hundred transformations, well within the Hobby plan's monthly allowance. Check Vercel → Usage → Image Optimization after the first weeks.
 
 ## Rollback
