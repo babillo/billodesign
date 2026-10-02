@@ -258,6 +258,33 @@ With a production server running, open a case-study page at 2880×1200 with the 
 | CLS | < 0.05 | 0–0.05 (bubble) ⚠️ |
 | Lighthouse a11y / SEO / best practices | 100 / 100 / ≥ 96 | 100 / 100 / 100 ✅ |
 
+### P4f — Spline scene profile and checklist (2026-10-02)
+
+Measured by instrumenting WebGL on the live scene (OrbitAI page, 1440×900 at 2× density; numbers per rendered frame):
+
+| What | Measured | Reading |
+|---|---|---|
+| Triangles per frame | **~320,000** in 51 draw calls | Three meshes (≈10.4k, 8.1k and 0.65k triangles) drawn over and over |
+| Offscreen renders at 1024×1024 | ~25 draws per frame into 12 1024² textures (two 6-face cube maps) | Pattern of a live reflection/environment capture: the scene is re-rendered into cube faces every frame |
+| Full-resolution offscreen buffers | 4 × 1612×1800 + 2 × 806×900, 26 framebuffers | Post-processing passes (glow/bloom-type effects) at full canvas resolution |
+| Shader programs | 17 (481 KB of shader source) | Each material/effect combination is compiled at start-up: a large part of the long start-up task |
+| Image textures | none besides render targets | Good: no heavy textures |
+| Geometry buffers | 0.7 MB | Fine |
+| Canvas | 1612×1800 for an 806×900 element (device pixel ratio 2) | Every pass above runs at this size (P4e) |
+
+Checklist for the owner (in the Spline editor; duplicate the file first):
+1. **Reflective / glass material (biggest suspect).** Find the material that reflects the scene (likely the glass face sphere). If it uses a live environment or reflection layer, try a static environment image or matcap instead, or the lowest reflection resolution/quality that still looks right.
+2. **Post-processing.** In the scene's effects (bloom/glow, noise, vignette, chromatic aberration, depth of field, etc.), turn off anything that doesn't visibly change the orb, and lower the quality/resolution of the glow that does.
+3. **Sphere detail.** Spheres around 8k triangles can usually be halved or quartered (fewer segments) with no visible change at this size. Check the terrain too.
+4. **Lights and shadows.** Remove lights that don't visibly contribute; turn off shadows on objects whose shadows can't be seen. Each light/shadow multiplies the shader and draw work.
+5. **Materials.** Reuse one material where two look the same; fewer distinct materials mean fewer shaders to compile at start-up.
+6. **Hidden/unused objects.** Delete (don't just hide) leftover objects, cameras, states and events that aren't used.
+7. **Animations.** The scene animates continuously (the floating orb), so it can never idle; keep only the loops that matter.
+8. **Export settings.** If the export panel offers geometry/image compression or quality options, test the lighter setting.
+9. **Publish to the same URL** if possible (`prod.spline.design/mFnZxSV0j4KZp6WS/scene.splinecode`); if the URL changes, update `SPLINE_SCENE_URL` in `components/experience/SplineOrb.tsx`.
+
+After each change: re-run this profile and the Lighthouse set, and re-render the orb poster if the look changed.
+
 ### Round 2 candidates (not started)
 - **P4e adaptive quality:** cap the orb's render resolution on high-density phones, poster-only with Save-Data. Needs a real-phone check.
 - **P4f scene check (owner, Spline editor):** polygon counts, texture sizes, lights, post-processing, unused objects. Directly reduces the start-up time that dominates TBT.
