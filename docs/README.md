@@ -23,6 +23,7 @@ node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSV
 | [phase-1-audit.md](phase-1-audit.md) | original site audit |
 | [phase-4-visual-qa.md](phase-4-visual-qa.md) | side-by-side comparison checklist |
 | [phase-6-proposals.md](phase-6-proposals.md) | Phase 6 design-enhancement proposals (prioritized) |
+| [orb-rebuild.md](orb-rebuild.md) | Spline orb: full scene inventory, cost analysis, Three.js prototype (`/lab/orb`) and the keep-vs-switch comparison |
 | [phase-7-baseline.md](phase-7-baseline.md) | Phase 7 baseline, round 1 results, optimization decision log, budgets |
 | [migration.md](migration.md) | migration log: Confirmed / Assumption / Decision / Needs investigation, and the Webflow → Next mapping |
 | [architecture.md](architecture.md) | structure, server/client split, services |

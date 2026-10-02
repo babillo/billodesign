@@ -223,3 +223,10 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 2. **Cause:** WebGL work runs in the GPU process, which `TaskDuration` doesn't include.
 3. **Solution:** count WebGL draw calls per second instead: 85 (desktop) / ~200 (phone) while visible, 0 while covered or behind a modal.
 4. **Related files:** components/experience/SplineOrb.tsx.
+
+## Three.js orb prototype looked paler and darker than Spline
+1. **Problem:** first renders of the rebuilt orb had a washed-out cyan orb and an unlit grey mountain.
+2. **Cause:** two renderer differences. Spline writes linear values to the screen (no sRGB encoding), and it uses Three.js' legacy light falloff.
+3. **Investigation:** captured Spline's compiled shaders: `linearToOutputTexel` is `LinearTransferOETF`, and `getDistanceAttenuation` is the legacy `pow(saturate(-d/cutoff + 1), decay)`.
+4. **Solution:** `renderer.outputColorSpace = LinearSRGBColorSpace`, raw colours (`ColorManagement.enabled = false`, textures `NoColorSpace`), and the legacy falloff patched into the lit materials.
+5. **Related files:** components/lab/ThreeOrb.tsx, docs/orb-rebuild.md.

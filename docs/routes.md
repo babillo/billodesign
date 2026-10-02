@@ -40,8 +40,9 @@
 | 404 | `app/not-found.tsx` | "Page Not Found / Go Home" |
 | runtime error | `app/error.tsx` | "Something went wrong / Try again" |
 | `/sitemap.xml` | `app/sitemap.ts` | home + 6 projects |
-| `/robots.txt` | `app/robots.ts` | disallows everything on Vercel preview deployments |
+| `/robots.txt` | `app/robots.ts` | disallows everything on Vercel preview deployments; `/api/` and `/lab/` in production |
 | `POST /api/chat` | `app/api/chat/route.ts` | `{message, conversationHistory}` → `{response}` |
+| `/lab/orb` | `app/lab/orb/page.tsx` → `components/lab/LabOrb.tsx`, `ThreeOrb.tsx` | Lab only: Spline vs Three.js orb comparison (docs/orb-rebuild.md). Not linked, not in the sitemap, `noindex`. Query: `engine=spline\|three`, `variant=home`, `shadows=1`, `t=<seconds>` |
 | `POST /api/contact` | `app/api/contact/route.ts` | Turnstile check → Resend email to the Zoho inbox (ADR-011). Email template: `lib/server/contact-email.ts` |
 
 **Not recreated** (see migration.md §4): Webflow `401` password page, `detail_testimonial` template, `style-guide`.

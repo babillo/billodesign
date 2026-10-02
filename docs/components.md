@@ -68,3 +68,9 @@ Client components are marked **(client)**. Everything else is a server component
 - `home/Testimonials`: slider at all widths (a desktop 2×2 grid was built, then dropped by the owner, who prefers the slider).
 - `home/Bio`: stats strip `<dl>` from `bioStats` in `lib/site.ts`.
 - `ui/SectionHeading`: eyebrow h2 has `data-text="decode"` (see animations.md).
+
+## Lab (`components/lab/`, not used on live pages)
+| Component | Purpose |
+|---|---|
+| `LabOrb` (client) | `/lab/orb` page body: renders the live `SplineOrb` or `ThreeOrb` in the same fixed orb layer (`SplineOrb.module.css`), plus a stats readout. |
+| `ThreeOrb` (client) | Three.js rebuild of the Spline orb scene from extracted data (`public/lab/orb/`). Props: `shadows`, `freezeAt` (seconds, for screenshots), `onStats`. Loads `three` with a dynamic import. See docs/orb-rebuild.md for how each material maps to Spline's layers. |

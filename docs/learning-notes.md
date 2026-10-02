@@ -86,3 +86,9 @@ Headless Chrome without a GPU (this sandbox, and many CI and lab environments) d
 
 ## Animated images: GIF vs WebP vs video
 GIF is the least efficient option. Animated WebP is a drop-in `<img>` with transparency, typically 85–90% smaller here, and it isn't blocked by iOS Low Power Mode. Video (MP4/WebM) is smaller still for large opaque animations, but needs `muted playsinline`, has no alpha in MP4, and won't autoplay in Low Power Mode, so give it a poster frame.
+
+## Looking inside a Spline scene
+Spline's web runtime is built on Three.js. Load a scene with `@splinetool/runtime` (`new Application(canvas).load(url)`) and the public API gives objects and events (`getAllObjects()`, `getSplineEvents()`). The private fields `_data` (scene JSON: materials, states, events), `_scene` (Three.js objects with `matrixWorld`, geometry and uniforms) and `_renderer` show everything else. Wrapping `WebGLRenderingContext.prototype.shaderSource` before loading captures the compiled shaders, which is how the material formulas were matched exactly (docs/orb-rebuild.md).
+
+## Matching another Three.js renderer's colours
+Three things decide the final colour beyond the material: colour management (are inputs treated as sRGB or raw?), the output transform (sRGB encoding or linear), and the light falloff model (Three.js changed to physically based falloff in r155; older code used a linear falloff to the light's range). Spline uses raw inputs, linear output and the legacy falloff. Getting any one wrong makes a faithful copy look paler or darker. Compare sampled pixel values per channel, not just screenshots by eye.
