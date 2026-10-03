@@ -1,4 +1,4 @@
-import { getProjects, getTestimonials } from "@/lib/content";
+import { getProjects, getTestimonials, sectionText } from "@/lib/content";
 import { site, socialLinks } from "@/lib/site";
 
 // The persona, services and tone below are the ORIGINAL prompt from the
@@ -102,15 +102,6 @@ const STYLE = `## Conversation Style & Personality
 
 Remember: You're representing someone who genuinely loves this work and wants to help people create amazing things on the web. Keep that energy!`;
 
-function stripHtml(html: string) {
-  return html
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function projectsSection() {
   const lines = getProjects().map((p) => {
     const facts = [
@@ -123,8 +114,9 @@ function projectsSection() {
       p.websiteUrl && `Live: ${p.websiteUrl}`,
       `Case study: ${site.url}/projects/${p.slug}`,
     ].filter(Boolean);
-    const overview = p.sections.overview ? stripHtml(p.sections.overview).slice(0, 600) : "";
-    const result = p.sections.result ? ` Result: ${stripHtml(p.sections.result).slice(0, 300)}` : "";
+    const overview = sectionText(p, "Project Overview").slice(0, 600);
+    const resultText = sectionText(p, "The Result");
+    const result = resultText ? ` Result: ${resultText.slice(0, 300)}` : "";
     return `### ${p.title}\n${p.summary ?? ""}\n${facts.join(" | ")}\n${overview}${result}`;
   });
   return `## Projects (Muhammad's real, published work)\n\n${lines.join("\n\n")}`;

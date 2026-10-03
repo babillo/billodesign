@@ -242,3 +242,9 @@ openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout | openssl pkey -pu
 1. **Problem:** moving the bubble from `right: 26%` to `left: 74%` (to stop layout shift) made it very narrow.
 2. **Cause:** an absolutely positioned box shrinks to fit the space between its anchor and the containing block's edge: 74% of the width on the right side before, only 26% after.
 3. **Solution:** `width: max-content` (capped by the bubble's existing `max-width`) plus `translateX(-100%)` to keep the same position.
+
+## A bullet sat outside its list (Personal Brand → The Result)
+1. **Problem:** the last bullet hung in the card's left padding, followed by an empty bullet.
+2. **Cause:** invalid HTML from the Webflow CMS: `</ul></li><li>…</li><li>&zwj;</li>`. Browsers rendered the stray `<li>`s outside the list.
+3. **Found by:** the MDX converter, which refused a list item outside a list.
+4. **Solution:** made it the list's last item in the MDX; removed the empty one.

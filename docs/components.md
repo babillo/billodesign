@@ -28,7 +28,8 @@ Client components are marked **(client)**. Everything else is a server component
 |---|---|---|
 | `ProjectCard` | homepage slider, "Next Project" | `next/image` thumbnail with hover zoom, Visit Site, View Project, tool logos |
 | `ProjectHeader` | project page | h1, Wistia video **or** thumbnail, Visit Site, meta `<dl>` (empty rows hidden) |
-| `ProjectSection` | project page | one case-study card with rich-text HTML (passed through `optimizeRichText`, `lib/rich-text.ts`); `visual` disables the screen blend |
+| `ProjectSection` | project page | one case-study card: a `# Title` section of the project's MDX file. Props: `slug`, `title`, `source` (MDX), `visual` (disables the screen blend) |
+| `CaseStudyMdx` (server) | `ProjectSection` | Compiles and renders a card's MDX at build time (`@mdx-js/mdx` `evaluate`). Provides `Figure` (optimized image, or looping video for a `.gif` path; Webflow figure markup + lightbox `data-full`), `WistiaVideo` and `Spacer`. Build errors name the file and card. No client JS. |
 | `RichTextVideos` (client) | project page | Phase 7. Plays the rich-text videos made from GIFs (`video[data-autoplay-visible]`) while in view; poster + controls with reduced motion. No props. |
 | `VisitSiteLink` | cards, header | external link with arrow |
 | `CaseStudyNav` (client) | project page | Phase 6 #7. 2px cyan reading-progress line at the top of the viewport (transform written directly, no re-render per frame) and a square "Sections" button at the bottom centre (rectangular like the rest of the site since Phase 7, V1) (shown after 60% of a screen of scrolling) that lists the card titles (h2) and rich-text chapters (h3), highlights the current one and jumps there via `scrollToElement` (`lib/scroll.ts`). Headings get ids on mount; `scroll-margin-top: 96px` (globals.css) keeps them clear of the navbar. |

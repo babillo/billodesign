@@ -188,3 +188,10 @@
 - Decoding text no longer resizes its element mid-animation: phone layout shift on the homepage 0.335 → 0.020 (lab, 11 s)
 - S2: Vercel Speed Insights for real-visitor Core Web Vitals (enable it in the Vercel dashboard)
 - Hero text on phones no longer runs under the Awwwards ribbon ("look" was cut at 390px); checked at 360–1440px
+
+## Content: case studies as MDX (2026-10-03)
+### Changed
+- Case studies moved from Webflow HTML in `content/projects.json` to one MDX file per project in `content/projects/` (ADR-018); pages render identically (DOM-verified)
+- Old importer retired to `scripts/legacy/`
+### Fixed
+- Personal Brand → The Result: last bullet sat outside the list (misaligned) and an empty bullet followed it

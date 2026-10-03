@@ -59,7 +59,7 @@ Every item respects `prefers-reduced-motion` unless noted.
 - **Reduced motion:** shows the final frame.
 
 ## Case-study GIF → video (Phase 7)
-- **Where:** FlexiBank "mobile banking app" animation (`RichTextVideos`, `lib/rich-text.ts`).
+- **Where:** FlexiBank "mobile banking app" animation (`RichTextVideos`; markup from `<Figure>` with a `.gif` path in `CaseStudyMdx.tsx`).
 - **Behavior:** muted looping video, loads and plays when it scrolls into view (200px margin), pauses off-screen, like the lazy GIF it replaces.
 - **Reduced motion:** stays on its poster frame, with controls.
 

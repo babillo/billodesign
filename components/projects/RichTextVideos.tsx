@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 /*
- * Phase 7 (P2): the case-study GIF became a looping video (lib/rich-text.ts).
+ * Phase 7 (P2): the case-study GIF became a looping video (`<Figure>` with a .gif path, CaseStudyMdx.tsx).
  * A GIF only downloaded when lazy-loading reached it and always animated; this
  * keeps that: the video loads and plays when it scrolls into view and pauses
  * off-screen. With reduced motion it stays on its poster frame with controls.

@@ -171,8 +171,8 @@ Investigation date: 2026-09-29.
 | Webflow | Next.js |
 |---|---|
 | Homepage sections (static HTML) | `components/home/*` server components |
-| Projects CMS + template page | `content/projects.json` + `app/projects/[slug]/page.tsx` |
-| Hardcoded slider cards & testimonials | `card` fields in projects.json, testimonials.json |
+| Projects CMS + template page | `content/projects/<slug>.mdx` (since 2026-10-03; JSON before) + `app/projects/[slug]/page.tsx` |
+| Hardcoded slider cards & testimonials | `card` in each project's frontmatter, testimonials.json |
 | Webflow slider | `components/ui/Slider` |
 | IX2: subtle slide from bottom | `data-reveal` + CSS + IntersectionObserver |
 | IX2: preloader | CSS keyframes (`Preloader`) |
@@ -254,3 +254,10 @@ Position of every section heading and total page height compared at 1440 and 390
 - **Scrub-words:** start at 50% opacity instead of Webflow's 40%, for AA contrast.
 - **Case-study header:** same fade, run in CSS from first paint instead of JavaScript.
 - Details and measurements: phase-7-baseline.md.
+
+## Case studies: Webflow rich text → MDX (2026-10-03)
+- **Why:** after the migration the case-study text lived as Webflow HTML inside `content/projects.json`. Editing meant editing HTML inside JSON, and re-running the importer would have overwritten edits. One readable MDX file per project replaces both (ADR-018).
+- **How:** a one-time converter parsed each section's HTML and wrote Markdown (paragraphs, lists, bold/italic, sub-headings, line breaks) plus `<Figure>`, `<WistiaVideo>` and `<Spacer>` tags that reproduce Webflow's figure markup. Section titles became `# Title` lines in the old page order; the CMS fields Webflow never displayed (Strategy, User Flow) are kept as `{hidden}` cards.
+- **Verification:** the rendered DOM of the homepage and all 6 case studies was compared element by element before and after (attributes sorted, whitespace normalized): identical except (1) the intended list fix below and (2) the OrbitAI header video's aspect ratio differing in the 14th decimal (YAML number round trip). The AI chat's project knowledge was compared too: same text, minus stray spaces.
+- **Fixed on the way:** Personal Brand → The Result had invalid CMS HTML: the last bullet ("Client marked project complete…") and an empty bullet sat outside the list and rendered misaligned in the card's padding (also on the original). It's now the list's 7th item; the empty bullet is gone.
+- The importer moved to `scripts/legacy/` and refuses to run.

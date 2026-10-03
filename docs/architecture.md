@@ -22,17 +22,18 @@ app/
 components/
   layout/       Navbar, Footer, SocialLinks, AwwwardsBadge
   home/         homepage sections (Hero, WeGotYou, Services, TechStack, Projects, Testimonials, Bio, Preloader)
-  projects/     ProjectCard, ProjectHeader, ProjectSection, VisitSiteLink
+  projects/     ProjectCard, ProjectHeader, ProjectSection, CaseStudyMdx (MDX → figures, videos,
+                spacers), CaseStudyNav, ImageLightbox, RichTextVideos, VisitSiteLink
   testimonials/ TestimonialCard
   sections/     Cta (+ CtaOrbTips), shared by home and project pages
   ui/           Button/PulseDot, SectionHeading, Slider, Ellipses, ShadowTitle
   experience/   client-side experience layer: SplineOrb, SoundProvider, SoundToggle,
                 ContactModalProvider, ContactModal, AiChat, OrbSpeech, TypedText,
                 SmoothScroll, ScrollEffects, OrbErrorBoundary
-content/        projects.json, testimonials.json (generated; see content.md)
+content/        projects/<slug>.mdx (one file per case study), testimonials.json (see content.md)
 lib/            content.ts (typed accessors), site.ts (site-wide copy/links), gsap.ts, motion.ts,
                 chat/ (system prompt, fallbacks), server/ (rate-limit.ts, contact-email.ts)
-scripts/        import-webflow.mjs (CSV → content + asset download)
+scripts/legacy/ import-webflow.mjs (retired migration importer, kept for reference)
 public/         icons/, images/, media/ (project + testimonial assets), audio/, lottie/
 webflow/export/ original Webflow export + CMS CSVs (reference only; excluded from lint)
 ```
@@ -42,7 +43,7 @@ webflow/export/ original Webflow export + CMS CSVs (reference only; excluded fro
 | URL | Source |
 |---|---|
 | `/` | `app/page.tsx` |
-| `/projects/<slug>` | `app/projects/[slug]/page.tsx`, 6 slugs from `content/projects.json`; unknown slugs → 404 |
+| `/projects/<slug>` | `app/projects/[slug]/page.tsx`, 6 slugs = the files in `content/projects/`; unknown slugs → 404 |
 | 4 removed project URLs | 308 permanent redirect → `/` (`next.config.ts`) |
 
 Details: [routes.md](routes.md).
@@ -79,7 +80,7 @@ See [animations.md](animations.md). In short: CSS for simple loops and transitio
 
 - All images and audio are self-hosted under `public/`. Nothing loads from the Webflow CDN.
 - `next/image` optimizes cards, thumbnails, avatars and the portrait into AVIF/WebP at the right sizes.
-- Case-study images inside rich text are rewritten at build time by `lib/rich-text.ts` to use the Next.js image optimizer (`getImageProps`: AVIF/WebP, `srcset` sized to the measured column width). Content files keep the original paths (ADR-015).
+- Case-study images are `<Figure>` tags in the MDX files; `components/projects/CaseStudyMdx.tsx` renders them through the Next.js image optimizer (`getImageProps`: AVIF/WebP, `srcset` sized to the measured column width) with Webflow's figure markup (ADR-015, ADR-018).
 - Animations are animated WebP (orb GIFs: preloader, contact modal, chat) or MP4/WebM video (FlexiBank). No GIFs are served any more.
 - Rule of thumb: photos and screenshots use `next/image`. SVG icons, animated images and tiny decorative images use `<img>` (the lint rule is off for this reason, ADR-013).
 
