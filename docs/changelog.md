@@ -200,3 +200,4 @@
 ### Added
 - V3: branded share images per case study (generated 1200×630 cards with the orb) for LinkedIn/X/WhatsApp previews
 - V2: optional "Key results" strip under the case-study header (`results` in the project file); empty until real figures are added
+- Personal Brand case study: Role corrected to "Web Design, Webflow Development" (the CMS had the client/project name there)
