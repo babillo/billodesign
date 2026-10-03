@@ -4,7 +4,7 @@
 
 - **Metadata** (`app/layout.tsx`): `metadataBase` = `NEXT_PUBLIC_SITE_URL` (default `https://billodesign.com`); title template `%s | Billodesign`; default title and description identical to Webflow; Open Graph + Twitter `summary_large_image`; favicon and Apple touch icon.
 - **Homepage:** canonical `/`, JSON-LD `WebPage` → `ProfessionalService` → `Person`, carried over from Webflow.
-- **Project pages** (`generateMetadata`): title = project title, description = CMS summary (the same text Webflow used), canonical `/projects/<slug>`, OG image = project thumbnail.
+- **Project pages** (`generateMetadata`): title = project title, description = CMS summary (the same text Webflow used), canonical `/projects/<slug>`. Share image (Open Graph + X): a branded 1200×630 card per case study (Phase 7, V3): project name, subtitle and tag, the orb, logo and domain, generated at build time by `app/projects/[slug]/opengraph-image.tsx` (`twitter-image.tsx` reuses it; design in `lib/og/case-study-card.tsx`, fonts and orb image in `assets/og/`). The homepage keeps `public/images/og-image.jpg`.
 - **Sitemap** `/sitemap.xml`: home + 6 projects. **robots.txt**: allow all except `/api/`; disallow everything on Vercel preview deployments.
 - **Redirects:** 4 removed projects → `/` (308).
 - **404:** real 404 status for unknown URLs.
@@ -32,5 +32,5 @@
 - ✅ Webflow subdomain indexing turned off after cutover (2026-10-01), so `billodesign.webflow.io` sends `Disallow: /`.
 - ✅ `billodesign.com` property set up in Search Console with `sitemap.xml` submitted (2026-10-01). Check coverage and queries after a few weeks.
 - Ask Awwwards / Made in Webflow / Contra to update links to `billodesign.com`.
-- Per-project OG images are large originals (up to ~3000px). Consider resized OG variants.
+- ~~Per-project OG images are large originals~~ replaced by generated 1200×630 cards (~130 KB PNG each).
 - `og:description` is 149 characters (the original Webflow text); opengraph.xyz warns that previews may truncate around 110. Candidate for Phase 6/7 copy tightening.

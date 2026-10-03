@@ -195,3 +195,8 @@
 - Old importer retired to `scripts/legacy/`
 ### Fixed
 - Personal Brand → The Result: last bullet sat outside the list (misaligned) and an empty bullet followed it
+
+## Case-study extras (2026-10-03)
+### Added
+- V3: branded share images per case study (generated 1200×630 cards with the orb) for LinkedIn/X/WhatsApp previews
+- V2: optional "Key results" strip under the case-study header (`results` in the project file); empty until real figures are added

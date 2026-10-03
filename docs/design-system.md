@@ -70,6 +70,8 @@ New values introduced in Phase 6, approved by the owner (see `phase-6-proposals.
 | Image lightbox (#5) | none | backdrop `#000000f2`; round 3rem cyan-outline buttons (contact-modal style); caption in mono 0.875rem grey, counter cyan | `ImageLightbox.module.css` |
 | Reading progress (#7) | none | 2px `--color-cyan` line with a 6px cyan glow, fixed at the top (z 11) | `CaseStudyNav.module.css` |
 | Hero copy on phones (≤767px) | 20px gutter both sides | right padding `34px + 0.5rem` from the edge, so text wraps before the fixed Awwwards ribbon (34px). Measured: no overlap from 360 to 1440px | `Hero.module.css` |
+| Key results strip (V2) | none | under the header meta: "KEY RESULTS" label (cyan 0.8rem, 0.4em tracking), 1px `--color-cyan-deep` bordered grid, values 1.75rem weight 300, labels grey 0.7rem uppercase; one row per result ≤479px | `ProjectResults.module.css` |
+| Case-study share image (V3) | project thumbnail | 1200×630 black card: "CASE STUDY" eyebrow, name in uppercase IBM Plex Mono 700 with the white→`#03869e` radial gradient, subtitle 300, tag grey, orb right, 1px `#03869e` frame inset 28px, logo + domain | `lib/og/case-study-card.tsx` |
 | Sections menu (#7) | none | 44px button, square corners (was a pill until Phase 7, V1), `rgb(0 0 0 / 0.7)` + blur(8px), `--color-cyan-deep` border, `--button-glow`; panel max 22rem / 60svh, square corners; sub-items indented, grey 0.8rem; current item cyan | `CaseStudyNav.module.css` |
 | Footer (#8) | divider + copyright only | **Reverted by the owner (2026-10-02)**: original footer kept | `Footer.module.css` |
 

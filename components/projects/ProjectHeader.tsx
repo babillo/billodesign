@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Project } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
+import { ProjectResults } from "./ProjectResults";
 import { VisitSiteLink } from "./VisitSiteLink";
 import styles from "./ProjectHeader.module.css";
 
@@ -61,6 +62,8 @@ export function ProjectHeader({ project }: { project: Project }) {
             );
           })}
         </dl>
+
+        <ProjectResults results={project.results} />
       </div>
     </Container>
   );

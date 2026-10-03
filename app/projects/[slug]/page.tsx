@@ -31,8 +31,9 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
     title: project.title,
     description,
     alternates: { canonical: `/projects/${slug}` },
-    openGraph: { type: "article", title: project.title, description, images: [{ url: project.thumbnail, ...project.thumbnailSize }] },
-    twitter: { card: "summary_large_image", title: project.title, description, images: [project.thumbnail] },
+    // Share images: opengraph-image.tsx / twitter-image.tsx next to this page.
+    openGraph: { type: "article", title: project.title, description },
+    twitter: { card: "summary_large_image", title: project.title, description },
   };
 }
 
