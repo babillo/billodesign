@@ -114,6 +114,15 @@
 }
 
 @media (max-width: 767px) {
+  /*
+   * Keep the hero copy clear of the fixed Awwwards ribbon (34px wide on
+   * phones, AwwwardsBadge.module.css): the page gutter is only 20px, so full
+   * lines ran underneath it ("look" lost its "k" at 390px). 0.5rem gap.
+   */
+  .content {
+    padding-right: calc(34px + 0.5rem - var(--padding-global));
+  }
+
   .paragraph {
     font-size: 1.6rem;
   }

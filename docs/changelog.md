@@ -187,3 +187,4 @@
 - V6: hero speech bubble no longer causes layout shift while typing (same position)
 - Decoding text no longer resizes its element mid-animation: phone layout shift on the homepage 0.335 → 0.020 (lab, 11 s)
 - S2: Vercel Speed Insights for real-visitor Core Web Vitals (enable it in the Vercel dashboard)
+- Hero text on phones no longer runs under the Awwwards ribbon ("look" was cut at 390px); checked at 360–1440px
