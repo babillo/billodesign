@@ -30,6 +30,7 @@ Client components are marked **(client)**. Everything else is a server component
 | `ProjectHeader` | project page | h1, Wistia video **or** thumbnail, Visit Site, meta `<dl>` (empty rows hidden) |
 | `ProjectSection` | project page | one case-study card: a `# Title` section of the project's MDX file. Props: `slug`, `title`, `source` (MDX), `visual` (disables the screen blend) |
 | `CaseStudyMdx` (server) | `ProjectSection` | Compiles and renders a card's MDX at build time (`@mdx-js/mdx` `evaluate`). Provides `Figure` (optimized image, or looping video for a `.gif` path; Webflow figure markup + lightbox `data-full`), `WistiaVideo` and `Spacer`. Build errors name the file and card. No client JS. |
+| `ProjectResults` | `ProjectHeader` | Phase 7 V2. "Key results" strip from frontmatter `results` (`{ value, label }[]`); bordered thin strip like the bio stats, one row per result on phones; renders nothing without results. |
 | `RichTextVideos` (client) | project page | Phase 7. Plays the rich-text videos made from GIFs (`video[data-autoplay-visible]`) while in view; poster + controls with reduced motion. No props. |
 | `VisitSiteLink` | cards, header | external link with arrow |
 | `CaseStudyNav` (client) | project page | Phase 6 #7. 2px cyan reading-progress line at the top of the viewport (transform written directly, no re-render per frame) and a square "Sections" button at the bottom centre (rectangular like the rest of the site since Phase 7, V1) (shown after 60% of a screen of scrolling) that lists the card titles (h2) and rich-text chapters (h3), highlights the current one and jumps there via `scrollToElement` (`lib/scroll.ts`). Headings get ids on mount; `scroll-margin-top: 96px` (globals.css) keeps them clear of the navbar. |
@@ -76,3 +77,9 @@ Client components are marked **(client)**. Everything else is a server component
 |---|---|
 | `LabOrb` (client) | `/lab/orb` page body: renders the live `SplineOrb` or `ThreeOrb` in the same fixed orb layer (`SplineOrb.module.css`), plus a stats readout. |
 | `ThreeOrb` (client) | Three.js rebuild of the Spline orb scene from extracted data (`public/lab/orb/`). Props: `shadows`, `freezeAt` (seconds, for screenshots), `onStats`. Loads `three` with a dynamic import. See docs/orb-rebuild.md for how each material maps to Spline's layers. |
+
+## Generated images
+| File | Purpose |
+|---|---|
+| `lib/og/case-study-card.tsx` | `caseStudyCard(project)`: the 1200×630 share card (next/og `ImageResponse`). Name in the uppercase gradient heading style (size steps down for long names), subtitle from the title after "—", `card.tag`, orb (`assets/og/orb.png`), logo, domain, 1px cyan frame. |
+| `app/projects/[slug]/opengraph-image.tsx`, `twitter-image.tsx` | per-project share image routes, static at build. |

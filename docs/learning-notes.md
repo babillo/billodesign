@@ -104,3 +104,6 @@ MDX is Markdown that can contain JSX tags. `evaluate(source, { ...runtime })` fr
 
 ## Verifying a refactor by comparing the DOM
 For a change that should be invisible, serialize the rendered page (each element's tag, sorted attributes, normalized text) before and after and diff the two. That checks every element at once, where screenshots only check what you look at, and the few differences that remain are easy to judge one by one.
+
+## Generated share images (next/og)
+A file named `opengraph-image.tsx` next to a page makes Next.js generate that page's share image and add the `og:image` tags; with `generateStaticParams` it's rendered once at build. The renderer (Satori) draws a subset of CSS with flexbox only: every container needs `display: flex`, `inset` isn't supported (use top/right/bottom/left), fonts must be TTF/OTF/WOFF (not WOFF2), and images are easiest as data URLs. Check the result by opening `/<page>/opengraph-image` in the browser; preview it as it'll appear on social platforms with LinkedIn Post Inspector or opengraph.xyz.

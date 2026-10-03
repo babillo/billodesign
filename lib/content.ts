@@ -41,6 +41,8 @@ export type Project = {
     industry: string | null;
     market: string | null;
   };
+  /** "Key results" strip under the header (Phase 7, V2); optional, real figures only. */
+  results?: { value: string; label: string }[];
   /** Case-study cards in page order. */
   sections: CaseStudySection[];
   testimonial: string | null;

@@ -34,6 +34,7 @@ content/        projects/<slug>.mdx (one file per case study), testimonials.json
 lib/            content.ts (typed accessors), site.ts (site-wide copy/links), gsap.ts, motion.ts,
                 chat/ (system prompt, fallbacks), server/ (rate-limit.ts, contact-email.ts)
 scripts/legacy/ import-webflow.mjs (retired migration importer, kept for reference)
+assets/og/      share-card fonts (IBM Plex Mono WOFF, OFL) and orb image, read at build
 public/         icons/, images/, media/ (project + testimonial assets), audio/, lottie/
 webflow/export/ original Webflow export + CMS CSVs (reference only; excluded from lint)
 ```

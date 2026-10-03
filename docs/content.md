@@ -33,6 +33,9 @@ meta:                                                     # header facts; null h
   industry: null
   market: null
 testimonial: null                # a testimonial slug from testimonials.json → "Client Feedback"
+results:                         # optional "Key results" strip under the header (real figures only)
+  - { value: "5★", label: "Client recommendation" }
+  - { value: "2–3 wks", label: "Design → Webflow launch" }
 nextProject: timms-team-landing-page
 card:                            # homepage grid tile
   title: OrbitAI
@@ -54,6 +57,12 @@ card:                            # homepage grid tile
 
 <Figure src="/media/projects/orbitai/thumbnail.jpg" alt="OrbitAI Hero" width={2880} height={1964} caption="OrbitAI Hero" />
 ```
+
+### Key results (`results`)
+Optional list of up to four `{ value, label }` pairs, shown as a thin bordered strip under the header facts (Phase 7, V2). Keep values short (`98`, `+40%`, `5★`, `3 wks`) and labels to a few words. Leave it out and nothing is shown. Only use figures you can stand behind (measured, or confirmed by the client).
+
+### Share image
+Each case study gets a generated share card (title, subtitle after the dash, `card.tag`, the orb) for LinkedIn, X, WhatsApp etc. It updates automatically from the frontmatter; nothing to do.
 
 ### Cards: `# Title`
 Every line starting with `# ` (one hash) starts a new case-study card with that title, in file order.

@@ -1,0 +1,80 @@
+/* Phase 7 (V2). Mirrors the bio stats strip (Bio.module.css): thin type, 1px cyan lines, square corners. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.heading {
+  margin: 0;
+  color: var(--color-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(var(--count), 1fr);
+  margin: 0;
+  border: 1px solid var(--color-cyan-deep);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  padding: 1rem 1.3rem;
+  border-right: 1px solid var(--color-cyan-deep);
+}
+
+.stat:last-child {
+  border-right: 0;
+}
+
+.stat dd {
+  margin: 0;
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.stat dt {
+  color: var(--color-grey-radial);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* Phones: one result per row, value and label side by side. */
+@media (max-width: 479px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-cyan-deep);
+  }
+
+  .stat:last-child {
+    border-bottom: 0;
+  }
+
+  .stat dd {
+    font-size: 1.4rem;
+  }
+}
