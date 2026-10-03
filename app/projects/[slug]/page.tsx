@@ -9,29 +9,9 @@ import { ProjectSection } from "@/components/projects/ProjectSection";
 import { RichTextVideos } from "@/components/projects/RichTextVideos";
 import { Cta } from "@/components/sections/Cta";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
-import { getProject, getProjects, getTestimonial, type ProjectSectionKey } from "@/lib/content";
+import { getProject, getProjects, getTestimonial } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import styles from "./page.module.css";
-
-// Order and headings of the Webflow project template. "strategy" and
-// "userFlow" exist in the CMS but were never shown on the live site, so they
-// are intentionally not rendered (docs/content.md).
-const SECTIONS: { key: ProjectSectionKey; title: string; visual?: boolean }[] = [
-  { key: "overview", title: "Project Overview" },
-  { key: "challenge", title: "The Challenge/Problem" },
-  { key: "problemStatement", title: "Problem Statement" },
-  { key: "goalStatement", title: "Goal Statement" },
-  { key: "researchInsights", title: "Research & Insights" },
-  { key: "designProcess", title: "Design Process" },
-  { key: "lowFidelityWireframes", title: "Low Fidelity Wireframes", visual: true },
-  { key: "designSystem", title: "Design System", visual: true },
-  { key: "highFidelityWireframes", title: "High Fidelity Wireframes", visual: true },
-  { key: "finalDesigns", title: "Final Design & Prototype", visual: true },
-  { key: "solution", title: "The Solution" },
-  { key: "result", title: "The Result" },
-  { key: "visualShowcase", title: "Visual Showcase", visual: true },
-  { key: "caseStudy", title: "Case Study", visual: true },
-];
 
 // The "Next Project" card showed the same three tool logos on every page.
 const NEXT_PROJECT_TOOLS = ["Webflow", "Figma", "JavaScript"];
@@ -71,10 +51,12 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
       <Container spacing="large">
         <div className={styles.content}>
-          {SECTIONS.map(({ key, title, visual }) => {
-            const html = project.sections[key];
-            return html ? <ProjectSection key={key} title={title} html={html} visual={visual} /> : null;
-          })}
+          {/* Cards in file order; content/projects/<slug>.mdx, one "# Title" per card. */}
+          {project.sections
+            .filter((s) => !s.hidden)
+            .map((s) => (
+              <ProjectSection key={s.title} slug={project.slug} title={s.title} source={s.source} visual={s.visual} />
+            ))}
 
           {testimonial && (
             <section className={styles.feedback} aria-labelledby="client-feedback">

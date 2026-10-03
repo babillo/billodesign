@@ -27,7 +27,7 @@ export function ImageLightbox() {
   useEffect(() => {
     const imgs = [...document.querySelectorAll<HTMLImageElement>(SELECTOR)];
     const list = imgs.map((img) => ({
-      // The optimizer's large size (lib/rich-text.ts), not the column-sized one.
+      // The optimizer's large size (`<Figure>` in CaseStudyMdx.tsx), not the column-sized one.
       src: img.dataset.full || img.currentSrc || img.src,
       alt: img.alt,
       caption: img.closest("figure")?.querySelector("figcaption")?.textContent?.trim() ?? "",

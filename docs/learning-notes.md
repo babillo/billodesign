@@ -98,3 +98,9 @@ The browser counts a layout shift when a visible element's position in the layou
 - An absolutely positioned box anchored on the right (`right: 26%`) moves its left edge whenever it grows, so a typing bubble shifts. Anchor it on the left and pull it back with `transform: translateX(-100%)`: same place, no shift.
 - Text effects that change characters re-wrap text in proportional fonts. Lock the element's size during the effect.
 Measure with `new PerformanceObserver(cb).observe({ type: "layout-shift", buffered: true })`; each entry's `sources` names the elements that moved.
+
+## MDX in server components
+MDX is Markdown that can contain JSX tags. `evaluate(source, { ...runtime })` from `@mdx-js/mdx` compiles and runs it, returning a component; pass your own tags with `<Content components={{ Figure, Spacer }} />`. In a Next.js server component on a statically generated page this happens once at build time, so visitors download only the resulting HTML. Plain Markdown maps to ordinary HTML tags (`**x**` → `<strong>`), which is why existing CSS for "rich text" keeps working. Files read at runtime by an API route with `fs` aren't detected by Next's file tracing; list them in `outputFileTracingIncludes`.
+
+## Verifying a refactor by comparing the DOM
+For a change that should be invisible, serialize the rendered page (each element's tag, sorted attributes, normalized text) before and after and diff the two. That checks every element at once, where screenshots only check what you look at, and the few differences that remain are easy to judge one by one.

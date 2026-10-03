@@ -3,7 +3,7 @@
 ## `/`: Homepage
 
 - **Component:** `app/page.tsx`
-- **Content:** `components/home/*`, `lib/site.ts`, `content/projects.json` (cards), `content/testimonials.json`
+- **Content:** `components/home/*`, `lib/site.ts`, `content/projects/*.mdx` (frontmatter `card` + `order`), `content/testimonials.json`
 - **Sections (in order):** Preloader → Spline orb + hero speech bubble → Hero → We got your back → Services → Tech Stack (Lottie) → Selected Work slider (`#portfolio`) → Testimonials slider → Bio (`#about-me`) → CTA → Footer
 - **SEO:** default title "Billodesign — Building Beyond Limits.", site description, canonical `/`, OG/Twitter image `/images/og-image.jpg`, JSON-LD `WebPage` + `ProfessionalService`
 - **Interactions:** preloader, typed orb speech, text reveals, Lottie scroll scrub, sliders, contact modal, sound
@@ -19,7 +19,7 @@
   - `timms-team-landing-page`
   - `macrostate-landing-page`
   - `flexibank---online-banking-mobile-app`
-- **Content:** `content/projects.json`
+- **Content:** `content/projects/<slug>.mdx` (frontmatter + one `# Title` per card; docs/content.md)
 - **SEO:** title "<Project title> | Billodesign", description = project summary, canonical, OG image = project thumbnail
 - **Interactions:** Spline orb (shifted right), section reveals, Wistia video, CTA bubbles, contact modal
 - **Migration notes:** `dynamicParams = false`, so unknown slugs return 404.

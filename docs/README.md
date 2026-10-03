@@ -2,10 +2,10 @@
 
 Portfolio of Muhammad (Billodesign), migrated from Webflow to Next.js. It will be deployed on Vercel at https://billodesign.com.
 
-**Status (2026-10-02):** Phases 1–6 done. Live at https://billodesign.com (Vercel). Phase 7 (performance, SEO, accessibility): round 1 optimizations done; round 2 (orb quality, scene check) pending.
+**Status (2026-10-03):** Phases 1–6 done. Case studies are MDX files (`content/projects/`, ADR-018). Live at https://billodesign.com (Vercel). Phase 7 (performance, SEO, accessibility): round 1 optimizations done; round 2 (orb quality, scene check) pending.
 
 ## Stack
-Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules · GSAP + Lenis · Spline · lottie-web · Howler · OpenAI (chat) · Vercel
+Next.js 16 (App Router) · React 19 · TypeScript · MDX (case studies) · CSS Modules · GSAP + Lenis · Spline · lottie-web · Howler · OpenAI (chat) · Vercel
 
 ## Development
 ```bash
@@ -14,8 +14,9 @@ cp .env.example .env.local      # add OPENAI_API_KEY to enable the chat
 npm run dev                     # http://localhost:3000
 npm run lint && npx tsc --noEmit
 npm run build && npm start      # production build
-node scripts/import-webflow.mjs # regenerate content/*.json from the Webflow CSVs (see content.md)
 ```
+
+To edit or add a case study: `content/projects/<slug>.mdx` (format in [content.md](content.md)).
 
 ## Documentation
 | Doc | What's in it |

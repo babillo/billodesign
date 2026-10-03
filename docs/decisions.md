@@ -134,6 +134,8 @@ Kept as dependencies (each earns its place): **GSAP** (ScrollTrigger + SplitText
 
 ## ADR-008 — Rich text stored as sanitized HTML, not MDX
 
+**Superseded by ADR-018 (2026-10-03).** The "formatting drift" risk below was handled by comparing the rendered DOM before and after the conversion.
+
 Date: 2026-09-29
 
 Decision:
@@ -279,6 +281,8 @@ Generate AVIF/WebP variants in the importer (≈3 files per image in the repo, a
 Trade-offs:
 Uses Vercel image transformations (cached; small numbers here). The `<img>` fallback `src` points at the largest width, which only browsers without `srcset` support would use.
 
+(Since ADR-018 the same logic lives in the `<Figure>` component, `components/projects/CaseStudyMdx.tsx`.)
+
 ## ADR-016 — Orb: poster first, runtime after load, paused when unseen
 
 Date:
@@ -318,3 +322,26 @@ Option B, switch to the Three.js version (best performance, about a day of work,
 
 Trade-offs:
 The Spline runtime download (~1 MB) and its start-up cost remain; revisit option B if the re-measured numbers after the checklist are still too high.
+
+## ADR-018 — Case studies as MDX files
+
+Date:
+2026-10-03
+
+Decision:
+Store each case study as `content/projects/<slug>.mdx`: YAML frontmatter for the project data, `# Title` lines for the cards, Markdown for the text and three tags (`Figure`, `WistiaVideo`, `Spacer`). Render with `@mdx-js/mdx` (`evaluate`) inside a server component at build time.
+
+Context:
+The Webflow HTML in `content/projects.json` was hard to edit by hand, and the importer that produced it would overwrite manual edits. ADR-001 (local content, no CMS) still holds; this changes the format, not the approach.
+
+Reason:
+Readable, diff-friendly files the owner can edit in any editor; one file per project instead of a shared JSON; components keep Webflow's exact figure markup, so the page renders identically (verified DOM diff). `evaluate` at build time adds no client JavaScript and needs no bundler plugin.
+
+Supersedes:
+ADR-008 (rich text as HTML in JSON). Its concern, formatting drift, was answered by diffing the rendered DOM of every page before and after (identical apart from one intended fix).
+
+Alternatives:
+`@next/mdx` (imports .mdx as modules; needs loader config and frontmatter plugins, and dynamic per-slug imports); `next-mdx-remote` (extra wrapper, uncertain maintenance); keep JSON but store Markdown strings (still editing inside JSON); a headless CMS (rejected in ADR-001).
+
+Trade-offs:
+Two dependencies (`@mdx-js/mdx`, `yaml`), server/build only. `/api/chat` reads the files at runtime, so they're added to its function with `outputFileTracingIncludes`. Section titles are free text, so the chat relies on the "Project Overview" and "The Result" titles.

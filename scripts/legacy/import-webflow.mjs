@@ -9,8 +9,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+// ⚠️ RETIRED (2026-10-03). Case studies now live in content/projects/*.mdx and are
+// edited there (docs/content.md). This importer built the old content/projects.json
+// from the Webflow CSV exports during the migration; it's kept for reference
+// (docs/migration.md) and refuses to run so it can't be mistaken for the content source.
+if (!process.argv.includes("--i-know-this-is-retired")) {
+  console.error("scripts/legacy/import-webflow.mjs is retired: edit content/projects/*.mdx instead (docs/content.md).");
+  process.exit(1);
+}
 
-const ROOT = path.resolve(import.meta.dirname, "..");
+
+const ROOT = path.resolve(import.meta.dirname, "../..");
 const EXPORT = path.join(ROOT, "webflow/export");
 const PUBLIC = path.join(ROOT, "public");
 const CONTENT = path.join(ROOT, "content");

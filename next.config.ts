@@ -10,6 +10,11 @@ const REMOVED_PROJECTS = [
 ];
 
 const nextConfig: NextConfig = {
+  // The AI chat reads the case-study MDX files at runtime (lib/content.ts, via
+  // fs), which file tracing can't detect on its own; include them in its function.
+  outputFileTracingIncludes: {
+    "/api/chat": ["./content/projects/**/*"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },
